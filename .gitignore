@@ -32,3 +32,12 @@
 
 # Composer PHAR
 /composer.phar
+
+/.idea
+
+/build/*
+!build/scripts
+!build/.gitkeep
+/web/components
+/web/vendor
+

@@ -1,0 +1,5 @@
+aerial_ship_steel_mq:
+    resource: "@AerialShipSteelMqBundle/Controller"
+    type: annotation
+
+

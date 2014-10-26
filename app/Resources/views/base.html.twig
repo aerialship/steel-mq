@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}
+            {% stylesheets
+            'vendor/necolas_normalize.css/normalize.css'
+            'components/bootstrap/css/bootstrap.min.css'
+            'vendor/fortawesome_font-awesome/css/font-awesome.min.css'
+            'bundles/aerialshipsteelmq/css/style.css'
+            filter="cssrewrite"
+            %}
+            <link href="{{ asset_url }}" rel="stylesheet">
+            {% endstylesheets %}
+            <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
+            {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
