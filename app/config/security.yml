@@ -1,12 +1,31 @@
 security:
+    encoders:
+        AerialShip\SteelMqBundle\Entity\User: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
     providers:
-        in_memory:
-            memory: ~
+        steelmq:
+            id: aerial_ship_steel_mq.security.user_provider
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        default:
+        api:
+            pattern: ^/projects
+            stateless: true
+            simple_preauth:
+                authenticator: aerial_ship_steel_mq.security.authenticator
+
+        main:
+            pattern: ^/
             anonymous: ~
+
+
+    access_control:
+        - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }
