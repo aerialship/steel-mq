@@ -1,0 +1,65 @@
+<project name="Included Deploy" default="deploy">
+
+    <target name="deploy" depends="init, deploy-reset, deploy-clear-cache, deploy-db-migrate, deploy-assetic-dump, deploy-minify-js-all, deploy-minify-css-all">
+    </target>
+
+    <target name="deploy-clear-cache" depends="init">
+        <exec executable="php" checkreturn="true" logoutput="true">
+            <arg value="${console}"/>
+            <arg value="cache:clear"/>
+            <arg value="--env=prod"/>
+        </exec>
+    </target>
+
+    <target name="deploy-reset" depends="init">
+        <delete dir="web/js" />
+        <delete dir="web/css" />
+        <mkdir dir="web/js/compiled"/>
+        <mkdir dir="web/css/compiled"/>
+    </target>
+
+    <target name="deploy-assetic-dump" depends="init">
+        <exec executable="php" checkreturn="true" logoutput="true">
+            <arg value="${console}"/>
+            <arg value="assetic:dump"/>
+            <arg value="--env=prod"/>
+        </exec>
+    </target>
+
+    <target name="deploy-db-migrate" depends="init">
+        <exec executable="php" checkreturn="true" logoutput="true">
+            <arg value="${console}"/>
+            <arg value="doc:mig:mig"/>
+            <arg value="-n"/>
+            <arg value="--env=prod"/>
+        </exec>
+    </target>
+
+    <target name="deploy-minify-js-all">
+        <foreach param="file" absparam="filename" target="deploy-minify-js-one">
+            <fileset dir="web/js/compiled">
+                <include name="**/*.js"/>
+            </fileset>
+        </foreach>
+    </target>
+
+    <target name="deploy-minify-js-one">
+        <echo>FILE: ${filename}</echo>
+        <exec command="uglifyjs ${filename} --compress --mangle -o ${filename}" checkreturn="true" escape="false" logoutput="true" />
+    </target>
+
+    <target name="deploy-minify-css-all">
+        <foreach param="file" absparam="filename" target="deploy-minify-css-one">
+            <fileset dir="web/css/compiled">
+                <include name="**/*.css"/>
+            </fileset>
+        </foreach>
+    </target>
+
+    <target name="deploy-minify-css-one">
+        <echo>FILE: ${filename}</echo>
+        <exec command="uglifycss ${filename} > ${filename}.min.css" checkreturn="true" escape="false" logoutput="true" />
+        <move file="${filename}.min.css" tofile="${filename}" overwrite="true"/>
+    </target>
+
+</project>

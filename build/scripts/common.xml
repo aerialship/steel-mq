@@ -1,0 +1,21 @@
+<project name="common" default="init">
+
+    <target name="init" depends="check-linux, check-windows, init-linux, init-windows">
+    </target>
+
+    <target name="init-windows" if="is-windows">
+        <property name="console" value="app\console" />
+    </target>
+
+    <target name="init-linux" if="is-linux">
+        <property name="console" value="app/console" />
+    </target>
+
+    <target name="check-windows">
+        <available file="c:/" property="is-windows"/>
+    </target>
+
+    <target name="check-linux">
+        <available file="/var" property="is-linux"/>
+    </target>
+</project>

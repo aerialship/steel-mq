@@ -41,3 +41,7 @@
 /web/components
 /web/vendor
 
+/php-cs-fixer.phar
+/web/css
+/web/js
+
