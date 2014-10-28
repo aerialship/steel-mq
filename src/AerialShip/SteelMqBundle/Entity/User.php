@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @Table(name="smq_user")
+ * @ORM\Table(name="smq_user")
  */
 class User implements UserInterface, \Serializable
 {
@@ -108,7 +108,8 @@ class User implements UserInterface, \Serializable
      * @ORM\OneToMany(
      *      targetEntity="ProjectRole",
      *      mappedBy="user",
-     *      orphanRemoval=true
+     *      orphanRemoval=true,
+     *      cascade={"remove"}
      * )
      * @ORM\OrderBy({"name": "ASC"})
      */
@@ -146,6 +147,7 @@ class User implements UserInterface, \Serializable
     public function setLocale($locale)
     {
         $this->locale = $locale;
+
         return $this;
     }
 
@@ -164,6 +166,7 @@ class User implements UserInterface, \Serializable
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -182,6 +185,7 @@ class User implements UserInterface, \Serializable
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -200,6 +204,7 @@ class User implements UserInterface, \Serializable
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -218,6 +223,7 @@ class User implements UserInterface, \Serializable
     public function setLastLogin($lastLogin)
     {
         $this->lastLogin = $lastLogin;
+
         return $this;
     }
 
@@ -236,6 +242,7 @@ class User implements UserInterface, \Serializable
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
+
         return $this;
     }
 
@@ -254,6 +261,7 @@ class User implements UserInterface, \Serializable
     public function setTimezone($timezone)
     {
         $this->timezone = $timezone;
+
         return $this;
     }
 
@@ -272,6 +280,7 @@ class User implements UserInterface, \Serializable
     public function setPictureUrl($pictureUrl)
     {
         $this->pictureUrl = $pictureUrl;
+
         return $this;
     }
 
@@ -290,6 +299,7 @@ class User implements UserInterface, \Serializable
     public function setToken($token)
     {
         $this->token = $token;
+
         return $this;
     }
 
@@ -308,6 +318,7 @@ class User implements UserInterface, \Serializable
     public function setTokenCreatedAt(\DateTime $tokenCreatedAt = null)
     {
         $this->tokenCreatedAt = $tokenCreatedAt;
+
         return $this;
     }
 
@@ -358,6 +369,7 @@ class User implements UserInterface, \Serializable
     public function setRoles(array $roles)
     {
         $this->roles = $roles;
+
         return $this;
     }
 
@@ -368,6 +380,7 @@ class User implements UserInterface, \Serializable
     public function setPassword($password)
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -378,6 +391,7 @@ class User implements UserInterface, \Serializable
     public function setSalt($salt)
     {
         $this->salt = $salt;
+
         return $this;
     }
 

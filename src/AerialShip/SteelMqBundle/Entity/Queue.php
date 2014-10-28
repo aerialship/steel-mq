@@ -55,15 +55,19 @@ class Queue
      *      targetEntity="Project",
      *      inversedBy="queues"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $project;
 
     /**
      * @var Subscriber[]|ArrayCollection
-     * @ORM\ManyToOne(
+     * @ORM\OneToMany(
      *      targetEntity="Subscriber",
-     *      inversedBy="queue"
+     *      mappedBy="queue",
+     *      orphanRemoval=true,
+     *      cascade={"remove"}
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $subscribers;
 
@@ -90,6 +94,7 @@ class Queue
     public function setErrorQueue($errorQueue)
     {
         $this->errorQueue = $errorQueue;
+
         return $this;
     }
 
@@ -116,6 +121,7 @@ class Queue
     public function setPushType($pushType)
     {
         $this->pushType = $pushType;
+
         return $this;
     }
 
@@ -134,6 +140,7 @@ class Queue
     public function setRetries($retries)
     {
         $this->retries = $retries;
+
         return $this;
     }
 
@@ -152,6 +159,7 @@ class Queue
     public function setRetriesDelay($retriesDelay)
     {
         $this->retriesDelay = $retriesDelay;
+
         return $this;
     }
 
@@ -170,6 +178,7 @@ class Queue
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 

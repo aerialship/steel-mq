@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity
  * @ORM\Table(name="smq_project")
  */
-class Project 
+class Project
 {
     /**
      * @var int
@@ -31,6 +31,7 @@ class Project
      *      targetEntity="User",
      *      inversedBy="ownOProjects"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $owner;
 
@@ -44,7 +45,8 @@ class Project
      * @ORM\OneToMany(
      *      targetEntity="ProjectRole",
      *      mappedBy="project",
-     *      orphanRemoval=true
+     *      orphanRemoval=true,
+     *      cascade={"remove"}
      * )
      */
     protected $projectRoles;
@@ -54,7 +56,8 @@ class Project
      * @ORM\OneToMany(
      *      targetEntity="Queue",
      *      mappedBy="project",
-     *      orphanRemoval=true
+     *      orphanRemoval=true,
+     *      cascade={"remove"}
      * )
      */
     protected $queues;
@@ -124,6 +127,7 @@ class Project
     public function setCreatedAt(\DateTime $createdAt = null)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -134,6 +138,7 @@ class Project
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -144,6 +149,7 @@ class Project
     public function setOwner(User $owner)
     {
         $this->owner = $owner;
+
         return $this;
     }
 

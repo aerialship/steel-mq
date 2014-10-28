@@ -38,7 +38,9 @@
         "components/bootstrap": "3.2.0",
         "fortawesome/font-awesome": "v4.1.0",
         "braincrafted/bootstrap-bundle": "~2.1",
-        "appsco/component-share": "~1.0"
+        "appsco/component-share": "~1.0",
+        "doctrine/doctrine-migrations-bundle": "dev-master#f7138381aa884c0f679da4de41e369b94ead9cd3",
+        "doctrine/migrations": "dev-master#46a031ddaea47d0685200027cfe8c83b02aee6f6"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

@@ -8,23 +8,27 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="smq_project_role")
  */
-class ProjectRole 
+class ProjectRole
 {
     /**
      * @var User
+     * @ORM\Id
      * @ORM\ManyToOne(
      *      targetEntity="User",
      *      inversedBy="projectRoles"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $user;
 
     /**
      * @var Project
+     * @ORM\Id
      * @ORM\ManyToOne(
      *      targetEntity="Project",
      *      inversedBy="projectRoles"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $project;
 
@@ -65,6 +69,7 @@ class ProjectRole
     public function setRoles(array $roles)
     {
         $this->roles = $roles;
+
         return $this;
     }
 

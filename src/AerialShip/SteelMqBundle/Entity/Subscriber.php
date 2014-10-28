@@ -36,6 +36,7 @@ class Subscriber
      *      targetEntity="Queue",
      *      inversedBy="subscribers"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $queue;
 

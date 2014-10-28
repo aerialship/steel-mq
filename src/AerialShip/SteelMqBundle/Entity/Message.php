@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="smq_queue")
+ * @ORM\Table(name="smq_message")
  */
 class Message
 {
@@ -65,6 +65,7 @@ class Message
      * @ORM\ManyToOne(
      *      targetEntity="Queue"
      * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $queue;
 
@@ -91,6 +92,7 @@ class Message
     public function setBody($body)
     {
         $this->body = $body;
+
         return $this;
     }
 
@@ -109,6 +111,7 @@ class Message
     public function setCompletedAt($completedAt)
     {
         $this->completedAt = $completedAt;
+
         return $this;
     }
 
@@ -127,6 +130,7 @@ class Message
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -153,6 +157,7 @@ class Message
     public function setRetriesRemaining($retriesRemaining)
     {
         $this->retriesRemaining = $retriesRemaining;
+
         return $this;
     }
 
@@ -171,6 +176,7 @@ class Message
     public function setTakenAt($takenAt)
     {
         $this->takenAt = $takenAt;
+
         return $this;
     }
 
@@ -189,6 +195,7 @@ class Message
     public function setTimeoutAt($timeoutAt)
     {
         $this->timeoutAt = $timeoutAt;
+
         return $this;
     }
 
@@ -207,6 +214,7 @@ class Message
     public function setToken($token)
     {
         $this->token = $token;
+
         return $this;
     }
 
@@ -225,6 +233,7 @@ class Message
     public function setQueue(Queue $queue)
     {
         $this->queue = $queue;
+
         return $this;
     }
 
