@@ -32,9 +32,9 @@ class Message
 
     /**
      * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
-    protected $takenAt;
+    protected $availableAt;
 
     /**
      * @var \DateTime|null
@@ -46,7 +46,7 @@ class Message
      * @var \DateTime|null
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $completedAt;
+    protected $deletedAt;
 
     /**
      * @var string|null
