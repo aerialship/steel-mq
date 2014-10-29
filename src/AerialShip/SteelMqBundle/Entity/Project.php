@@ -4,6 +4,7 @@ namespace AerialShip\SteelMqBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -22,6 +23,7 @@ class Project implements \JsonSerializable
     /**
      * @var string
      * @ORM\Column(type="string", length=60)
+     * @Assert\NotBlank
      */
     protected $title;
 
@@ -121,10 +123,10 @@ class Project implements \JsonSerializable
     }
 
     /**
-     * @param \DateTime|null $createdAt
+     * @param \DateTime $createdAt
      * @return $this|Project
      */
-    public function setCreatedAt(\DateTime $createdAt = null)
+    public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
 

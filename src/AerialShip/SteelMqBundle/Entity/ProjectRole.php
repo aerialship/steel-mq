@@ -14,12 +14,14 @@ class ProjectRole
     const PROJECT_ROLE_QUEUE = 'PROJECT_ROLE_QUEUE';
     const PROJECT_ROLE_SHARE = 'PROJECT_ROLE_SHARE';
     const PROJECT_ROLE_SUBSCRIBE = 'PROJECT_ROLE_SUBSCRIBE';
+    const PROJECT_ROLE_OWNER = 'PROJECT_ROLE_OWNER';
 
     private static $validRoles = array(
         self::PROJECT_ROLE_DEFAULT => 1,
         self::PROJECT_ROLE_QUEUE => 1,
         self::PROJECT_ROLE_SHARE => 1,
         self::PROJECT_ROLE_SUBSCRIBE => 1,
+        self::PROJECT_ROLE_OWNER => 1,
     );
 
     /**
@@ -57,11 +59,52 @@ class ProjectRole
     protected $accessToken;
 
     /**
+     * @return string
+     */
+    public function getAccessToken()
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * @param string $accessToken
+     * @return $this|ProjectRole
+     */
+    public function setAccessToken($accessToken)
+    {
+        $this->accessToken = $accessToken;
+
+        return $this;
+    }
+
+    /**
      * @return Project
      */
     public function getProject()
     {
         return $this->project;
+    }
+
+    /**
+     * @param Project $project
+     * @return $this|ProjectRole
+     */
+    public function setProject(Project $project)
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * @param User $user
+     * @return $this|ProjectRole
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     /**
