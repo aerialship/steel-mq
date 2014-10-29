@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Entity
  * @ORM\Table(name="smq_project")
  */
-class Project
+class Project implements \JsonSerializable
 {
     /**
      * @var int
@@ -23,7 +23,7 @@ class Project
      * @var string
      * @ORM\Column(type="string", length=60)
      */
-    protected $name;
+    protected $title;
 
     /**
      * @var User
@@ -91,9 +91,9 @@ class Project
     /**
      * @return mixed
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
     }
 
     /**
@@ -132,12 +132,12 @@ class Project
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $title
      * @return $this|Project
      */
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }
@@ -151,6 +151,21 @@ class Project
         $this->owner = $owner;
 
         return $this;
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.4.0)<br/>
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     */
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->getId(),
+            'title' => $this->getTitle(),
+        );
     }
 
 }

@@ -2,6 +2,8 @@
 
 namespace AerialShip\SteelMqBundle\Controller\Api;
 
+use AerialShip\SteelMqBundle\Entity\ProjectRole;
+use AerialShip\SteelMqBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -18,6 +20,25 @@ class ProjectController extends Controller
      */
     public function listAction()
     {
-        return new JsonResponse(array($this->getUser()->getUsername(), $this->getUser()->getRoles()));
+        $sc = $this->get('security.context');
+        $result = array();
+        foreach ($this->getUser()->getProjectRoles() as $projectRole) {
+            if ($sc->isGranted(ProjectRole::PROJECT_ROLE_DEFAULT, $projectRole->getProject())) {
+                $obj = $projectRole->getProject()->jsonSerialize();
+                $obj['roles'] = ProjectRole::toStrings($projectRole->getRoles());
+                $result[] = $obj;
+            }
+        }
+
+        return new JsonResponse($result);
     }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return parent::getUser();
+    }
+
 }

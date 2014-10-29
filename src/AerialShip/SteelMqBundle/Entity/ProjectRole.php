@@ -10,16 +10,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ProjectRole
 {
-    const ROLE_DEFAULT = 'ROLE_DEFAULT';
-    const ROLE_QUEUE = 'ROLE_QUEUE';
-    const ROLE_SHARE = 'ROLE_SHARE';
-    const ROLE_SUBSCRIBE = 'ROLE_SUBSCRIBE';
+    const PROJECT_ROLE_DEFAULT = 'PROJECT_ROLE_DEFAULT';
+    const PROJECT_ROLE_QUEUE = 'PROJECT_ROLE_QUEUE';
+    const PROJECT_ROLE_SHARE = 'PROJECT_ROLE_SHARE';
+    const PROJECT_ROLE_SUBSCRIBE = 'PROJECT_ROLE_SUBSCRIBE';
 
     private static $validRoles = array(
-        self::ROLE_DEFAULT => 1,
-        self::ROLE_QUEUE => 1,
-        self::ROLE_SHARE => 1,
-        self::ROLE_SUBSCRIBE => 1,
+        self::PROJECT_ROLE_DEFAULT => 1,
+        self::PROJECT_ROLE_QUEUE => 1,
+        self::PROJECT_ROLE_SHARE => 1,
+        self::PROJECT_ROLE_SUBSCRIBE => 1,
     );
 
     /**
@@ -57,7 +57,7 @@ class ProjectRole
     protected $accessToken;
 
     /**
-     * @return mixed
+     * @return Project
      */
     public function getProject()
     {
@@ -130,5 +130,39 @@ class ProjectRole
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $role
+     * @return bool
+     */
+    public static function isRoleValid($role)
+    {
+        return isset(self::$validRoles[$role]);
+    }
+
+    public static function toStrings(array $roles)
+    {
+        $result = array();
+        foreach ($roles as $role) {
+            if (self::isRoleValid($role)) {
+                $result[] = strtolower(substr($role, 13));
+            }
+        }
+
+        return array_unique($result);
+    }
+
+    public static function fromString(array $roles)
+    {
+        $result = array();
+        foreach ($roles as $role) {
+            $role = 'PROJECT_ROLE_'.strtoupper($role);
+            if (self::isRoleValid($role)) {
+                $result[] = $role;
+            }
+        }
+
+        return array_unique($result);
     }
 }
