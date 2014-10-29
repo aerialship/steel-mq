@@ -66,7 +66,6 @@ class SteelMqUserProvider implements UserProviderInterface
         if ($user instanceof User) {
             $result = $this->userRepository->find($user->getId());
             if ($result) {
-
                 return $result;
             }
         }

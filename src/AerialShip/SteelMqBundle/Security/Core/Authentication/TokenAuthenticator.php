@@ -92,6 +92,7 @@ class TokenAuthenticator implements SimplePreAuthenticatorInterface
         }
 
         /** @noinspection PhpParamsInspection */
+
         return new TokenPreAuthenticatedToken(
             $user,
             $projectRole ? $projectRole->getProject() : null,

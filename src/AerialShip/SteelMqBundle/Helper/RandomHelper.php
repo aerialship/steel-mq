@@ -2,7 +2,7 @@
 
 namespace AerialShip\SteelMqBundle\Helper;
 
-class RandomHelper 
+class RandomHelper
 {
     /**
      * @return string
