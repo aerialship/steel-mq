@@ -117,7 +117,6 @@ class User implements UserInterface, \Serializable
      *      orphanRemoval=true,
      *      cascade={"remove"}
      * )
-     * @ORM\OrderBy({"name": "ASC"})
      */
     protected $projectRoles;
 
