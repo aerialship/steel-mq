@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AerialShip\SteelMqBundle\Entity\UserRepository")
  * @ORM\Table(name="smq_user")
  */
 class User implements UserInterface, \Serializable
@@ -74,16 +74,22 @@ class User implements UserInterface, \Serializable
     protected $roles = array();
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=120, nullable=true)
+     * @var string
+     * @ORM\Column(type="string", length=64)
      */
-    protected $token;
+    protected $accessToken;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    protected $passwordToken;
 
     /**
      * @var \DateTime|null
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $tokenCreatedAt;
+    protected $passwordRequestAt;
 
     /**
      * @var string
@@ -99,7 +105,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=120)
+     * @ORM\Column(type="string", length=200, nullable=true)
      */
     protected $pictureUrl;
 
@@ -120,7 +126,6 @@ class User implements UserInterface, \Serializable
      */
     public function __construct()
     {
-        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->projectRoles = new ArrayCollection();
     }
 
@@ -287,18 +292,18 @@ class User implements UserInterface, \Serializable
     /**
      * @return null|string
      */
-    public function getToken()
+    public function getAccessToken()
     {
-        return $this->token;
+        return $this->accessToken;
     }
 
     /**
-     * @param null|string $token
+     * @param string $accessToken
      * @return $this|User
      */
-    public function setToken($token)
+    public function setAccessToken($accessToken)
     {
-        $this->token = $token;
+        $this->accessToken = $accessToken;
 
         return $this;
     }
@@ -306,18 +311,37 @@ class User implements UserInterface, \Serializable
     /**
      * @return \DateTime|null
      */
-    public function getTokenCreatedAt()
+    public function getPasswordRequestAt()
     {
-        return $this->tokenCreatedAt;
+        return $this->passwordRequestAt;
     }
 
     /**
-     * @param \DateTime|null $tokenCreatedAt
+     * @param \DateTime|null $passwordRequestAt
      * @return $this|User
      */
-    public function setTokenCreatedAt(\DateTime $tokenCreatedAt = null)
+    public function setPasswordRequestAt(\DateTime $passwordRequestAt = null)
     {
-        $this->tokenCreatedAt = $tokenCreatedAt;
+        $this->passwordRequestAt = $passwordRequestAt;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPasswordToken()
+    {
+        return $this->passwordToken;
+    }
+
+    /**
+     * @param null|string $passwordToken
+     * @return $this|User
+     */
+    public function setPasswordToken($passwordToken)
+    {
+        $this->passwordToken = $passwordToken;
 
         return $this;
     }

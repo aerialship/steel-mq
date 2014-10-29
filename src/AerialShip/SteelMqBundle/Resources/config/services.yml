@@ -1,4 +1,11 @@
 services:
-#    aerial_ship_steel_mq.example:
-#        class: AerialShip\SteelMqBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    aerial_ship_steel_mq.security.authenticator:
+        class: AerialShip\SteelMqBundle\Security\Core\Authentication\TokenAuthenticator
+        arguments:
+            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:ProjectRole')"
+            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:User')"
+
+    aerial_ship_steel_mq.security.user_provider:
+        class: AerialShip\SteelMqBundle\Security\Core\User\SteelMqUserProvider
+        arguments:
+            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:User')"
