@@ -19,7 +19,7 @@ class ProjectController extends AbstractApiController
      * @Route("", name="projects_list")
      * @Method({"GET"})
      */
-    public function getProjectsAction()
+    public function listAction()
     {
         $sc = $this->get('security.context');
         $result = array();
@@ -41,7 +41,7 @@ class ProjectController extends AbstractApiController
      * @Route("", name="projects_create")
      * @Method({"POST"})
      */
-    public function postProjectsAction(Request $request)
+    public function createAction(Request $request)
     {
         $project = new Project();
         $form = $this->createForm('project', $project);
