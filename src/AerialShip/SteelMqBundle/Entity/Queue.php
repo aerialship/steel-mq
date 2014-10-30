@@ -4,10 +4,12 @@ namespace AerialShip\SteelMqBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="smq_queue")
+ * @JMS\ExclusionPolicy("all")
  */
 class Queue
 {
@@ -20,34 +22,65 @@ class Queue
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $id;
 
     /**
      * @var string
-     * @ORM\Column(type="integer", length=100)
+     * @ORM\Column(type="string", length=100)
+     * @JMS\Expose
      */
     protected $title;
 
     /**
      * @var string
+     * @ORM\Column(type="string", length=20, name="push_type")
+     * @JMS\Expose
      */
     protected $pushType = self::PUSH_TYPE_PULL;
 
     /**
      * @var int
+     * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $retries;
 
     /**
      * @var int
+     * @ORM\Column(type="integer", name="retries_delay")
+     * @JMS\Expose
      */
     protected $retriesDelay;
 
     /**
-     * @var string|null
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true)
+     * @JMS\Expose
      */
     protected $errorQueue;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     * @JMS\Expose
+     */
+    protected $timeout;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     * @JMS\Expose
+     */
+    protected $delay;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     * @JMS\Expose
+     */
+    protected $expiresIn;
 
     /**
      * @var Project
@@ -183,6 +216,63 @@ class Queue
     }
 
     /**
+     * @return int
+     */
+    public function getDelay()
+    {
+        return $this->delay;
+    }
+
+    /**
+     * @param int $delay
+     * @return $this|Queue
+     */
+    public function setDelay($delay)
+    {
+        $this->delay = $delay;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExpiresIn()
+    {
+        return $this->expiresIn;
+    }
+
+    /**
+     * @param int $expiresIn
+     * @return $this|Queue
+     */
+    public function setExpiresIn($expiresIn)
+    {
+        $this->expiresIn = $expiresIn;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimeout()
+    {
+        return $this->timeout;
+    }
+
+    /**
+     * @param int $timeout
+     * @return $this|Queue
+     */
+    public function setTimeout($timeout)
+    {
+        $this->timeout = $timeout;
+
+        return $this;
+    }
+
+    /**
      * @return Project
      */
     public function getProject()
@@ -190,4 +280,24 @@ class Queue
         return $this->project;
     }
 
+    /**
+     * @param Project $project
+     * @return $this|Queue
+     */
+    public function setProject(Project $project)
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("project_id")
+     */
+    public function getProjectId()
+    {
+        return $this->getProject()->getId();
+    }
 }

@@ -184,7 +184,7 @@ class ProjectRole
         return isset(self::$validRoles[$role]);
     }
 
-    public static function toStrings(array $roles)
+    public static function toString(array $roles)
     {
         $result = array();
         foreach ($roles as $role) {

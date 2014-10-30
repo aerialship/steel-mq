@@ -1,5 +1,10 @@
-aerial_ship_steel_mq:
-    resource: "@AerialShipSteelMqBundle/Controller"
+aerial_ship_steel_mq_api:
+    resource: "@AerialShipSteelMqBundle/Controller/Api"
     type: annotation
+    defaults: { "_format": "json", "slash": "/" }
+    requirements:
+        slash: /|
 
-
+aerial_ship_steel_mq_html:
+    resource: "@AerialShipSteelMqBundle/Controller/Html"
+    type: annotation

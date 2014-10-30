@@ -31,7 +31,8 @@ class ApiProjectTokenVoter implements VoterInterface
      */
     public function supportsClass($class)
     {
-        return is_subclass_of($class, 'AerialShip\SteelMqBundle\Entity\Project');
+        return $class == 'AerialShip\SteelMqBundle\Entity\Project' ||
+            is_subclass_of($class, 'AerialShip\SteelMqBundle\Entity\Project');
     }
 
     /**
