@@ -19,6 +19,8 @@ class AppKernel extends Kernel
 
             new Braincrafted\Bundle\BootstrapBundle\BraincraftedBootstrapBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
 
             new AerialShip\SteelMqBundle\AerialShipSteelMqBundle(),
         );

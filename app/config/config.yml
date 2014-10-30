@@ -72,6 +72,7 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -80,3 +81,16 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
 #    spool:     { type: memory }
+
+sensio_framework_extra:
+    view:    { annotations: false }
+
+fos_rest:
+    view:
+        view_response_listener: force
+    body_listener:
+        decoders:
+            json: fos_rest.decoder.json
+            xml:  fos_rest.decoder.xml
+            txt:  fos_rest.decoder.json
+            html: fos_rest.decoder.json

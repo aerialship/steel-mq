@@ -1,0 +1,10 @@
+services:
+    aerial_ship_steel_mq.form.type.project:
+        class: AerialShip\SteelMqBundle\Form\Type\ProjectType
+        tags:
+            - { name: form.type, alias: project }
+
+    aerial_ship_steel_mq.form.type.queue:
+        class: AerialShip\SteelMqBundle\Form\Type\QueueType
+        tags:
+            - { name: form.type, alias: queue }

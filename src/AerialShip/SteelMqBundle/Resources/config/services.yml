@@ -1,25 +1,3 @@
 services:
-    aerial_ship_steel_mq.security.authenticator:
-        class: AerialShip\SteelMqBundle\Security\Core\Authentication\TokenAuthenticator
-        arguments:
-            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:ProjectRole')"
-            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:User')"
-
-    aerial_ship_steel_mq.security.user_provider:
-        class: AerialShip\SteelMqBundle\Security\Core\User\SteelMqUserProvider
-        arguments:
-            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:User')"
-
-
-    aerial_ship_steel_mq.security.voter.project_role:
-        class: AerialShip\SteelMqBundle\Security\Authorization\Voter\ProjectRoleVoter
-        arguments:
-            - @security.role_hierarchy
-        tags:
-            - { name: security.voter }
-
-    aerial_ship_steel_mq.security.voter.api_project_token:
-        class: AerialShip\SteelMqBundle\Security\Authorization\Voter\ApiProjectTokenVoter
-        arguments: []
-        tags:
-            - { name: security.voter }
+    aerial_ship_steel_mq.defaulter.queue:
+        class: AerialShip\SteelMqBundle\Services\Defaulter\QueueDefaulter

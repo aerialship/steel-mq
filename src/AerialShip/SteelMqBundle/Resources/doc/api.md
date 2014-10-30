@@ -32,7 +32,9 @@ POST /projects
 
 ``` json
 {
-    "title": "Project name"
+    "project": {
+        "title": "Project name"
+    }
 }
 ```
 
@@ -99,14 +101,16 @@ POST /projects/{Project ID}/queues
 
 ``` json
 {
-    "title": "New Queue Name",
-    "push_type": "unicast",
-    "retries": 5,
-    "retries_delay": 600,
-    "error_queue": 678,
-    "timeout": 60,
-    "delay": 0,
-    "expires_in": 604800
+    "queue": {
+        "title": "New Queue Name",
+        "push_type": "unicast",
+        "retries": 5,
+        "retries_delay": 600,
+        "error_queue": 678,
+        "timeout": 60,
+        "delay": 0,
+        "expires_in": 604800
+    }
 }
 ```
 

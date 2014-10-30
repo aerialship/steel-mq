@@ -4,64 +4,59 @@ namespace AerialShip\SteelMqBundle\Controller\Api;
 
 use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Entity\ProjectRole;
-use AerialShip\SteelMqBundle\Entity\User;
-use AerialShip\SteelMqBundle\Helper\RandomHelper;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use AerialShip\SteelMqBundle\Helper\Helper;
+use JMS\Serializer\SerializationContext;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
- * @Route("/projects")
+ * @Route("/projects{slash}")
  */
-class ProjectController extends Controller
+class ProjectController extends AbstractApiController
 {
     /**
-     * @Route("/", name="projects_list")
+     * @Route("", name="projects_list")
      * @Method({"GET"})
      */
-    public function listAction()
+    public function getProjectsAction()
     {
         $sc = $this->get('security.context');
         $result = array();
         foreach ($this->getUser()->getProjectRoles() as $projectRole) {
             if ($sc->isGranted(ProjectRole::PROJECT_ROLE_DEFAULT, $projectRole->getProject())) {
-                $obj = $projectRole->getProject()->jsonSerialize();
-                $obj['roles'] = ProjectRole::toStrings($projectRole->getRoles());
-                $result[] = $obj;
+                $projectRole->getProject()->setCurrentProjectRole($projectRole);
+                $result[] = $projectRole->getProject();
             }
         }
 
-        return new JsonResponse($result);
+        return $this->handleView(
+            $this->view($result)->setSerializationContext(
+                SerializationContext::create()->setGroups(array('Default', 'roles'))
+            )
+        );
     }
 
     /**
-     * @Route("/", name="projects_create")
+     * @Route("", name="projects_create")
      * @Method({"POST"})
      */
-    public function createAction(Request $request)
+    public function postProjectsAction(Request $request)
     {
-        $json = json_decode($request->getContent(), true);
+        $project = new Project();
+        $form = $this->createForm('project', $project);
 
-        if (false == is_array($json)) {
-            throw new BadRequestHttpException('Body parameters not supplied');
+        $form->handleRequest($request);
+        if (false == $form->isValid()) {
+            return $this->handleView($this->view($form, 400));
         }
 
-        $project = (new Project())
-            ->setTitle(trim(@$json['title']))
-            ->setOwner($this->getUser());
+        $project->setOwner($this->getUser());
         $projectRole = (new ProjectRole())
             ->setRoles(array(ProjectRole::PROJECT_ROLE_OWNER))
-            ->setAccessToken(RandomHelper::generateToken())
+            ->setAccessToken(Helper::generateToken())
             ->setProject($project)
             ->setUser($this->getUser());
-
-        $errors = $this->get('validator')->validate($project);
-        if (count($errors) > 0) {
-            throw new BadRequestHttpException((string) $errors);
-        }
 
         $em = $this->getEntityManager();
 
@@ -72,25 +67,10 @@ class ProjectController extends Controller
             $em->flush();
         });
 
-        return new JsonResponse(array(
+        return $this->handleView($this->view(array(
             'id' => $project->getId(),
             'success' => true,
-        ));
+        )));
     }
 
-    /**
-     * @return User
-     */
-    public function getUser()
-    {
-        return parent::getUser();
-    }
-
-    /**
-     * @return \Doctrine\ORM\EntityManager
-     */
-    protected function getEntityManager()
-    {
-        return $this->getDoctrine()->getManager();
-    }
 }
