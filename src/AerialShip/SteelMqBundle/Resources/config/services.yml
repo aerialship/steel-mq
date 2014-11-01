@@ -1,3 +1,5 @@
 services:
-    aerial_ship_steel_mq.defaulter.queue:
-        class: AerialShip\SteelMqBundle\Services\Defaulter\QueueDefaulter
+    aerial_ship_steel_mq.user_provider:
+        class: AerialShip\SteelMqBundle\Services\UserProvider
+        arguments:
+            - @security.context

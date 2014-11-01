@@ -1,0 +1,14 @@
+services:
+    aerial_ship_steel_mq.manager.project:
+        class: AerialShip\SteelMqBundle\Services\Manager\ProjectManager
+        arguments:
+            - "@=service('doctrine').getManager()"
+            - @security.context
+            - @aerial_ship_steel_mq.user_provider
+
+    aerial_ship_steel_mq.manager.queue:
+        class: AerialShip\SteelMqBundle\Services\Manager\QueueManager
+        arguments:
+            - "@=service('doctrine').getManager()"
+            - @security.context
+            - @aerial_ship_steel_mq.defaulter.queue

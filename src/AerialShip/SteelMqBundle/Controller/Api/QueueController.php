@@ -26,14 +26,11 @@ class QueueController extends AbstractApiController
      */
     public function listAction(Project $project)
     {
-        if (false == $this->get('security.context')->isGranted(ProjectRole::PROJECT_ROLE_DEFAULT, $project)) {
-            throw new NotFoundHttpException();
+        if (false == $this->get('security.context')->isGranted(ProjectRole::PROJECT_ROLE_QUEUE, $project)) {
+            throw new AccessDeniedHttpException();
         }
 
-        $result = array();
-        foreach ($project->getQueues() as $queue) {
-            $result[] = $queue;
-        }
+        $result = $this->get('aerial_ship_steel_mq.manager.queue')->getList($project);
 
         return $this->handleView(
             $this->view($result)
@@ -65,13 +62,8 @@ class QueueController extends AbstractApiController
 
         /** @var Queue $queue */
         $queue = $form->getData();
-        $this->get('aerial_ship_steel_mq.defaulter.queue')->setDefaults($queue);
-        $queue->setProject($project);
 
-        $em = $this->getEntityManager();
-
-        $em->persist($queue);
-        $em->flush();
+        $this->get('aerial_ship_steel_mq.manager.queue')->create($project, $queue);
 
         return $this->handleView(
             $this->view($queue)
@@ -106,12 +98,7 @@ class QueueController extends AbstractApiController
             return $this->handleView($this->view($form, 400));
         }
 
-        $this->get('aerial_ship_steel_mq.defaulter.queue')->setDefaults($queue);
-
-        $em = $this->getEntityManager();
-
-        $em->persist($queue);
-        $em->flush();
+        $this->get('aerial_ship_steel_mq.manager.queue')->update($project, $queue);
 
         return $this->handleView(
             $this->view($queue)

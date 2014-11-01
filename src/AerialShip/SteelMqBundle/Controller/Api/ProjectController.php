@@ -3,32 +3,23 @@
 namespace AerialShip\SteelMqBundle\Controller\Api;
 
 use AerialShip\SteelMqBundle\Entity\Project;
-use AerialShip\SteelMqBundle\Entity\ProjectRole;
-use AerialShip\SteelMqBundle\Helper\Helper;
 use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * @Route("/projects{slash}")
+ * @Route("/projects")
  */
 class ProjectController extends AbstractApiController
 {
     /**
-     * @Route("", name="projects_list")
+     * @Route("{slash}", name="projects_list")
      * @Method({"GET"})
      */
     public function listAction()
     {
-        $sc = $this->get('security.context');
-        $result = array();
-        foreach ($this->getUser()->getProjectRoles() as $projectRole) {
-            if ($sc->isGranted(ProjectRole::PROJECT_ROLE_DEFAULT, $projectRole->getProject())) {
-                $projectRole->getProject()->setCurrentProjectRole($projectRole);
-                $result[] = $projectRole->getProject();
-            }
-        }
+        $result = $this->get('aerial_ship_steel_mq.manager.project')->getList();
 
         return $this->handleView(
             $this->view($result)->setSerializationContext(
@@ -38,7 +29,7 @@ class ProjectController extends AbstractApiController
     }
 
     /**
-     * @Route("", name="projects_create")
+     * @Route("{slash}", name="projects_create")
      * @Method({"POST"})
      */
     public function createAction(Request $request)
@@ -51,21 +42,7 @@ class ProjectController extends AbstractApiController
             return $this->handleView($this->view($form, 400));
         }
 
-        $project->setOwner($this->getUser());
-        $projectRole = (new ProjectRole())
-            ->setRoles(array(ProjectRole::PROJECT_ROLE_OWNER))
-            ->setAccessToken(Helper::generateToken())
-            ->setProject($project)
-            ->setUser($this->getUser());
-
-        $em = $this->getEntityManager();
-
-        $em->transactional(function () use ($em, $project, $projectRole) {
-            $em->persist($project);
-            $em->flush();
-            $em->persist($projectRole);
-            $em->flush();
-        });
+        $this->get('aerial_ship_steel_mq.manager.project')->create($project, $this->getUser());
 
         return $this->handleView($this->view(array(
             'id' => $project->getId(),
