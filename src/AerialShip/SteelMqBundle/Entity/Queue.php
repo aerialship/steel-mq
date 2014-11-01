@@ -105,11 +105,25 @@ class Queue
     protected $subscribers;
 
     /**
+     * @var Message[]|ArrayCollection
+     * @ORM\OneToMany(
+     *      targetEntity="Message",
+     *      mappedBy="queue",
+     *      orphanRemoval=true,
+     *      cascade={"remove"},
+     *      fetch="EXTRA_LAZY"
+     * )
+     * @ORM\JoinColumn(onDelete="CASCADE")
+     */
+    protected $messages;
+
+    /**
      *
      */
     public function __construct()
     {
         $this->subscribers = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     /**
@@ -292,6 +306,22 @@ class Queue
     }
 
     /**
+     * @return Message[]|ArrayCollection
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+
+    /**
+     * @return Subscriber[]|ArrayCollection
+     */
+    public function getSubscribers()
+    {
+        return $this->subscribers;
+    }
+
+    /**
      * @return int
      * @JMS\VirtualProperty()
      * @JMS\SerializedName("project_id")
@@ -300,4 +330,16 @@ class Queue
     {
         return $this->getProject()->getId();
     }
+
+    /**
+     * @return int
+     * @JMS\Groups({"size"})
+     * @JMS\VirtualProperty()
+     * @JMS\SerializedName("size")
+     */
+    public function getSize()
+    {
+        return $this->getMessages()->count();
+    }
+
 }

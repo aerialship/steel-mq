@@ -5,6 +5,7 @@ namespace AerialShip\SteelMqBundle\Controller\Api;
 use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Entity\ProjectRole;
 use AerialShip\SteelMqBundle\Entity\Queue;
+use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -36,6 +37,10 @@ class QueueController extends AbstractApiController
 
         return $this->handleView(
             $this->view($result)
+                ->setSerializationContext(
+                    SerializationContext::create()
+                        ->setGroups(array('Default'))
+                )
         );
     }
 
@@ -68,7 +73,14 @@ class QueueController extends AbstractApiController
         $em->persist($queue);
         $em->flush();
 
-        return $this->handleView($this->view($queue));
+        return $this->handleView(
+            $this->view($queue)
+                ->setSerializationContext(
+                    SerializationContext::create()
+                        ->setGroups(array('Default'))
+                )
+        );
+
     }
 
     /**
@@ -101,6 +113,36 @@ class QueueController extends AbstractApiController
         $em->persist($queue);
         $em->flush();
 
-        return $this->handleView($this->view($queue));
+        return $this->handleView(
+            $this->view($queue)
+                ->setSerializationContext(
+                    SerializationContext::create()
+                        ->setGroups(array('Default'))
+                )
+        );
+    }
+
+    /**
+     * @Route("/{queueId}{slash}")
+     * @Method({"GET"})
+     * @ParamConverter("project", options={"id" = "projectId"})
+     * @ParamConverter("queue", options={"id" = "queueId"})
+     */
+    public function infoAction(Project $project, Queue $queue)
+    {
+        if (false == $this->get('security.context')->isGranted(ProjectRole::PROJECT_ROLE_QUEUE, $project)) {
+            throw new AccessDeniedHttpException();
+        }
+        if ($queue->getProject()->getId() != $project->getId()) {
+            throw new BadRequestHttpException();
+        }
+
+        return $this->handleView(
+            $this->view($queue)
+                ->setSerializationContext(
+                    SerializationContext::create()
+                        ->setGroups(array('Default', 'size'))
+                )
+        );
     }
 }
