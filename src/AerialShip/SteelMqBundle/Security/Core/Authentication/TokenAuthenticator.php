@@ -2,29 +2,28 @@
 
 namespace AerialShip\SteelMqBundle\Security\Core\Authentication;
 
-use AerialShip\SteelMqBundle\Entity\ProjectRoleRepository;
-use AerialShip\SteelMqBundle\Entity\UserRepository;
+use AerialShip\SteelMqBundle\Model\Repository\ProjectRoleRepositoryInterface;
+use AerialShip\SteelMqBundle\Model\Repository\UserRepositoryInterface;
 use AerialShip\SteelMqBundle\Security\Core\Authentication\Token\TokenPreAuthenticatedToken;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\SimplePreAuthenticatorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class TokenAuthenticator implements SimplePreAuthenticatorInterface
 {
-    /** @var ProjectRoleRepository */
+    /** @var ProjectRoleRepositoryInterface */
     protected $projectRoleRepository;
 
-    /** @var UserRepository */
+    /** @var UserRepositoryInterface */
     protected $userRepository;
 
     /**
-     * @param ProjectRoleRepository $projectRoleRepository
-     * @param UserRepository $userRepository
+     * @param ProjectRoleRepositoryInterface $projectRoleRepository
+     * @param UserRepositoryInterface $userRepository
      */
-    public function __construct(ProjectRoleRepository $projectRoleRepository, UserRepository $userRepository)
+    public function __construct(ProjectRoleRepositoryInterface $projectRoleRepository, UserRepositoryInterface $userRepository)
     {
         $this->projectRoleRepository = $projectRoleRepository;
         $this->userRepository = $userRepository;
@@ -52,7 +51,7 @@ class TokenAuthenticator implements SimplePreAuthenticatorInterface
         }
 
         if (false == $accessToken) {
-            return null;
+            $accessToken = '';
         }
 
         return new TokenPreAuthenticatedToken(

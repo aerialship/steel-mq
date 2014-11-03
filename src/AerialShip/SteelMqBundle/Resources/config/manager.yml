@@ -2,7 +2,8 @@ services:
     aerial_ship_steel_mq.manager.project:
         class: AerialShip\SteelMqBundle\Services\Manager\ProjectManager
         arguments:
-            - "@=service('doctrine').getManager()"
+            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:Project')"
+            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:ProjectRole')"
             - @security.context
             - @aerial_ship_steel_mq.user_provider
 

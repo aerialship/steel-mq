@@ -6,8 +6,9 @@ use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Entity\ProjectRole;
 use AerialShip\SteelMqBundle\Entity\User;
 use AerialShip\SteelMqBundle\Helper\Helper;
+use AerialShip\SteelMqBundle\Model\Repository\ProjectRepositoryInterface;
+use AerialShip\SteelMqBundle\Model\Repository\ProjectRoleRepositoryInterface;
 use AerialShip\SteelMqBundle\Services\UserProvider;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class ProjectManager
@@ -15,20 +16,30 @@ class ProjectManager
     /** @var SecurityContextInterface */
     protected $securityContext;
 
-    /** @var EntityManager */
-    protected $entityManager;
+    /** @var ProjectRepositoryInterface */
+    protected $projectRepository;
+
+    /** @var ProjectRoleRepositoryInterface */
+    protected $projectRoleRepository;
 
     /** @var UserProvider */
     protected $userProvider;
 
     /**
-     * @param EntityManager $entityManager
+     * @param ProjectRepositoryInterface $projectRepository
+     * @param ProjectRoleRepositoryInterface $projectRoleRepository
      * @param SecurityContextInterface $securityContext
      * @param UserProvider $userProvider
      */
-    public function __construct(EntityManager $entityManager, SecurityContextInterface $securityContext, UserProvider $userProvider)
+    public function __construct(
+        ProjectRepositoryInterface $projectRepository,
+        ProjectRoleRepositoryInterface $projectRoleRepository,
+        SecurityContextInterface $securityContext,
+        UserProvider $userProvider
+    )
     {
-        $this->entityManager = $entityManager;
+        $this->projectRepository = $projectRepository;
+        $this->projectRoleRepository = $projectRoleRepository;
         $this->securityContext = $securityContext;
         $this->userProvider = $userProvider;
     }
@@ -79,11 +90,9 @@ class ProjectManager
             ->setProject($project)
             ->setUser($owner);
 
-        $this->entityManager->transactional(function () use ($project, $projectRole) {
-            $this->entityManager->persist($project);
-            $this->entityManager->flush();
-            $this->entityManager->persist($projectRole);
-            $this->entityManager->flush();
+        $this->projectRepository->transactional(function () use ($project, $projectRole) {
+            $this->projectRepository->save($project);
+            $this->projectRoleRepository->save($projectRole);
         });
 
         return $projectRole;

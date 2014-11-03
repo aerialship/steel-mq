@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass="AerialShip\SteelMqBundle\Entity\UserRepository")
+ * @ORM\Entity(repositoryClass="AerialShip\SteelMqBundle\Entity\Repository\UserRepository")
  * @ORM\Table(name="smq_user")
  */
 class User implements UserInterface, \Serializable
@@ -125,6 +125,7 @@ class User implements UserInterface, \Serializable
      */
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
         $this->projectRoles = new ArrayCollection();
     }
 

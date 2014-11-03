@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AerialShip\SteelMqBundle\Entity\Repository\ProjectRepository")
  * @ORM\Table(name="smq_project")
  * @JMS\ExclusionPolicy("all")
  */

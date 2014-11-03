@@ -5,7 +5,7 @@ namespace AerialShip\SteelMqBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="AerialShip\SteelMqBundle\Entity\ProjectRoleRepository")
+ * @ORM\Entity(repositoryClass="AerialShip\SteelMqBundle\Entity\Repository\ProjectRoleRepository")
  * @ORM\Table(name="smq_project_role")
  */
 class ProjectRole

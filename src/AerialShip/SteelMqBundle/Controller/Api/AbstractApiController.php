@@ -15,12 +15,4 @@ class AbstractApiController extends FOSRestController
         return parent::getUser();
     }
 
-    /**
-     * @return \Doctrine\ORM\EntityManager
-     */
-    protected function getEntityManager()
-    {
-        return $this->getDoctrine()->getManager();
-    }
-
 }

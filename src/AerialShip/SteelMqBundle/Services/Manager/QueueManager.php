@@ -5,9 +5,8 @@ namespace AerialShip\SteelMqBundle\Services\Manager;
 use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Entity\ProjectRole;
 use AerialShip\SteelMqBundle\Entity\Queue;
+use AerialShip\SteelMqBundle\Model\Repository\QueueRepositoryInterface;
 use AerialShip\SteelMqBundle\Services\Defaulter\QueueDefaulter;
-use AerialShip\SteelMqBundle\Services\UserProvider;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
@@ -16,20 +15,20 @@ class QueueManager
     /** @var SecurityContextInterface */
     protected $securityContext;
 
-    /** @var EntityManager */
-    protected $entityManager;
+    /** @var QueueRepositoryInterface */
+    protected $queueRepository;
 
     /** @var QueueDefaulter */
     protected $queueDefaulter;
 
     /**
-     * @param EntityManager $entityManager
+     * @param QueueRepositoryInterface $queueRepository
      * @param SecurityContextInterface $securityContext
      * @param QueueDefaulter $queueDefaulter
      */
-    public function __construct(EntityManager $entityManager, SecurityContextInterface $securityContext, QueueDefaulter $queueDefaulter)
+    public function __construct(QueueRepositoryInterface $queueRepository, SecurityContextInterface $securityContext, QueueDefaulter $queueDefaulter)
     {
-        $this->entityManager = $entityManager;
+        $this->queueRepository = $queueRepository;
         $this->securityContext = $securityContext;
         $this->queueDefaulter = $queueDefaulter;
     }
@@ -66,8 +65,7 @@ class QueueManager
         $this->queueDefaulter->setDefaults($queue);
         $queue->setProject($project);
 
-        $this->entityManager->persist($queue);
-        $this->entityManager->flush();
+        $this->queueRepository->save($queue);
     }
 
     /**

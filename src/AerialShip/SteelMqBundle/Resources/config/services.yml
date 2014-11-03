@@ -3,3 +3,10 @@ services:
         class: AerialShip\SteelMqBundle\Services\UserProvider
         arguments:
             - @security.context
+
+    aerial_ship_steel_mq.model.account_listener:
+        class: AerialShip\SteelMqBundle\Services\Model\Orm\UserListener
+        arguments: [@security.encoder_factory]
+        tags:
+            - { name: doctrine.event_subscriber }
+        public: false

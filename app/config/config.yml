@@ -28,6 +28,7 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
 
 # Assetic Configuration
 assetic:
@@ -94,3 +95,9 @@ fos_rest:
             xml:  fos_rest.decoder.xml
             txt:  fos_rest.decoder.json
             html: fos_rest.decoder.json
+    exception:
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+        messages:
+            'AerialShip\SteelMqBundle\Error\SafeException': true

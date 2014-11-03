@@ -3,7 +3,7 @@
 namespace AerialShip\SteelMqBundle\Security\Core\User;
 
 use AerialShip\SteelMqBundle\Entity\User;
-use AerialShip\SteelMqBundle\Entity\UserRepository;
+use AerialShip\SteelMqBundle\Model\Repository\UserRepositoryInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -11,13 +11,13 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class SteelMqUserProvider implements UserProviderInterface
 {
-    /** @var  UserRepository */
+    /** @var  UserRepositoryInterface */
     protected $userRepository;
 
     /**
-     * @param UserRepository $userRepository
+     * @param UserRepositoryInterface $userRepository
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->userRepository = $userRepository;
     }
@@ -64,7 +64,7 @@ class SteelMqUserProvider implements UserProviderInterface
     public function refreshUser(UserInterface $user)
     {
         if ($user instanceof User) {
-            $result = $this->userRepository->find($user->getId());
+            $result = $this->userRepository->getById($user->getId());
             if ($result) {
                 return $result;
             }

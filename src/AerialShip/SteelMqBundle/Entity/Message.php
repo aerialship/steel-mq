@@ -5,7 +5,7 @@ namespace AerialShip\SteelMqBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AerialShip\SteelMqBundle\Entity\Repository\MessageRepository")
  * @ORM\Table(name="smq_message")
  */
 class Message

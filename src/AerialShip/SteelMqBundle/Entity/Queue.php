@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AerialShip\SteelMqBundle\Entity\Repository\QueueRepository")
  * @ORM\Table(name="smq_queue")
  * @JMS\ExclusionPolicy("all")
  */
