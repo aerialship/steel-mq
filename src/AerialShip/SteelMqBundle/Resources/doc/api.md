@@ -151,14 +151,16 @@ POST /projects/{Project ID}/queues/{Queue ID}
 
 ``` json
 {
-    "title": "New Queue Name",
-    "push_type": "unicast",
-    "retries": 5,
-    "retries_delay": 600,
-    "error_queue": 678,
-    "timeout": 60,
-    "delay": 0,
-    "expires_in": 604800
+    "queue": {
+        "title": "New Queue Name",
+        "push_type": "unicast",
+        "retries": 5,
+        "retries_delay": 600,
+        "error_queue": 678,
+        "timeout": 60,
+        "delay": 0,
+        "expires_in": 604800
+    }
 }
 ```
 
@@ -287,13 +289,15 @@ POST /projects/{Project ID}/queues/{Queue ID}/subscribers
 
 ``` json
 {
-    "url": "http://some.subscriber.com/steel_mq_hook",
-    "headers": {
-        "Content-Type": "application/json",
-        "X-Custom": [
-            "foo",
-            "bar"
-        ]
+    "subscriber": {
+        "url": "http://some.subscriber.com/steel_mq_hook",
+        "headers": {
+            "Content-Type": "application/json",
+            "X-Custom": [
+                "foo",
+                "bar"
+            ]
+        }
     }
 }
 ```
