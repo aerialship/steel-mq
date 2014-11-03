@@ -10,8 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * @Route("/projects/{projectId}/queues")
@@ -25,9 +23,7 @@ class QueueController extends AbstractApiController
      */
     public function listAction(Project $project)
     {
-        if (false == $this->get('security.context')->isGranted(ProjectRole::PROJECT_ROLE_QUEUE, $project)) {
-            throw new AccessDeniedHttpException();
-        }
+        $this->checkPermission(ProjectRole::PROJECT_ROLE_QUEUE, $project);
 
         $result = $this->get('aerial_ship_steel_mq.manager.queue')->getList($project);
 
@@ -47,9 +43,7 @@ class QueueController extends AbstractApiController
      */
     public function createAction(Project $project, Request $request)
     {
-        if (false == $this->get('security.context')->isGranted(ProjectRole::PROJECT_ROLE_QUEUE, $project)) {
-            throw new AccessDeniedHttpException();
-        }
+        $this->checkPermission(ProjectRole::PROJECT_ROLE_QUEUE, $project);
 
         $form = $this->createForm('queue');
 
@@ -82,12 +76,8 @@ class QueueController extends AbstractApiController
      */
     public function updateAction(Project $project, Queue $queue, Request $request)
     {
-        if (false == $this->get('security.context')->isGranted(ProjectRole::PROJECT_ROLE_QUEUE, $project)) {
-            throw new AccessDeniedHttpException();
-        }
-        if ($queue->getProject()->getId() != $project->getId()) {
-            throw new BadRequestHttpException();
-        }
+        $this->checkPermission(ProjectRole::PROJECT_ROLE_QUEUE, $project);
+        $this->checkQueueIsInProject($project, $queue);
 
         $form = $this->createForm('queue', $queue);
 
@@ -116,12 +106,8 @@ class QueueController extends AbstractApiController
      */
     public function infoAction(Project $project, Queue $queue)
     {
-        if (false == $this->get('security.context')->isGranted(ProjectRole::PROJECT_ROLE_QUEUE, $project)) {
-            throw new AccessDeniedHttpException();
-        }
-        if ($queue->getProject()->getId() != $project->getId()) {
-            throw new BadRequestHttpException();
-        }
+        $this->checkPermission(ProjectRole::PROJECT_ROLE_QUEUE, $project);
+        $this->checkQueueIsInProject($project, $queue);
 
         return $this->handleView(
             $this->view($queue)
@@ -129,6 +115,24 @@ class QueueController extends AbstractApiController
                     SerializationContext::create()
                         ->setGroups(array('Default', 'size'))
                 )
+        );
+    }
+
+    /**
+     * @Route("/{queueId}{slash}")
+     * @Method({"DELETE"})
+     * @ParamConverter("project", options={"id" = "projectId"})
+     * @ParamConverter("queue", options={"id" = "queueId"})
+     */
+    public function deleteAction(Project $project, Queue $queue)
+    {
+        $this->checkPermission(ProjectRole::PROJECT_ROLE_QUEUE, $project);
+        $this->checkQueueIsInProject($project, $queue);
+
+        $this->get('aerial_ship_steel_mq.manager.queue')->delete($queue);
+
+        return $this->handleView(
+            $this->view(["success" => true])
         );
     }
 }

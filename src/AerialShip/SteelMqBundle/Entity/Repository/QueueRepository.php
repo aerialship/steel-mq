@@ -30,4 +30,10 @@ class QueueRepository extends EntityRepository implements QueueRepositoryInterfa
         }
     }
 
+    public function delete(Queue $queue)
+    {
+        $this->_em->remove($queue);
+        $this->_em->flush();
+    }
+
 }
