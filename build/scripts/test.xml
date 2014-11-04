@@ -1,6 +1,6 @@
 <project name="test" default="test">
 
-    <target name="test" depends="init, test-jscs, test-php-cs, test-php-lint, test-phpunit">
+    <target name="test" depends="init, init-reset-build-logs, test-jscs, test-php-cs, test-php-lint, test-phpunit">
 
     </target>
 
@@ -24,7 +24,7 @@
     </target>
 
     <target name="test-phpunit" depends="init">
-        <exec command="phpunit -c app" checkreturn="true" logoutput="true">
+        <exec command="${phpunit} -c app --coverage-clover=build/logs/coverage.clover.xml" checkreturn="true" logoutput="true">
         </exec>
     </target>
 

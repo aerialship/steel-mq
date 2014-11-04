@@ -3,12 +3,19 @@
     <target name="init" depends="check-linux, check-windows, init-linux, init-windows">
     </target>
 
+    <target name="init-reset-build-logs">
+        <delete dir="build/logs" />
+        <mkdir dir="build/logs" />
+    </target>
+
     <target name="init-windows" if="is-windows">
         <property name="console" value="app\console" />
+        <property name="phpunit" value="bin\phpunit.bat" />
     </target>
 
     <target name="init-linux" if="is-linux">
         <property name="console" value="app/console" />
+        <property name="phpunit" value="bin/phpunit" />
     </target>
 
     <target name="check-windows">
