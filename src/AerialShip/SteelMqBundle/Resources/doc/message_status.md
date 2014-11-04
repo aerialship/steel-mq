@@ -1,7 +1,6 @@
 Message Status
 ==============
 
-
 not available
 -------------
 
@@ -14,14 +13,23 @@ available
 
 deleted_at = null
 available_at <= now
-token = null
+
 
 progress
 --------
 
 deleted_at = null
 available_at <= now
-timeout_at != null
+timeout_at > now
+
+
+timed-out
+---------
+
+deleted_at = null
+available_at <= now
+timeout_at <= now
+
 
 deleted
 -------
@@ -32,5 +40,4 @@ timeout_at != null
 expired
 -------
 
-deleted_at != null
-timeout_at = null
+created_at + queue.expires_in < now
