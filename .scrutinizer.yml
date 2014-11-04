@@ -6,6 +6,7 @@ tools:
 filter:
     excluded_paths:
         - 'app/*'
+        - 'src/AerialShip/SteelMqBundle/Tests/*'
 
 before_commands:
     - mysql -e 'create database steelmq;'
@@ -30,7 +31,7 @@ build:
     project_setup:
         before:
     tests:
-        before:
+        override:
             -
                 command: php phing.phar test
                 coverage:
