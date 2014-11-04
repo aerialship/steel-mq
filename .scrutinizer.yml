@@ -14,11 +14,8 @@ build:
     environment:
         timezone: 'Europe/Oslo'
         node: '0.10.29'
-    project_setup:
-        before:
-            - mysql -e 'create database steelmq;'
-    tests:
-        before:
+    dependencies:
+        override:
             - npm install uglify-js
             - npm install uglifycss
             - npm install jscs
@@ -27,8 +24,13 @@ build:
             - chmod u+x phing.phar
             - curl http://get.sensiolabs.org/php-cs-fixer.phar -o php-cs-fixer.phar
             - chmod u+x php-cs-fixer.phar
-        override:
+            - mysql -e 'create database steelmq;'
+            - composer --prefer-source --dev --no-interaction install
             - php phing.phar deploy
+    project_setup:
+        before:
+    tests:
+        before:
             -
                 command: php phing.phar test
                 coverage:
