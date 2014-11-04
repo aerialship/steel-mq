@@ -19,6 +19,10 @@ build:
             - mysql -e 'create database steelmq;'
     tests:
         before:
+            - npm install uglify-js
+            - npm install uglifycss
+            - npm install jscs
+            - export PATH=`pwd`/node_modules/.bin:$PATH
             - curl http://www.phing.info/get/phing-latest.phar -o phing.phar
             - chmod u+x phing.phar
             - curl http://get.sensiolabs.org/php-cs-fixer.phar -o php-cs-fixer.phar
