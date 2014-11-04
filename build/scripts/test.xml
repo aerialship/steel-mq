@@ -1,10 +1,10 @@
-<project name="test-smoke" default="test-smoke">
+<project name="test" default="test">
 
-    <target name="test-smoke" depends="init, test-smoke-jscs, test-smoke-php-cs, test-smoke-php-lint, test-smoke-phpunit">
+    <target name="test" depends="init, test-jscs, test-php-cs, test-php-lint, test-phpunit">
 
     </target>
 
-    <target name="test-smoke-php-lint">
+    <target name="test-php-lint">
         <apply executable="php" parallel="false" checkreturn="true">
             <arg value="-l"/>
             <fileset dir="src">
@@ -13,17 +13,17 @@
         </apply>
     </target>
 
-    <target name="test-smoke-jscs" depends="init">
+    <target name="test-jscs" depends="init">
         <exec command="jscs --max-errors=20 src" checkreturn="true" logoutput="true">
         </exec>
     </target>
 
-    <target name="test-smoke-php-cs">
+    <target name="test-php-cs">
         <exec command="php php-cs-fixer.phar fix -v --dry-run --fixers=-phpdoc_params src"
               checkreturn="true" logoutput="true"/>
     </target>
 
-    <target name="test-smoke-phpunit" depends="init">
+    <target name="test-phpunit" depends="init">
         <exec command="phpunit -c app" checkreturn="true" logoutput="true">
         </exec>
     </target>

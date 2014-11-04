@@ -20,4 +20,4 @@ before_script:
 
 script:
     - phing deploy
-    - phing test-smoke
+    - phing test

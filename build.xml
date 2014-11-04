@@ -2,13 +2,13 @@
 
     <import file="build/scripts/common.xml" />
     <import file="build/scripts/deploy.xml" />
-    <import file="build/scripts/test-smoke.xml" />
+    <import file="build/scripts/test.xml" />
 
     <target name="default">
         <echo />
         <echo>INVALID USAGE - Pick a target:</echo>
         <echo/>
-        <echo>    test-smoke          - Performs smoke tests</echo>
+        <echo>    test                - Performs tests</echo>
         <echo>    deploy              - Deploy app in prod environment</echo>
         <echo />
         <echo />

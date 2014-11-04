@@ -1,0 +1,36 @@
+tools:
+    php_sim: true
+    php_pdepend: true
+    php_analyzer: true
+
+filter:
+    excluded_paths:
+        - 'app/*'
+
+before_commands:
+    - mysql -e 'create database steelmq;'
+
+build:
+    environment:
+        timezone: 'Europe/Oslo'
+        node: '0.10.29'
+    project_setup:
+        before:
+            - mysql -e 'create database steelmq;'
+    tests:
+        before:
+            - curl http://www.phing.info/get/phing-latest.phar -o phing.phar
+            - chmod u+x phing.phar
+            - curl http://get.sensiolabs.org/php-cs-fixer.phar -o php-cs-fixer.phar
+            - chmod u+x php-cs-fixer.phar
+        override:
+            - php phing.phar deploy
+            -
+                command: php phing.phar test
+                coverage:
+                    file: build/logs/coverage.clover.xml
+                    format: php-clover
+
+build_failure_conditions:
+    - 'elements.rating(<= F).exists'
+    - 'issues.label("unused-code").new.exists'
