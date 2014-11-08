@@ -3,9 +3,7 @@
 namespace AerialShip\SteelMqBundle\Controller\Api;
 
 use AerialShip\SteelMqBundle\Entity\Project;
-use AerialShip\SteelMqBundle\Entity\ProjectRole;
 use AerialShip\SteelMqBundle\Entity\Queue;
-use JMS\SecurityExtraBundle\Annotation\PreAuthorize;
 use JMS\SecurityExtraBundle\Annotation\SecureParam;
 use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -28,13 +26,7 @@ class QueueController extends AbstractApiController
     {
         $result = $this->get('aerial_ship_steel_mq.manager.queue')->getList($project);
 
-        return $this->handleView(
-            $this->view($result)
-                ->setSerializationContext(
-                    SerializationContext::create()
-                        ->setGroups(array('Default'))
-                )
-        );
+        return $this->handleData($result, array('Default'));
     }
 
     /**
@@ -58,14 +50,7 @@ class QueueController extends AbstractApiController
 
         $this->get('aerial_ship_steel_mq.manager.queue')->create($project, $queue);
 
-        return $this->handleView(
-            $this->view($queue)
-                ->setSerializationContext(
-                    SerializationContext::create()
-                        ->setGroups(array('Default'))
-                )
-        );
-
+        return $this->handleData($queue, array('Default'));
     }
 
     /**
@@ -74,7 +59,6 @@ class QueueController extends AbstractApiController
      * @ParamConverter("project", options={"id" = "projectId"})
      * @ParamConverter("queue", options={"id" = "queueId"})
      * @SecureParam(name="project", permissions="PROJECT_ROLE_QUEUE")
-     * @PreAuthorize(expr="queue.project.id == project.id")
      */
     public function updateAction(Project $project, Queue $queue, Request $request)
     {
@@ -88,13 +72,7 @@ class QueueController extends AbstractApiController
 
         $this->get('aerial_ship_steel_mq.manager.queue')->update($project, $queue);
 
-        return $this->handleView(
-            $this->view($queue)
-                ->setSerializationContext(
-                    SerializationContext::create()
-                        ->setGroups(array('Default'))
-                )
-        );
+        return $this->handleData($queue, array('Default'));
     }
 
     /**
@@ -103,17 +81,10 @@ class QueueController extends AbstractApiController
      * @ParamConverter("project", options={"id" = "projectId"})
      * @ParamConverter("queue", options={"id" = "queueId"})
      * @SecureParam(name="project", permissions="PROJECT_ROLE_DEFAULT")
-     * @PreAuthorize(expr="queue.project.id == project.id")
      */
     public function infoAction(Project $project, Queue $queue)
     {
-        return $this->handleView(
-            $this->view($queue)
-                ->setSerializationContext(
-                    SerializationContext::create()
-                        ->setGroups(array('Default', 'size'))
-                )
-        );
+        return $this->handleData($queue, array('Default', 'size'));
     }
 
     /**
@@ -122,15 +93,14 @@ class QueueController extends AbstractApiController
      * @ParamConverter("project", options={"id" = "projectId"})
      * @ParamConverter("queue", options={"id" = "queueId"})
      * @SecureParam(name="project", permissions="PROJECT_ROLE_QUEUE")
-     * @PreAuthorize(expr="queue.project.id == project.id")
      */
     public function deleteAction(Project $project, Queue $queue)
     {
+        $this->checkQueueIsInProject($project, $queue);
+
         $this->get('aerial_ship_steel_mq.manager.queue')->delete($queue);
 
-        return $this->handleView(
-            $this->view(["success" => true])
-        );
+        return $this->handleData($this->getSuccessData());
     }
 
     /**
@@ -138,16 +108,14 @@ class QueueController extends AbstractApiController
      * @Method({"POST"})
      * @ParamConverter("project", options={"id" = "projectId"})
      * @ParamConverter("queue", options={"id" = "queueId"})
+     * @SecureParam(name="project", permissions="PROJECT_ROLE_QUEUE")
      */
     public function clearAction(Project $project, Queue $queue)
     {
-        $this->checkPermission(ProjectRole::PROJECT_ROLE_QUEUE, $project);
         $this->checkQueueIsInProject($project, $queue);
 
         $this->get('aerial_ship_steel_mq.manager.queue')->clear($queue);
 
-        return $this->handleView(
-            $this->view(["success" => true])
-        );
+        return $this->handleData($this->getSuccessData());
     }
 }
