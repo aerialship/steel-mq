@@ -133,7 +133,7 @@ class Queue
     }
 
     /**
-     * @param  null|int $errorQueue
+     * @param  null|int    $errorQueue
      * @return $this|Queue
      */
     public function setErrorQueue($errorQueue)
