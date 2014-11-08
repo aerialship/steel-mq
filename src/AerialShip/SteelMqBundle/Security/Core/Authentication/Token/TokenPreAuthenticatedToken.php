@@ -16,8 +16,8 @@ class TokenPreAuthenticatedToken extends PreAuthenticatedToken
      * @param $user
      * @param Project $project
      * @param $credentials
-     * @param array $providerKey
-     * @param array $roles
+     * @param array   $providerKey
+     * @param array   $roles
      */
     public function __construct($user, Project $project = null, $credentials, $providerKey, array $roles = array())
     {

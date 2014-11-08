@@ -16,7 +16,7 @@ class Helper
     }
 
     /**
-     * @param Request $request
+     * @param  Request $request
      * @return array
      */
     public static function getPostJson(Request $request)

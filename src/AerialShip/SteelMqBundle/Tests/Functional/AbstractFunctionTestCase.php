@@ -4,7 +4,9 @@ namespace AerialShip\SteelMqBundle\Tests\Functional;
 
 use AerialShip\SteelMqBundle\DataFixtures\Orm\ProjectData;
 use AerialShip\SteelMqBundle\DataFixtures\Orm\UserData;
+use AerialShip\SteelMqBundle\Model\Repository\MessageRepositoryInterface;
 use AerialShip\SteelMqBundle\Model\Repository\ProjectRepositoryInterface;
+use AerialShip\SteelMqBundle\Model\Repository\QueueRepositoryInterface;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -40,7 +42,7 @@ class AbstractFunctionTestCase extends WebTestCase
     }
 
     /**
-     * @param string $name
+     * @param  string $name
      * @return object
      */
     protected function getService($name)
@@ -49,7 +51,7 @@ class AbstractFunctionTestCase extends WebTestCase
     }
 
     /**
-     * @param string $name
+     * @param  string $name
      * @return bool
      */
     protected function hasService($name)
@@ -71,6 +73,38 @@ class AbstractFunctionTestCase extends WebTestCase
         }
 
         throw new \LogicException('Expected ProjectRepositoryInterface');
+    }
+
+    /**
+     * @return QueueRepositoryInterface
+     */
+    protected function getQueueRepository()
+    {
+        $result = $this->getService('doctrine')
+            ->getManager()
+            ->getRepository('AerialShipSteelMqBundle:Queue');
+
+        if ($result instanceof QueueRepositoryInterface) {
+            return $result;
+        }
+
+        throw new \LogicException('Expected QueueRepositoryInterface');
+    }
+
+    /**
+     * @return MessageRepositoryInterface
+     */
+    protected function getMessageRepository()
+    {
+        $result = $this->getService('doctrine')
+            ->getManager()
+            ->getRepository('AerialShipSteelMqBundle:Message');
+
+        if ($result instanceof MessageRepositoryInterface) {
+            return $result;
+        }
+
+        throw new \LogicException('Expected MessageRepositoryInterface');
     }
 
     /**
@@ -100,9 +134,9 @@ class AbstractFunctionTestCase extends WebTestCase
     }
 
     /**
-     * @param string $route
-     * @param array $params
-     * @param bool $referenceType
+     * @param  string $route
+     * @param  array  $params
+     * @param  bool   $referenceType
      * @return string
      */
     protected function generateUrl($route, $params = array(), $referenceType = RouterInterface::ABSOLUTE_PATH)
@@ -112,7 +146,7 @@ class AbstractFunctionTestCase extends WebTestCase
 
     /**
      * @param Response $response
-     * @param int $statusCode
+     * @param int      $statusCode
      */
     protected function assertJsonResponse(Response $response, $statusCode = 200)
     {

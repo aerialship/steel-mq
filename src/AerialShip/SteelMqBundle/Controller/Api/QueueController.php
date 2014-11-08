@@ -135,4 +135,22 @@ class QueueController extends AbstractApiController
             $this->view(["success" => true])
         );
     }
+
+    /**
+     * @Route("/{queueId}/clear{slash}")
+     * @Method({"POST"})
+     * @ParamConverter("project", options={"id" = "projectId"})
+     * @ParamConverter("queue", options={"id" = "queueId"})
+     */
+    public function clearAction(Project $project, Queue $queue)
+    {
+        $this->checkPermission(ProjectRole::PROJECT_ROLE_QUEUE, $project);
+        $this->checkQueueIsInProject($project, $queue);
+
+        $this->get('aerial_ship_steel_mq.manager.queue')->clear($queue);
+
+        return $this->handleView(
+            $this->view(["success" => true])
+        );
+    }
 }

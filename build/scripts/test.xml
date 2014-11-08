@@ -19,7 +19,7 @@
     </target>
 
     <target name="test-php-cs">
-        <exec command="php php-cs-fixer.phar fix -v --dry-run --fixers=-phpdoc_params src"
+        <exec command="php php-cs-fixer.phar fix -v --dry-run src"
               checkreturn="true" logoutput="true"/>
     </target>
 

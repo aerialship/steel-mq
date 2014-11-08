@@ -18,8 +18,8 @@ class QueueRepository extends EntityRepository implements QueueRepositoryInterfa
     }
 
     /**
-     * @param Queue $queue
-     * @param bool $flush
+     * @param  Queue $queue
+     * @param  bool  $flush
      * @return void
      */
     public function save(Queue $queue, $flush = true)
@@ -30,10 +30,29 @@ class QueueRepository extends EntityRepository implements QueueRepositoryInterfa
         }
     }
 
+    /**
+     * @param Queue $queue
+     */
     public function delete(Queue $queue)
     {
         $this->_em->remove($queue);
         $this->_em->flush();
+    }
+
+    /**
+     * @param  Queue $queue
+     * @return int
+     */
+    public function clearQueue(Queue $queue)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $q = $qb->delete('AerialShipSteelMqBundle:Message', 'm')
+            ->where('m.queue = :queue')
+            ->setParameter('queue', $queue)
+            ->getQuery();
+        $result = $q->execute();
+
+        return $result;
     }
 
 }

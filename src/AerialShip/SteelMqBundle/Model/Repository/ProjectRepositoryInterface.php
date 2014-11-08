@@ -13,15 +13,15 @@ interface ProjectRepositoryInterface
     public function transactional($callback);
 
     /**
-     * @param Project $project
-     * @param bool $flush
+     * @param  Project $project
+     * @param  bool    $flush
      * @return void
      */
     public function save(Project $project, $flush = true);
 
     /**
-     * @param array $criteria
-     * @param array $orderBy
+     * @param  array        $criteria
+     * @param  array        $orderBy
      * @return Project|null
      */
     public function findOneBy(array $criteria, array $orderBy = null);

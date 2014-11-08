@@ -67,7 +67,7 @@ class ProjectRole
     }
 
     /**
-     * @param string $accessToken
+     * @param  string            $accessToken
      * @return $this|ProjectRole
      */
     public function setAccessToken($accessToken)
@@ -86,7 +86,7 @@ class ProjectRole
     }
 
     /**
-     * @param Project $project
+     * @param  Project           $project
      * @return $this|ProjectRole
      */
     public function setProject(Project $project)
@@ -97,7 +97,7 @@ class ProjectRole
     }
 
     /**
-     * @param User $user
+     * @param  User              $user
      * @return $this|ProjectRole
      */
     public function setUser(User $user)
@@ -124,7 +124,7 @@ class ProjectRole
     }
 
     /**
-     * @param array $roles
+     * @param  array             $roles
      * @return $this|ProjectRole
      */
     public function setRoles(array $roles)
@@ -143,7 +143,7 @@ class ProjectRole
     }
 
     /**
-     * @param string $role
+     * @param  string            $role
      * @return $this|ProjectRole
      */
     public function addRole($role)
@@ -162,7 +162,7 @@ class ProjectRole
     }
 
     /**
-     * @param string $role
+     * @param  string            $role
      * @return $this|ProjectRole
      */
     public function removeRole($role)
@@ -176,7 +176,7 @@ class ProjectRole
     }
 
     /**
-     * @param string $role
+     * @param  string $role
      * @return bool
      */
     public static function isRoleValid($role)

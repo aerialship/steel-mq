@@ -75,7 +75,7 @@ class UserListener implements EventSubscriber
     }
 
     /**
-     * @param User $user
+     * @param  User                                                              $user
      * @return \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface
      */
     protected function getEncoder(User $user)

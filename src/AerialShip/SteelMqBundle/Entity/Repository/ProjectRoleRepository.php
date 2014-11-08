@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityRepository;
 class ProjectRoleRepository extends EntityRepository implements ProjectRoleRepositoryInterface
 {
     /**
-     * @param ProjectRole $projectRole
+     * @param  ProjectRole $projectRole
      * @return void
      */
     public function save(ProjectRole $projectRole, $flush = true)
@@ -21,7 +21,7 @@ class ProjectRoleRepository extends EntityRepository implements ProjectRoleRepos
     }
 
     /**
-     * @param string $accessToken
+     * @param  string                                            $accessToken
      * @return \AerialShip\SteelMqBundle\Entity\ProjectRole|null
      */
     public function getByAccessToken($accessToken)

@@ -136,7 +136,7 @@ class Project
     }
 
     /**
-     * @param \DateTime $createdAt
+     * @param  \DateTime     $createdAt
      * @return $this|Project
      */
     public function setCreatedAt(\DateTime $createdAt)
@@ -147,7 +147,7 @@ class Project
     }
 
     /**
-     * @param mixed $title
+     * @param  mixed         $title
      * @return $this|Project
      */
     public function setTitle($title)
@@ -158,7 +158,7 @@ class Project
     }
 
     /**
-     * @param User $owner
+     * @param  User          $owner
      * @return $this|Project
      */
     public function setOwner(User $owner)
@@ -177,7 +177,7 @@ class Project
     }
 
     /**
-     * @param ProjectRole|null $currentProjectRole
+     * @param  ProjectRole|null $currentProjectRole
      * @return $this|Project
      */
     public function setCurrentProjectRole(ProjectRole $currentProjectRole = null)
