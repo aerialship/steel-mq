@@ -100,7 +100,6 @@ class Queue
      *      orphanRemoval=true,
      *      cascade={"remove"}
      * )
-     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $subscribers;
 
@@ -113,7 +112,6 @@ class Queue
      *      cascade={"remove"},
      *      fetch="EXTRA_LAZY"
      * )
-     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $messages;
 

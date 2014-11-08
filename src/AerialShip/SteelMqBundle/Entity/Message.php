@@ -6,7 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="AerialShip\SteelMqBundle\Entity\Repository\MessageRepository")
- * @ORM\Table(name="smq_message")
+ * @ORM\Table(name="smq_message", indexes={
+ *      @ORM\Index(name="idx_available_at", columns={"queue_id", "available_at"})
+ * })
  */
 class Message
 {
@@ -20,7 +22,7 @@ class Message
 
     /**
      * @var int
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      */
     protected $retriesRemaining;
 
@@ -31,7 +33,7 @@ class Message
     protected $createdAt;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTime
      * @ORM\Column(type="datetime")
      */
     protected $availableAt;
@@ -43,14 +45,8 @@ class Message
     protected $timeoutAt;
 
     /**
-     * @var \DateTime|null
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $deletedAt;
-
-    /**
      * @var string|null
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, nullable=true, unique=true)
      */
     protected $token;
 
@@ -75,6 +71,7 @@ class Message
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->availableAt = new \DateTime();
     }
 
     /**
@@ -97,25 +94,6 @@ class Message
     }
 
     /**
-     * @return \DateTime|null
-     */
-    public function getCompletedAt()
-    {
-        return $this->completedAt;
-    }
-
-    /**
-     * @param \DateTime|null $completedAt
-     * @return $this|Message
-     */
-    public function setCompletedAt($completedAt)
-    {
-        $this->completedAt = $completedAt;
-
-        return $this;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getCreatedAt()
@@ -127,9 +105,28 @@ class Message
      * @param \DateTime $createdAt
      * @return $this|Message
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt = null)
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getAvailableAt()
+    {
+        return $this->availableAt;
+    }
+
+    /**
+     * @param \DateTime|null $availableAt
+     * @return $this|Message
+     */
+    public function setAvailableAt(\DateTime $availableAt)
+    {
+        $this->availableAt = $availableAt;
 
         return $this;
     }
@@ -164,25 +161,6 @@ class Message
     /**
      * @return \DateTime|null
      */
-    public function getTakenAt()
-    {
-        return $this->takenAt;
-    }
-
-    /**
-     * @param \DateTime|null $takenAt
-     * @return $this|Message
-     */
-    public function setTakenAt($takenAt)
-    {
-        $this->takenAt = $takenAt;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime|null
-     */
     public function getTimeoutAt()
     {
         return $this->timeoutAt;
@@ -192,7 +170,7 @@ class Message
      * @param \DateTime|null $timeoutAt
      * @return $this|Message
      */
-    public function setTimeoutAt($timeoutAt)
+    public function setTimeoutAt(\DateTime $timeoutAt = null)
     {
         $this->timeoutAt = $timeoutAt;
 
