@@ -9,6 +9,15 @@ use Doctrine\ORM\EntityRepository;
 class MessageRepository extends EntityRepository implements MessageRepositoryInterface
 {
     /**
+     * @param $callback
+     * @return mixed
+     */
+    public function transactional($callback)
+    {
+        return $this->_em->transactional($callback);
+    }
+
+    /**
      * @param  Message $message
      * @param  bool    $flush
      * @return void
