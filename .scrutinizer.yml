@@ -40,4 +40,3 @@ build:
 
 build_failure_conditions:
     - 'elements.rating(<= F).exists'
-    - 'issues.label("unused-code").new.exists'
