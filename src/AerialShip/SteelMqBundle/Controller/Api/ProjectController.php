@@ -2,9 +2,8 @@
 
 namespace AerialShip\SteelMqBundle\Controller\Api;
 
-use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Helper\CastHelper;
-use JMS\Serializer\SerializationContext;
+use AerialShip\SteelMqBundle\Helper\RequestHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -22,11 +21,7 @@ class ProjectController extends AbstractApiController
     {
         $result = $this->get('aerial_ship_steel_mq.manager.project')->getList();
 
-        return $this->handleView(
-            $this->view($result)->setSerializationContext(
-                SerializationContext::create()->setGroups(array('Default', 'roles'))
-            )
-        );
+        return $this->handleData($result, array('Default', 'roles'));
     }
 
     /**
@@ -35,20 +30,22 @@ class ProjectController extends AbstractApiController
      */
     public function createAction(Request $request)
     {
-        $project = new Project();
-        $form = $this->createForm('project', $project);
+        RequestHelper::ensure($request->request, array('project'=>array()));
 
+        $form = $this->createForm('project');
         $form->handleRequest($request);
-        if (false == $form->isValid()) {
+        if (false === $form->isValid()) {
             return $this->handleView($this->view($form, 400));
         }
 
-        $this->get('aerial_ship_steel_mq.manager.project')->create($project, CastHelper::asUser($this->getUser()));
+        $project = CastHelper::asProject($form->getData());
 
-        return $this->handleView($this->view(array(
-            'id' => $project->getId(),
-            'success' => true,
-        )));
+        $this->get('aerial_ship_steel_mq.manager.project')->create(
+            $project,
+            CastHelper::asUser($this->getUser())
+        );
+
+        return $this->handleData($this->getSuccessData(array('id'=>$project->getId())));
     }
 
 }

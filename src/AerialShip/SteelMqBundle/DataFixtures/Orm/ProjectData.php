@@ -22,6 +22,7 @@ class ProjectData extends AbstractFixture implements OrderedFixtureInterface
             ->setOwner($this->getReference('user-user'));
         $manager->persist($project);
         $manager->flush();
+        $this->addReference('project-one', $project);
 
         $projectRole = new ProjectRole();
         $projectRole->setProject($project)
@@ -46,6 +47,7 @@ class ProjectData extends AbstractFixture implements OrderedFixtureInterface
             ->setOwner($this->getReference('user-user'));
         $manager->persist($project);
         $manager->flush();
+        $this->addReference('project-two', $project);
 
         $projectRole = new ProjectRole();
         $projectRole->setProject($project)
@@ -70,6 +72,7 @@ class ProjectData extends AbstractFixture implements OrderedFixtureInterface
             ->setOwner($this->getReference('user-user'));
         $manager->persist($project);
         $manager->flush();
+        $this->addReference('project-three', $project);
 
         $projectRole = new ProjectRole();
         $projectRole->setProject($project)
@@ -94,6 +97,7 @@ class ProjectData extends AbstractFixture implements OrderedFixtureInterface
             ->setOwner($this->getReference('user-user'));
         $manager->persist($project);
         $manager->flush();
+        $this->addReference('project-four', $project);
 
         $projectRole = new ProjectRole();
         $projectRole->setProject($project)

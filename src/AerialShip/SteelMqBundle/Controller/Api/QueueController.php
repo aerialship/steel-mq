@@ -4,8 +4,8 @@ namespace AerialShip\SteelMqBundle\Controller\Api;
 
 use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Entity\Queue;
+use AerialShip\SteelMqBundle\Helper\RequestHelper;
 use JMS\SecurityExtraBundle\Annotation\SecureParam;
-use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -62,6 +62,8 @@ class QueueController extends AbstractApiController
      */
     public function updateAction(Project $project, Queue $queue, Request $request)
     {
+        RequestHelper::ensure($request->request, array('queue'=>array()));
+
         $form = $this->createForm('queue', $queue);
 
         $form->submit($request, false);

@@ -39,6 +39,14 @@ class AuthFunctionalTest extends AbstractFunctionTestCase
         $json = json_decode($client->getResponse()->getContent());
         $this->assertTrue(is_array($json));
         $this->assertCount(4, $json);
+        $arr = array();
+        foreach ($json as $project) {
+            $arr[$project->title] = 1;
+        }
+        $this->assertArrayHasKey('First Project', $arr);
+        $this->assertArrayHasKey('Second Project', $arr);
+        $this->assertArrayHasKey('Third Project', $arr);
+        $this->assertArrayHasKey('Fourth Project', $arr);
     }
 
     public function testFirstProjectTokenQueryString()

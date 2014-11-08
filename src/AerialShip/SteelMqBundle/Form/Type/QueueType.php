@@ -12,18 +12,24 @@ class QueueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text')
-            ->add('pushType', 'choice', array(
+            ->add('title', 'text', array(
+                'required' => true,
+            ))
+            ->add('push_type', 'choice', array(
                 'required' => false,
-                'choices' => array(Queue::PUSH_TYPE_PULL, Queue::PUSH_TYPE_MULTICAST, Queue::PUSH_TYPE_UNICAST),
+                'choices' => array(
+                    Queue::PUSH_TYPE_PULL=>Queue::PUSH_TYPE_PULL,
+                    Queue::PUSH_TYPE_MULTICAST=>Queue::PUSH_TYPE_MULTICAST,
+                    Queue::PUSH_TYPE_UNICAST=>Queue::PUSH_TYPE_UNICAST
+                ),
             ))
             ->add('retries', 'integer', array(
                 'required' => false,
             ))
-            ->add('retriesDelay', 'integer', array(
+            ->add('retries_delay', 'integer', array(
                 'required' => false,
             ))
-            ->add('errorQueue', 'integer', array(
+            ->add('error_queue', 'integer', array(
                 'required' => false,
             ))
             ->add('timeout', 'integer', array(
@@ -32,7 +38,7 @@ class QueueType extends AbstractType
             ->add('delay', 'integer', array(
                 'required' => false,
             ))
-            ->add('expiresIn', 'integer', array(
+            ->add('expires_in', 'integer', array(
                 'required' => false,
             ))
         ;

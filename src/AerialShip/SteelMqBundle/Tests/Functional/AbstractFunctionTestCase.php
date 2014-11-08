@@ -3,6 +3,7 @@
 namespace AerialShip\SteelMqBundle\Tests\Functional;
 
 use AerialShip\SteelMqBundle\DataFixtures\Orm\ProjectData;
+use AerialShip\SteelMqBundle\DataFixtures\Orm\QueueData;
 use AerialShip\SteelMqBundle\DataFixtures\Orm\UserData;
 use AerialShip\SteelMqBundle\Model\Repository\MessageRepositoryInterface;
 use AerialShip\SteelMqBundle\Model\Repository\ProjectRepositoryInterface;
@@ -12,6 +13,7 @@ use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -130,6 +132,12 @@ class AbstractFunctionTestCase extends WebTestCase
         $loader = new Loader();
         $loader->addFixture(new UserData());
         $loader->addFixture(new ProjectData());
+        $loader->addFixture(new QueueData());
+        foreach ($loader->getFixtures() as $fixture) {
+            if ($fixture instanceof ContainerAwareInterface) {
+                $fixture->setContainer($this->getBootedKernel()->getContainer());
+            }
+        }
         $this->loadFixtures($loader);
     }
 

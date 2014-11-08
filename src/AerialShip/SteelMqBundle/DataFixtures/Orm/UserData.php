@@ -3,7 +3,7 @@
 namespace AerialShip\SteelMqBundle\DataFixtures\Orm;
 
 use AerialShip\SteelMqBundle\Entity\User;
-use AerialShip\SteelMqBundle\Helper\Helper;
+use AerialShip\SteelMqBundle\Helper\TokenHelper;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -20,7 +20,7 @@ class UserData extends AbstractFixture implements OrderedFixtureInterface
         $user = new User();
         $user->setEmail('superadmin@aerialship.com')
             ->setName('Super Admin')
-            ->setSalt(Helper::generateToken())
+            ->setSalt(TokenHelper::generate())
             ->setPassword('abcdefgh123')
             ->setRoles(array(User::ROLE_SUPER_ADMIN))
             ->setAccessToken('superAdminToken')
@@ -32,7 +32,7 @@ class UserData extends AbstractFixture implements OrderedFixtureInterface
         $user = new User();
         $user->setEmail('admin@aerialship.com')
             ->setName('Admin')
-            ->setSalt(Helper::generateToken())
+            ->setSalt(TokenHelper::generate())
             ->setPassword('abcdefgh123')
             ->setRoles(array(User::ROLE_ADMIN))
             ->setAccessToken('adminToken')
@@ -44,7 +44,7 @@ class UserData extends AbstractFixture implements OrderedFixtureInterface
         $user = new User();
         $user->setEmail('user@aerialship.com')
             ->setName('User')
-            ->setSalt(Helper::generateToken())
+            ->setSalt(TokenHelper::generate())
             ->setPassword('abcdefgh123')
             ->setRoles(array(User::ROLE_USER))
             ->setAccessToken('userToken')
@@ -56,7 +56,7 @@ class UserData extends AbstractFixture implements OrderedFixtureInterface
         $user = new User();
         $user->setEmail('guest@aerialship.com')
             ->setName('Guest')
-            ->setSalt(Helper::generateToken())
+            ->setSalt(TokenHelper::generate())
             ->setPassword('abcdefgh123')
             ->setRoles(array(User::ROLE_USER))
             ->setAccessToken('guestToken')

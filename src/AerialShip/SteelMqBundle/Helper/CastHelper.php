@@ -2,6 +2,7 @@
 
 namespace AerialShip\SteelMqBundle\Helper;
 
+use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Entity\User;
 
 final class CastHelper
@@ -17,5 +18,18 @@ final class CastHelper
         }
 
         throw new \InvalidArgumentException('Expected User');
+    }
+
+    /**
+     * @param $project
+     * @return Project
+     */
+    public static function asProject($project)
+    {
+        if ($project instanceof Project) {
+            return $project;
+        }
+
+        throw new \InvalidArgumentException('Expected Project');
     }
 }

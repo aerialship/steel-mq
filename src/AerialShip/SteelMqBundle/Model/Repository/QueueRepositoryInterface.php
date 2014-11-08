@@ -32,9 +32,25 @@ interface QueueRepositoryInterface
     public function clearQueue(Queue $queue);
 
     /**
-     * @param  int        $id
+     * @param  mixed      $id
      * @return Queue|null
      */
     public function find($id);
+
+    /**
+     * @param  array      $criteria
+     * @param  array      $orderBy
+     * @return Queue|null
+     */
+    public function findOneBy(array $criteria, array $orderBy = null);
+
+    /**
+     * @param  array    $criteria
+     * @param  array    $orderBy
+     * @param  int|null $limit
+     * @param  int|null $offset
+     * @return Queue[]
+     */
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null);
 
 }

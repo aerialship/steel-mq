@@ -71,7 +71,6 @@ class SteelMqUserProvider implements UserProviderInterface
         }
 
         throw new UnsupportedUserException();
-
     }
 
     /**
@@ -83,7 +82,8 @@ class SteelMqUserProvider implements UserProviderInterface
      */
     public function supportsClass($class)
     {
-        return 'AerialShip\SteelMqBundle\Entity\User' == $class;
+        return 'AerialShip\SteelMqBundle\Entity\User' == $class ||
+            is_subclass_of($class, 'AerialShip\SteelMqBundle\Entity\User');
     }
 
 }

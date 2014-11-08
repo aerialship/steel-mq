@@ -5,7 +5,7 @@ namespace AerialShip\SteelMqBundle\Services\Manager;
 use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Entity\ProjectRole;
 use AerialShip\SteelMqBundle\Entity\User;
-use AerialShip\SteelMqBundle\Helper\Helper;
+use AerialShip\SteelMqBundle\Helper\TokenHelper;
 use AerialShip\SteelMqBundle\Model\Repository\ProjectRepositoryInterface;
 use AerialShip\SteelMqBundle\Model\Repository\ProjectRoleRepositoryInterface;
 use AerialShip\SteelMqBundle\Services\UserProvider;
@@ -86,7 +86,7 @@ class ProjectManager
         $project->setOwner($owner);
         $projectRole = (new ProjectRole())
             ->setRoles(array(ProjectRole::PROJECT_ROLE_OWNER))
-            ->setAccessToken(Helper::generateToken())
+            ->setAccessToken(TokenHelper::generate())
             ->setProject($project)
             ->setUser($owner);
 
