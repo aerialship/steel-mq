@@ -16,7 +16,7 @@ class AbstractApiController extends FOSRestController
      *
      * @throws AccessDeniedHttpException
      */
-    public function checkPermission($permission, $object = null)
+    protected function checkPermission($permission, $object = null)
     {
         if (false == $this->get('security.context')->isGranted($permission, $object)) {
             throw new AccessDeniedHttpException();
@@ -29,10 +29,15 @@ class AbstractApiController extends FOSRestController
      *
      * @throws BadRequestHttpException
      */
-    public function checkQueueIsInProject(Project $project, Queue $queue)
+    protected function checkQueueIsInProject(Project $project, Queue $queue)
     {
         if ($queue->getProject()->getId() != $project->getId()) {
             throw new BadRequestHttpException();
         }
+    }
+
+    protected function handleSuccessView($extra = array())
+    {
+
     }
 }
