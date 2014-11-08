@@ -83,7 +83,7 @@ class Message
     }
 
     /**
-     * @param string $body
+     * @param  string        $body
      * @return $this|Message
      */
     public function setBody($body)
@@ -102,7 +102,7 @@ class Message
     }
 
     /**
-     * @param \DateTime $createdAt
+     * @param  \DateTime     $createdAt
      * @return $this|Message
      */
     public function setCreatedAt(\DateTime $createdAt = null)
@@ -121,7 +121,7 @@ class Message
     }
 
     /**
-     * @param \DateTime|null $availableAt
+     * @param  \DateTime|null $availableAt
      * @return $this|Message
      */
     public function setAvailableAt(\DateTime $availableAt)
@@ -148,7 +148,7 @@ class Message
     }
 
     /**
-     * @param int $retriesRemaining
+     * @param  int           $retriesRemaining
      * @return $this|Message
      */
     public function setRetriesRemaining($retriesRemaining)
@@ -167,7 +167,7 @@ class Message
     }
 
     /**
-     * @param \DateTime|null $timeoutAt
+     * @param  \DateTime|null $timeoutAt
      * @return $this|Message
      */
     public function setTimeoutAt(\DateTime $timeoutAt = null)
@@ -186,7 +186,7 @@ class Message
     }
 
     /**
-     * @param null|string $token
+     * @param  null|string   $token
      * @return $this|Message
      */
     public function setToken($token)
@@ -205,7 +205,7 @@ class Message
     }
 
     /**
-     * @param Queue $queue
+     * @param  Queue         $queue
      * @return $this|Message
      */
     public function setQueue(Queue $queue)

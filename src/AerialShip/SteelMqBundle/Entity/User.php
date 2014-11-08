@@ -146,7 +146,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param string $locale
+     * @param  string     $locale
      * @return $this|User
      */
     public function setLocale($locale)
@@ -165,7 +165,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param string $name
+     * @param  string     $name
      * @return $this|User
      */
     public function setName($name)
@@ -184,7 +184,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param string $email
+     * @param  string     $email
      * @return $this|User
      */
     public function setEmail($email)
@@ -203,7 +203,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param \DateTime $createdAt
+     * @param  \DateTime  $createdAt
      * @return $this|User
      */
     public function setCreatedAt($createdAt)
@@ -222,7 +222,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param \DateTime|null $lastLogin
+     * @param  \DateTime|null $lastLogin
      * @return $this|User
      */
     public function setLastLogin($lastLogin)
@@ -241,7 +241,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param null|string $plainPassword
+     * @param  null|string $plainPassword
      * @return $this|User
      */
     public function setPlainPassword($plainPassword)
@@ -260,7 +260,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param string $timezone
+     * @param  string     $timezone
      * @return $this|User
      */
     public function setTimezone($timezone)
@@ -279,7 +279,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param string $pictureUrl
+     * @param  string     $pictureUrl
      * @return $this|User
      */
     public function setPictureUrl($pictureUrl)
@@ -298,7 +298,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param string $accessToken
+     * @param  string     $accessToken
      * @return $this|User
      */
     public function setAccessToken($accessToken)
@@ -317,7 +317,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param \DateTime|null $passwordRequestAt
+     * @param  \DateTime|null $passwordRequestAt
      * @return $this|User
      */
     public function setPasswordRequestAt(\DateTime $passwordRequestAt = null)
@@ -336,7 +336,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param null|string $passwordToken
+     * @param  null|string $passwordToken
      * @return $this|User
      */
     public function setPasswordToken($passwordToken)
@@ -355,7 +355,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param string $role
+     * @param  string     $role
      * @return User|$this
      */
     public function addRole($role)
@@ -373,7 +373,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param string $role
+     * @param  string     $role
      * @return User|$this
      */
     public function removeRole($role)
@@ -387,7 +387,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param array $roles
+     * @param  array      $roles
      * @return $this|User
      */
     public function setRoles(array $roles)
@@ -398,7 +398,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param string $password
+     * @param  string     $password
      * @return $this|User
      */
     public function setPassword($password)
@@ -409,7 +409,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param string $salt
+     * @param  string     $salt
      * @return $this|User
      */
     public function setSalt($salt)
@@ -517,9 +517,9 @@ class User implements UserInterface, \Serializable
      * (PHP 5 &gt;= 5.1.0)<br/>
      * Constructs the object
      * @link http://php.net/manual/en/serializable.unserialize.php
-     * @param string $serialized <p>
-     * The string representation of the object.
-     * </p>
+     * @param  string $serialized <p>
+     *                            The string representation of the object.
+     *                            </p>
      * @return void
      */
     public function unserialize($serialized)

@@ -24,7 +24,7 @@ class QueueManager
     /**
      * @param QueueRepositoryInterface $queueRepository
      * @param SecurityContextInterface $securityContext
-     * @param QueueDefaulter $queueDefaulter
+     * @param QueueDefaulter           $queueDefaulter
      */
     public function __construct(QueueRepositoryInterface $queueRepository, SecurityContextInterface $securityContext, QueueDefaulter $queueDefaulter)
     {
@@ -34,10 +34,10 @@ class QueueManager
     }
 
     /**
-     * @param Project $project
-     * @param int $limit
-     * @param int $offset
-     * @param bool $security
+     * @param  Project $project
+     * @param  int     $limit
+     * @param  int     $offset
+     * @param  bool    $security
      * @return Queue[]
      */
     public function getList(Project $project, $limit = 100, $offset = 0, $security = true)
@@ -58,7 +58,7 @@ class QueueManager
 
     /**
      * @param Project $project
-     * @param Queue $queue
+     * @param Queue   $queue
      */
     public function create(Project $project, Queue $queue)
     {
@@ -70,7 +70,7 @@ class QueueManager
 
     /**
      * @param Project $project
-     * @param Queue $queue
+     * @param Queue   $queue
      */
     public function update(Project $project, Queue $queue)
     {
@@ -83,5 +83,10 @@ class QueueManager
     public function delete(Queue $queue)
     {
         $this->queueRepository->delete($queue);
+    }
+
+    public function clear(Queue $queue)
+    {
+        $this->queueRepository->clearQueue($queue);
     }
 }

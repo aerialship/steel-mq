@@ -49,8 +49,8 @@ class Subscriber
     }
 
     /**
-     * @param string $name
-     * @param string $value
+     * @param  string           $name
+     * @param  string           $value
      * @return $this|Subscriber
      */
     public function addHeader($name, $value)
@@ -77,7 +77,7 @@ class Subscriber
     }
 
     /**
-     * @param Queue $queue
+     * @param  Queue            $queue
      * @return $this|Subscriber
      */
     public function setQueue(Queue $queue)
@@ -96,7 +96,7 @@ class Subscriber
     }
 
     /**
-     * @param string $url
+     * @param  string           $url
      * @return $this|Subscriber
      */
     public function setUrl($url)

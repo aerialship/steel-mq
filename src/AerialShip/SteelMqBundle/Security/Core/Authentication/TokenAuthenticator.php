@@ -21,7 +21,7 @@ class TokenAuthenticator implements SimplePreAuthenticatorInterface
 
     /**
      * @param ProjectRoleRepositoryInterface $projectRoleRepository
-     * @param UserRepositoryInterface $userRepository
+     * @param UserRepositoryInterface        $userRepository
      */
     public function __construct(ProjectRoleRepositoryInterface $projectRoleRepository, UserRepositoryInterface $userRepository)
     {
@@ -30,8 +30,8 @@ class TokenAuthenticator implements SimplePreAuthenticatorInterface
     }
 
     /**
-     * @param Request $request
-     * @param string $providerKey
+     * @param  Request                                                            $request
+     * @param  string                                                             $providerKey
      * @return PreAuthenticatedToken
      * @throws \Symfony\Component\Security\Core\Exception\BadCredentialsException
      */
@@ -63,9 +63,9 @@ class TokenAuthenticator implements SimplePreAuthenticatorInterface
     }
 
     /**
-     * @param TokenInterface $token
-     * @param UserProviderInterface $userProvider
-     * @param string $providerKey
+     * @param  TokenInterface                                                     $token
+     * @param  UserProviderInterface                                              $userProvider
+     * @param  string                                                             $providerKey
      * @return PreAuthenticatedToken
      * @throws \Symfony\Component\Security\Core\Exception\AuthenticationException
      */
@@ -102,8 +102,8 @@ class TokenAuthenticator implements SimplePreAuthenticatorInterface
     }
 
     /**
-     * @param TokenInterface $token
-     * @param string $providerKey
+     * @param  TokenInterface $token
+     * @param  string         $providerKey
      * @return bool
      */
     public function supportsToken(TokenInterface $token, $providerKey)

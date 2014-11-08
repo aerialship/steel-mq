@@ -15,7 +15,7 @@ class ApiProjectTokenVoter implements VoterInterface
      *
      * @param string $attribute An attribute
      *
-     * @return bool    true if this Voter supports the attribute, false otherwise
+     * @return bool true if this Voter supports the attribute, false otherwise
      */
     public function supportsAttribute($attribute)
     {
@@ -27,7 +27,7 @@ class ApiProjectTokenVoter implements VoterInterface
      *
      * @param string $class A class name
      *
-     * @return bool    true if this Voter can process the class
+     * @return bool true if this Voter can process the class
      */
     public function supportsClass($class)
     {
@@ -41,11 +41,11 @@ class ApiProjectTokenVoter implements VoterInterface
      * This method must return one of the following constants:
      * ACCESS_GRANTED, ACCESS_DENIED, or ACCESS_ABSTAIN.
      *
-     * @param TokenInterface $token A TokenInterface instance
-     * @param object|null $object The object to secure
-     * @param array $attributes An array of attributes associated with the method being invoked
+     * @param TokenInterface $token      A TokenInterface instance
+     * @param object|null    $object     The object to secure
+     * @param array          $attributes An array of attributes associated with the method being invoked
      *
-     * @return int     either ACCESS_GRANTED, ACCESS_ABSTAIN, or ACCESS_DENIED
+     * @return int either ACCESS_GRANTED, ACCESS_ABSTAIN, or ACCESS_DENIED
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {

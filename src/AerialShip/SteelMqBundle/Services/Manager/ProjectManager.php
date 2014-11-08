@@ -26,10 +26,10 @@ class ProjectManager
     protected $userProvider;
 
     /**
-     * @param ProjectRepositoryInterface $projectRepository
+     * @param ProjectRepositoryInterface     $projectRepository
      * @param ProjectRoleRepositoryInterface $projectRoleRepository
-     * @param SecurityContextInterface $securityContext
-     * @param UserProvider $userProvider
+     * @param SecurityContextInterface       $securityContext
+     * @param UserProvider                   $userProvider
      */
     public function __construct(
         ProjectRepositoryInterface $projectRepository,
@@ -45,8 +45,8 @@ class ProjectManager
     }
 
     /**
-     * @param User|null $user
-     * @param bool $security
+     * @param  User|null $user
+     * @param  bool      $security
      * @return Project[]
      */
     public function getList(User $user = null, $security = true)
@@ -69,8 +69,8 @@ class ProjectManager
     }
 
     /**
-     * @param Project $project
-     * @param User|null $owner
+     * @param  Project     $project
+     * @param  User|null   $owner
      * @return ProjectRole
      */
     public function create(Project $project, User $owner = null)

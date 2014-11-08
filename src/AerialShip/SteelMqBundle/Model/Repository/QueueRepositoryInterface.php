@@ -13,15 +13,28 @@ interface QueueRepositoryInterface
     public function transactional($callback);
 
     /**
-     * @param Queue $queue
-     * @param bool $flush
+     * @param  Queue $queue
+     * @param  bool  $flush
      * @return void
      */
     public function save(Queue $queue, $flush = true);
 
     /**
-     * @param Queue $queue
+     * @param  Queue $queue
      * @return void
      */
     public function delete(Queue $queue);
+
+    /**
+     * @param  Queue $queue
+     * @return int
+     */
+    public function clearQueue(Queue $queue);
+
+    /**
+     * @param  int        $id
+     * @return Queue|null
+     */
+    public function find($id);
+
 }

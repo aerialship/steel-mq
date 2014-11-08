@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityRepository;
 class UserRepository extends EntityRepository implements UserRepositoryInterface
 {
     /**
-     * @param string $accessToken
+     * @param  string                                     $accessToken
      * @return \AerialShip\SteelMqBundle\Entity\User|null
      */
     public function getByAccessToken($accessToken)
@@ -17,7 +17,7 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param int $userId
+     * @param  int                                        $userId
      * @return \AerialShip\SteelMqBundle\Entity\User|null
      */
     public function getById($userId)
@@ -26,7 +26,7 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
     }
 
     /**
-     * @param string $username
+     * @param  string                                     $username
      * @return \AerialShip\SteelMqBundle\Entity\User|null
      */
     public function getByUsername($username)

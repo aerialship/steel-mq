@@ -133,7 +133,7 @@ class Queue
     }
 
     /**
-     * @param null|string $errorQueue
+     * @param  null|string $errorQueue
      * @return $this|Queue
      */
     public function setErrorQueue($errorQueue)
@@ -160,7 +160,7 @@ class Queue
     }
 
     /**
-     * @param string $pushType
+     * @param  string      $pushType
      * @return $this|Queue
      */
     public function setPushType($pushType)
@@ -179,7 +179,7 @@ class Queue
     }
 
     /**
-     * @param int $retries
+     * @param  int         $retries
      * @return $this|Queue
      */
     public function setRetries($retries)
@@ -198,7 +198,7 @@ class Queue
     }
 
     /**
-     * @param int $retriesDelay
+     * @param  int         $retriesDelay
      * @return $this|Queue
      */
     public function setRetriesDelay($retriesDelay)
@@ -217,7 +217,7 @@ class Queue
     }
 
     /**
-     * @param string $title
+     * @param  string      $title
      * @return $this|Queue
      */
     public function setTitle($title)
@@ -236,7 +236,7 @@ class Queue
     }
 
     /**
-     * @param int $delay
+     * @param  int         $delay
      * @return $this|Queue
      */
     public function setDelay($delay)
@@ -255,7 +255,7 @@ class Queue
     }
 
     /**
-     * @param int $expiresIn
+     * @param  int         $expiresIn
      * @return $this|Queue
      */
     public function setExpiresIn($expiresIn)
@@ -274,7 +274,7 @@ class Queue
     }
 
     /**
-     * @param int $timeout
+     * @param  int         $timeout
      * @return $this|Queue
      */
     public function setTimeout($timeout)
@@ -293,7 +293,7 @@ class Queue
     }
 
     /**
-     * @param Project $project
+     * @param  Project     $project
      * @return $this|Queue
      */
     public function setProject(Project $project)

@@ -18,8 +18,8 @@ class ProjectRepository extends EntityRepository implements ProjectRepositoryInt
     }
 
     /**
-     * @param Project $project
-     * @param bool $flush
+     * @param  Project $project
+     * @param  bool    $flush
      * @return void
      */
     public function save(Project $project, $flush = true)

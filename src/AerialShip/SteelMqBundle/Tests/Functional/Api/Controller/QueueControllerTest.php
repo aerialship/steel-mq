@@ -2,6 +2,7 @@
 
 namespace AerialShip\SteelMqBundle\Tests\Functional\Api\Controller;
 
+use AerialShip\SteelMqBundle\Entity\Message;
 use AerialShip\SteelMqBundle\Tests\Functional\AbstractFunctionTestCase;
 
 class QueueControllerTest extends AbstractFunctionTestCase
@@ -54,6 +55,40 @@ class QueueControllerTest extends AbstractFunctionTestCase
         $client->request('DELETE', sprintf('projects/%s/queues/%s?token=%s', $this->projectId, $queueId, $token));
         $response = $client->getResponse();
         $this->assertJsonResponse($response, 404);
+    }
+
+    public function testClear()
+    {
+        $token = 'userToken';
+        $queueId = $this->createQueue($token);
+
+        $queue = $this->getQueueRepository()->find($queueId);
+
+        $this->getMessageRepository()->save((new Message())
+            ->setQueue($queue)
+            ->setAvailableAt(new \DateTime())
+            ->setBody('body')
+            ->setRetriesRemaining(5)
+        );
+
+        $client = static::createClient();
+        $client->request('GET', sprintf('projects/%s/queues/%s?token=%s', $this->projectId, $queueId, $token));
+        $response = $client->getResponse();
+        $this->assertJsonResponse($response);
+        $json = json_decode($response->getContent(), true);
+        $this->assertEquals(1, $json['size']);
+
+        $client = static::createClient();
+        $client->request('POST', sprintf('projects/%s/queues/%s/clear?token=%s', $this->projectId, $queueId, $token));
+        $response = $client->getResponse();
+        $this->assertJsonResponse($response);
+
+        $client = static::createClient();
+        $client->request('GET', sprintf('projects/%s/queues/%s?token=%s', $this->projectId, $queueId, $token));
+        $response = $client->getResponse();
+        $this->assertJsonResponse($response);
+        $json = json_decode($response->getContent(), true);
+        $this->assertEquals(0, $json['size']);
     }
 
     /**
