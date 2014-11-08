@@ -125,7 +125,7 @@ class Queue
     }
 
     /**
-     * @return null|string
+     * @return null|int
      */
     public function getErrorQueue()
     {
@@ -133,7 +133,7 @@ class Queue
     }
 
     /**
-     * @param  null|string $errorQueue
+     * @param  null|int $errorQueue
      * @return $this|Queue
      */
     public function setErrorQueue($errorQueue)
