@@ -9,6 +9,10 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class QueueType extends AbstractType
 {
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -44,6 +48,9 @@ class QueueType extends AbstractType
         ;
     }
 
+    /**
+     * @param OptionsResolverInterface $resolver
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -53,8 +60,6 @@ class QueueType extends AbstractType
     }
 
     /**
-     * Returns the name of this type.
-     *
      * @return string The name of this type
      */
     public function getName()

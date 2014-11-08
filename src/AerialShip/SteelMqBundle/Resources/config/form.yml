@@ -8,3 +8,13 @@ services:
         class: AerialShip\SteelMqBundle\Form\Type\QueueType
         tags:
             - { name: form.type, alias: queue }
+
+    aerial_ship_steel_mq.form.type.message:
+        class: AerialShip\SteelMqBundle\Form\Type\MessageType
+        tags:
+            - { name: form.type, alias: message }
+
+    aerial_ship_steel_mq.form.type.message_collection:
+        class: AerialShip\SteelMqBundle\Form\Type\MessageCollectionType
+        tags:
+            - { name: form.type, alias: message_collection }

@@ -1,3 +1,6 @@
 services:
     aerial_ship_steel_mq.defaulter.queue:
         class: AerialShip\SteelMqBundle\Services\Defaulter\QueueDefaulter
+
+    aerial_ship_steel_mq.defaulter.message:
+        class: AerialShip\SteelMqBundle\Services\Defaulter\MessageDefaulter
