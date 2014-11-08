@@ -3,6 +3,7 @@
 namespace AerialShip\SteelMqBundle\Controller\Api;
 
 use AerialShip\SteelMqBundle\Entity\Project;
+use AerialShip\SteelMqBundle\Helper\CastHelper;
 use JMS\Serializer\SerializationContext;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -42,7 +43,7 @@ class ProjectController extends AbstractApiController
             return $this->handleView($this->view($form, 400));
         }
 
-        $this->get('aerial_ship_steel_mq.manager.project')->create($project, $this->getUser());
+        $this->get('aerial_ship_steel_mq.manager.project')->create($project, CastHelper::asUser($this->getUser()));
 
         return $this->handleView($this->view(array(
             'id' => $project->getId(),

@@ -4,6 +4,7 @@ namespace AerialShip\SteelMqBundle\Tests\Functional;
 
 use AerialShip\SteelMqBundle\DataFixtures\Orm\ProjectData;
 use AerialShip\SteelMqBundle\DataFixtures\Orm\UserData;
+use AerialShip\SteelMqBundle\Model\Repository\ProjectRepositoryInterface;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -54,6 +55,22 @@ class AbstractFunctionTestCase extends WebTestCase
     protected function hasService($name)
     {
         return $this->getBootedKernel()->getContainer()->has($name);
+    }
+
+    /**
+     * @return ProjectRepositoryInterface
+     */
+    protected function getProjectRepository()
+    {
+        $result = $this->getService('doctrine')
+            ->getManager()
+            ->getRepository('AerialShipSteelMqBundle:Project');
+
+        if ($result instanceof ProjectRepositoryInterface) {
+            return $result;
+        }
+
+        throw new \LogicException('Expected ProjectRepositoryInterface');
     }
 
     /**

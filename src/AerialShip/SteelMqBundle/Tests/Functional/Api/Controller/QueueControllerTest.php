@@ -1,19 +1,17 @@
 <?php
-namespace AerialShip\SteelMqBundle\Tests\Functional\Controller\Api;
+
+namespace AerialShip\SteelMqBundle\Tests\Functional\Api\Controller;
 
 use AerialShip\SteelMqBundle\Tests\Functional\AbstractFunctionTestCase;
 
 class QueueControllerTest extends AbstractFunctionTestCase
 {
-
     /** @var int */
     private $projectId;
 
     protected function setUp()
     {
-        $projectRepo = $this->getService('doctrine')
-            ->getManager()
-            ->getRepository('AerialShipSteelMqBundle:Project');
+        $projectRepo = $this->getProjectRepository();
 
         $project = $projectRepo->findOneBy([]);
         $this->projectId = $project->getId();
@@ -21,25 +19,24 @@ class QueueControllerTest extends AbstractFunctionTestCase
 
     public function testDelete()
     {
-        $token = 'token=userToken';
+        $token = 'userToken';
         $queueId = $this->createQueue($token);
 
         $client = static::createClient();
-        $client->request('DELETE', sprintf('projects/%s/queues/%s?%s', $this->projectId, $queueId, $token));
+        $client->request('DELETE', sprintf('projects/%s/queues/%s?token=%s', $this->projectId, $queueId, $token));
 
         $response = $client->getResponse();
         $this->assertJsonResponse($response, 200);
         $data = json_decode($response->getContent());
         $this->assertTrue($data->success);
-
     }
 
     public function testDeleteNotYours()
     {
-        $queueId = $this->createQueue('token=userToken');
+        $queueId = $this->createQueue('userToken');
 
         $client = static::createClient();
-        $client->request('DELETE', sprintf('projects/%s/queues/%s?%s', $this->projectId, $queueId, 'token=guestToken'));
+        $client->request('DELETE', sprintf('projects/%s/queues/%s?token=guestToken', $this->projectId, $queueId));
         $response = $client->getResponse();
         $this->assertJsonResponse($response, 403);
 
@@ -47,14 +44,14 @@ class QueueControllerTest extends AbstractFunctionTestCase
 
     public function testDeleteNonExisting()
     {
-        $token = 'token=userToken';
+        $token = 'userToken';
         $queueId = $this->createQueue($token);
 
         $client = static::createClient();
-        $client->request('DELETE', sprintf('projects/%s/queues/%s?%s', $this->projectId, $queueId, $token));
+        $client->request('DELETE', sprintf('projects/%s/queues/%s?token=%s', $this->projectId, $queueId, $token));
 
         $client = static::createClient();
-        $client->request('DELETE', sprintf('projects/%s/queues/%s?%s', $this->projectId, $queueId, $token));
+        $client->request('DELETE', sprintf('projects/%s/queues/%s?token=%s', $this->projectId, $queueId, $token));
         $response = $client->getResponse();
         $this->assertJsonResponse($response, 404);
     }
@@ -69,11 +66,10 @@ class QueueControllerTest extends AbstractFunctionTestCase
         $parameters = [
             "queue" => [
                 "title" => "Queue 111",
-                "delay" => 333
             ]
         ];
         $client = static::createClient();
-        $client->request('POST', sprintf('projects/%s/queues?%s', $this->projectId, $token), $parameters);
+        $client->request('POST', sprintf('projects/%s/queues?token=%s', $this->projectId, $token), $parameters);
         $response = $client->getResponse();
 
         $content = json_decode($response->getContent());

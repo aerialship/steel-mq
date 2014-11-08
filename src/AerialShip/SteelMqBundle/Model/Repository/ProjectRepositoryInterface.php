@@ -18,4 +18,11 @@ interface ProjectRepositoryInterface
      * @return void
      */
     public function save(Project $project, $flush = true);
+
+    /**
+     * @param array $criteria
+     * @param array $orderBy
+     * @return Project|null
+     */
+    public function findOneBy(array $criteria, array $orderBy = null);
 }

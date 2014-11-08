@@ -23,7 +23,7 @@ class QueueController extends AbstractApiController
      */
     public function listAction(Project $project)
     {
-        $this->checkPermission(ProjectRole::PROJECT_ROLE_QUEUE, $project);
+        $this->checkPermission(ProjectRole::PROJECT_ROLE_DEFAULT, $project);
 
         $result = $this->get('aerial_ship_steel_mq.manager.queue')->getList($project);
 
