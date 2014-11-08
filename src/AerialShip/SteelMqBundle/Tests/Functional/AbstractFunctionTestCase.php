@@ -9,6 +9,7 @@ use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
 class AbstractFunctionTestCase extends WebTestCase
@@ -90,5 +91,22 @@ class AbstractFunctionTestCase extends WebTestCase
     protected function generateUrl($route, $params = array(), $referenceType = RouterInterface::ABSOLUTE_PATH)
     {
         return $this->getBootedKernel()->getContainer()->get('router')->generate($route, $params, $referenceType);
+    }
+
+    /**
+     * @param Response $response
+     * @param int $statusCode
+     */
+    protected function assertJsonResponse(Response $response, $statusCode = 200)
+    {
+        $this->assertEquals(
+            $statusCode,
+            $response->getStatusCode(),
+            $response->getContent()
+        );
+        $this->assertTrue(
+            $response->headers->contains('Content-Type', 'application/json'),
+            $response->headers
+        );
     }
 }

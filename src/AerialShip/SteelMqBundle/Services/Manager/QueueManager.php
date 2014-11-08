@@ -76,4 +76,12 @@ class QueueManager
     {
         $this->create($project, $queue);
     }
+
+    /**
+     * @param Queue $queue
+     */
+    public function delete(Queue $queue)
+    {
+        $this->queueRepository->delete($queue);
+    }
 }

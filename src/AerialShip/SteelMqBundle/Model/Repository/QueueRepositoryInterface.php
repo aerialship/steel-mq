@@ -19,4 +19,9 @@ interface QueueRepositoryInterface
      */
     public function save(Queue $queue, $flush = true);
 
+    /**
+     * @param Queue $queue
+     * @return void
+     */
+    public function delete(Queue $queue);
 }
