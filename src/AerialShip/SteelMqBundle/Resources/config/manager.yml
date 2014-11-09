@@ -17,5 +17,7 @@ services:
     aerial_ship_steel_mq.manager.message:
         class: AerialShip\SteelMqBundle\Services\Manager\MessageManager
         arguments:
+            - @validator
             - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:Message')"
             - @aerial_ship_steel_mq.defaulter.message
+            - @aerial_ship_steel_mq.defaulter.get_message

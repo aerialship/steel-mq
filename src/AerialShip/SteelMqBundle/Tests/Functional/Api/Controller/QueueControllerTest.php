@@ -17,7 +17,7 @@ class QueueControllerTest extends AbstractFunctionTestCase
 
     protected function setUp()
     {
-        $this->loadUserAndProjectData();
+        $this->loadQueueData();
 
         $projectRepo = $this->getProjectRepository();
 

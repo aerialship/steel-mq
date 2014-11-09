@@ -6,6 +6,10 @@ use AerialShip\SteelMqBundle\Entity\Message;
 
 class MessageDefaulter
 {
+    /**
+     * @param  Message $message
+     * @return Message
+     */
     public function setDefaults(Message $message)
     {
         if (null === $message->getQueue()) {
@@ -18,5 +22,7 @@ class MessageDefaulter
         if (null == $message->getRetriesRemaining()) {
             $message->setRetries($message->getQueue()->getRetries());
         }
+
+        return $message;
     }
 }

@@ -8,7 +8,8 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * @ORM\Entity(repositoryClass="AerialShip\SteelMqBundle\Entity\Repository\MessageRepository")
  * @ORM\Table(name="smq_message", indexes={
- *      @ORM\Index(name="idx_available_at", columns={"queue_id", "available_at"})
+ *      @ORM\Index(name="idx_available_at", columns={"queue_id", "available_at"}),
+ *      @ORM\Index(name="idx_token", columns={"token"})
  * })
  * @JMS\ExclusionPolicy("all")
  */
@@ -57,7 +58,7 @@ class Message
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true, unique=true)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $token;
 

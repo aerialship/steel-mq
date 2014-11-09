@@ -2,6 +2,7 @@
 
 namespace AerialShip\SteelMqBundle\Tests\Functional;
 
+use AerialShip\SteelMqBundle\DataFixtures\Orm\MessageData;
 use AerialShip\SteelMqBundle\DataFixtures\Orm\ProjectData;
 use AerialShip\SteelMqBundle\DataFixtures\Orm\QueueData;
 use AerialShip\SteelMqBundle\DataFixtures\Orm\UserData;
@@ -122,22 +123,50 @@ class AbstractFunctionTestCase extends WebTestCase
      */
     protected function loadFixtures(Loader $loader)
     {
-        $purger = new ORMPurger();
-        $executor = new ORMExecutor($this->getEm(), $purger);
-        $executor->execute($loader->getFixtures());
-    }
-
-    protected function loadUserAndProjectData()
-    {
-        $loader = new Loader();
-        $loader->addFixture(new UserData());
-        $loader->addFixture(new ProjectData());
-        $loader->addFixture(new QueueData());
         foreach ($loader->getFixtures() as $fixture) {
             if ($fixture instanceof ContainerAwareInterface) {
                 $fixture->setContainer($this->getBootedKernel()->getContainer());
             }
         }
+        $purger = new ORMPurger();
+        $executor = new ORMExecutor($this->getEm(), $purger);
+        $executor->execute($loader->getFixtures());
+    }
+
+    protected function loadUserData()
+    {
+        $loader = new Loader();
+        $loader->addFixture(new UserData());
+        $loader->addFixture(new ProjectData());
+        $loader->addFixture(new QueueData());
+        $this->loadFixtures($loader);
+    }
+
+    protected function loadProjectData()
+    {
+        $loader = new Loader();
+        $loader->addFixture(new UserData());
+        $loader->addFixture(new ProjectData());
+        $loader->addFixture(new QueueData());
+        $this->loadFixtures($loader);
+    }
+
+    protected function loadQueueData()
+    {
+        $loader = new Loader();
+        $loader->addFixture(new UserData());
+        $loader->addFixture(new ProjectData());
+        $loader->addFixture(new QueueData());
+        $this->loadFixtures($loader);
+    }
+
+    protected function loadMessageData()
+    {
+        $loader = new Loader();
+        $loader->addFixture(new UserData());
+        $loader->addFixture(new ProjectData());
+        $loader->addFixture(new QueueData());
+        $loader->addFixture(new MessageData());
         $this->loadFixtures($loader);
     }
 
