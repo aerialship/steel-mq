@@ -345,14 +345,15 @@ POST /projects/{Project ID}/queues/{Queue ID}/messages
 ### Request
 
 ``` json
-[
-    {
-        "body": "Message string body",
-        "timeout": 60,
-        "delay": 0,
-        "expires_in": 604800
-    }
-]
+{
+    "messages": [
+        {
+            "body": "Message string body",
+            "delay": 0,
+            "retries": 3
+        }
+    ]
+}
 ```
 
 
