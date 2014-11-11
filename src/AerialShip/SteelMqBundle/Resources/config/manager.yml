@@ -19,3 +19,9 @@ services:
         arguments:
             - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:Message')"
             - @aerial_ship_steel_mq.defaulter.message
+
+    aerial_ship_steel_mq.manager.subscriber:
+            class: AerialShip\SteelMqBundle\Services\Manager\SubscriberManager
+            arguments:
+                - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:Subscriber')"
+                - @security.context

@@ -18,3 +18,13 @@ services:
         class: AerialShip\SteelMqBundle\Form\Type\MessageCollectionType
         tags:
             - { name: form.type, alias: message_collection }
+
+    aerial_ship_steel_mq.form.type.header:
+            class: AerialShip\SteelMqBundle\Form\Type\HeaderType
+            tags:
+                - { name: form.type, alias: header }
+
+    aerial_ship_steel_mq.form.type.subscriber:
+            class: AerialShip\SteelMqBundle\Form\Type\SubscriberType
+            tags:
+                - { name: form.type, alias: subscriber }

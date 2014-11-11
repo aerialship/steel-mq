@@ -4,6 +4,7 @@ namespace AerialShip\SteelMqBundle\Controller\Api;
 
 use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Entity\Queue;
+use AerialShip\SteelMqBundle\Entity\Subscriber;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializationContext;
@@ -25,12 +26,23 @@ class AbstractApiController extends FOSRestController
     }
 
     /**
+     * @param Queue      $queue
+     * @param Subscriber $subscriber
+     */
+    protected function checkSubscriberIsInQueue(Queue $queue, Subscriber $subscriber)
+    {
+        if ($subscriber->getQueue()->getId() !== $queue->getId()) {
+            throw new BadRequestHttpException();
+        }
+    }
+
+    /**
      * @param  array $extra
      * @return array
      */
     protected function getSuccessData($extra = array())
     {
-        return array_merge(['success'=>true], $extra);
+        return array_merge(['success' => true], $extra);
     }
 
     /**
