@@ -37,7 +37,7 @@ class QueueControllerTest extends AbstractFunctionTestCase
 
         $json = json_decode($response->getContent(), true);
         $this->assertTrue(is_array($json));
-        $this->assertCount(1, $json);
+        $this->assertCount(2, $json);
 
         $this->assertArrayHasKey('project_id', $json[0]);
         $this->assertArrayNotHasKey('size', $json[0]);
