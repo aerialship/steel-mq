@@ -8,22 +8,22 @@ class QueueDefaulter
 {
     public function setDefaults(Queue $queue)
     {
-        if (false == $queue->getPushType()) {
+        if (false === $queue->getPushType()) {
             $queue->setPushType(Queue::PUSH_TYPE_PULL);
         }
-        if (false == $queue->getRetries()) {
+        if (false === $queue->getRetries()) {
             $queue->setRetries(3);
         }
-        if (false == $queue->getRetriesDelay()) {
+        if (false === $queue->getRetriesDelay()) {
             $queue->setRetriesDelay(600);
         }
-        if (false == $queue->getTimeout()) {
+        if (false === $queue->getTimeout()) {
             $queue->setTimeout(60);
         }
-        if (false == $queue->getDelay()) {
+        if (false === $queue->getDelay()) {
             $queue->setDelay(0);
         }
-        if (false == $queue->getExpiresIn()) {
+        if (false === $queue->getExpiresIn()) {
             $queue->setExpiresIn(604800); // 7 days
         }
     }

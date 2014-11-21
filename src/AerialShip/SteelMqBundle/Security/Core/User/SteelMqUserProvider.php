@@ -41,7 +41,7 @@ class SteelMqUserProvider implements UserProviderInterface
     {
         $result = $this->userRepository->getByUsername($username);
 
-        if (false == $result) {
+        if (false === $result) {
             throw new UsernameNotFoundException();
         }
 
