@@ -121,6 +121,15 @@ class User implements UserInterface, \Serializable
     protected $projectRoles;
 
     /**
+     * @var Project[]|ArrayCollection
+     * @ORM\ManyToOne(
+     *      targetEntity="Project"
+     *      mappedBy="owner"
+     * )
+     */
+    protected $ownOProjects;
+
+    /**
      *
      */
     public function __construct()
