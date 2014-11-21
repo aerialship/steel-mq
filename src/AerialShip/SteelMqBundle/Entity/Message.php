@@ -71,7 +71,8 @@ class Message
     /**
      * @var Queue
      * @ORM\ManyToOne(
-     *      targetEntity="Queue"
+     *      targetEntity="Queue",
+     *      inversedBy="messages"
      * )
      * @ORM\JoinColumn(onDelete="CASCADE")
      */

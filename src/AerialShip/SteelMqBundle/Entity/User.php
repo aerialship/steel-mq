@@ -123,7 +123,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var Project[]|ArrayCollection
      * @ORM\ManyToOne(
-     *      targetEntity="Project"
+     *      targetEntity="Project",
      *      mappedBy="owner"
      * )
      */
