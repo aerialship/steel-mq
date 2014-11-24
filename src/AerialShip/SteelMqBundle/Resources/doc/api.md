@@ -267,7 +267,9 @@ GET /projects/{Project ID}/queues/{Queue ID}/subscribers
         "id": 123,
         "url": "http://some.subscriber.com/steel_mq_hook",
         "headers": {
-            "Content-Type": "application/json",
+            "Content-Type": [
+                "application/json"
+            ],
             "X-Custom": [
                 "foo",
                 "bar"
@@ -292,7 +294,9 @@ POST /projects/{Project ID}/queues/{Queue ID}/subscribers
     "subscriber": {
         "url": "http://some.subscriber.com/steel_mq_hook",
         "headers": {
-            "Content-Type": "application/json",
+            "Content-Type": [
+                "application/json"
+            ],
             "X-Custom": [
                 "foo",
                 "bar"

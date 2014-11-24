@@ -29,5 +29,4 @@ class ProjectRepository extends EntityRepository implements ProjectRepositoryInt
             $this->_em->flush();
         }
     }
-
 }

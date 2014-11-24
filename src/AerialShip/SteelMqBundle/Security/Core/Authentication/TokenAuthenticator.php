@@ -110,5 +110,4 @@ class TokenAuthenticator implements SimplePreAuthenticatorInterface
     {
         return $token instanceof TokenPreAuthenticatedToken && $token->getProviderKey() === $providerKey;
     }
-
 }

@@ -30,7 +30,7 @@ class ProjectController extends AbstractApiController
      */
     public function createAction(Request $request)
     {
-        RequestHelper::ensure($request->request, array('project'=>array()));
+        RequestHelper::ensure($request->request, array('project' => array()));
 
         $form = $this->createForm('project');
         $form->handleRequest($request);
@@ -45,7 +45,6 @@ class ProjectController extends AbstractApiController
             CastHelper::asUser($this->getUser())
         );
 
-        return $this->handleData($this->getSuccessData(array('id'=>$project->getId())));
+        return $this->handleData($this->getSuccessData(array('id' => $project->getId())));
     }
-
 }
