@@ -85,5 +85,4 @@ class SteelMqUserProvider implements UserProviderInterface
         return 'AerialShip\SteelMqBundle\Entity\User' == $class ||
             is_subclass_of($class, 'AerialShip\SteelMqBundle\Entity\User');
     }
-
 }

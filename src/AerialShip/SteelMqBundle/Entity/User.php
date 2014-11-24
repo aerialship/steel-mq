@@ -518,7 +518,7 @@ class User implements UserInterface, \Serializable
             $this->locale,
             $this->timezone,
             $this->pictureUrl,
-            $this->roles
+            $this->roles,
         ));
     }
 

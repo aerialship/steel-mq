@@ -42,5 +42,4 @@ class MessageController extends AbstractApiController
 
         return $this->handleData($message, array('Default'));
     }
-
 }

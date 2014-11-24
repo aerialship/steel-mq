@@ -38,5 +38,4 @@ class SubscriberData extends AbstractFixture implements OrderedFixtureInterface
     {
         return 40;
     }
-
 }

@@ -62,7 +62,7 @@ class QueueController extends AbstractApiController
      */
     public function updateAction(Project $project, Queue $queue, Request $request)
     {
-        RequestHelper::ensure($request->request, array('queue'=>array()));
+        RequestHelper::ensure($request->request, array('queue' => array()));
 
         $form = $this->createForm('queue', $queue);
 

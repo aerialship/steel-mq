@@ -319,5 +319,4 @@ class QueueControllerTest extends AbstractFunctionTestCase
         $queue = $this->getQueueRepository()->findOneBy(array('project' => $this->allProjects[0]));
         $this->assertEquals(0, $queue->getSize());
     }
-
 }

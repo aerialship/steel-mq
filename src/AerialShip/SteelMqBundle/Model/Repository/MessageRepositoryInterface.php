@@ -18,5 +18,4 @@ interface MessageRepositoryInterface
      * @return void
      */
     public function save(Message $message, $flush = true);
-
 }

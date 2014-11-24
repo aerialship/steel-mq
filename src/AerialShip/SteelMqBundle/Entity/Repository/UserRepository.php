@@ -13,7 +13,7 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
      */
     public function getByAccessToken($accessToken)
     {
-        return $this->findOneBy(array('accessToken'=>$accessToken));
+        return $this->findOneBy(array('accessToken' => $accessToken));
     }
 
     /**
@@ -31,6 +31,6 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
      */
     public function getByUsername($username)
     {
-        return $this->findOneBy(array('email'=>$username));
+        return $this->findOneBy(array('email' => $username));
     }
 }

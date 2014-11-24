@@ -54,5 +54,4 @@ class QueueRepository extends EntityRepository implements QueueRepositoryInterfa
 
         return $result;
     }
-
 }

@@ -61,5 +61,4 @@ class QueueData extends AbstractFixture implements OrderedFixtureInterface, Cont
     {
         return 30;
     }
-
 }

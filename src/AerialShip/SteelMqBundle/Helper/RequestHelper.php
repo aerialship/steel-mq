@@ -12,7 +12,7 @@ final class RequestHelper
      */
     public static function ensure(ParameterBag $bag, array $values)
     {
-        foreach ($values as $k=>$v) {
+        foreach ($values as $k => $v) {
             if (is_int($k)) {
                 $key = $v;
                 $value = null;

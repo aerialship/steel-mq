@@ -8,7 +8,6 @@ use AerialShip\SteelMqBundle\Tests\Functional\AbstractFunctionTestCase;
 
 class SubscriberControllerTest extends AbstractFunctionTestCase
 {
-
     /** @var Subscriber $subscriber */
     private $subscriber;
 
@@ -66,7 +65,6 @@ class SubscriberControllerTest extends AbstractFunctionTestCase
         $this->assertEquals('http://some.subscriber.com/steal_mq_hook', $subscriberData['url']);
         $this->assertEquals('Content-Type', array_keys($subscriberData['headers'])[0]);
         $this->assertEquals('X-Custom', array_keys($subscriberData['headers'])[1]);
-
     }
 
     public function testEmptyList()
@@ -88,7 +86,6 @@ class SubscriberControllerTest extends AbstractFunctionTestCase
         $json = json_decode($response->getContent(), true);
         $this->assertTrue(is_array($json));
         $this->assertCount(0, $json);
-
     }
 
     public function testCreate()

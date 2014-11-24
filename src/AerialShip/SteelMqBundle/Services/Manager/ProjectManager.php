@@ -36,8 +36,7 @@ class ProjectManager
         ProjectRoleRepositoryInterface $projectRoleRepository,
         SecurityContextInterface $securityContext,
         UserProvider $userProvider
-    )
-    {
+    ) {
         $this->projectRepository = $projectRepository;
         $this->projectRoleRepository = $projectRoleRepository;
         $this->securityContext = $securityContext;

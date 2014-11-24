@@ -82,5 +82,4 @@ class UserListener implements EventSubscriber
     {
         return $this->encoderFactory->getEncoder($user);
     }
-
 }
