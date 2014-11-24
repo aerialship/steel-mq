@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('aerial_ship_steel_mq');
+        $treeBuilder->root('aerial_ship_steel_mq');
 
         return $treeBuilder;
     }

@@ -41,7 +41,7 @@ class QueueController extends AbstractApiController
 
         $form->handleRequest($request);
 
-        if (false == $form->isValid()) {
+        if (false === $form->isValid()) {
             return $this->handleView($this->view($form, 400));
         }
 
@@ -68,7 +68,7 @@ class QueueController extends AbstractApiController
 
         $form->submit($request, false);
 
-        if (false == $form->isValid()) {
+        if (false === $form->isValid()) {
             return $this->handleView($this->view($form, 400));
         }
 

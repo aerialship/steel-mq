@@ -62,7 +62,7 @@ class ProjectRoleVoter implements VoterInterface
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
-        if (false == $object || false == $this->supportsClass(get_class($object))) {
+        if (false === $object || false == $this->supportsClass(get_class($object))) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
 
@@ -72,7 +72,7 @@ class ProjectRoleVoter implements VoterInterface
 
         $projectRole = $this->getProjectRole($user, $project);
 
-        if (false == $projectRole) {
+        if (false === $projectRole) {
             return VoterInterface::ACCESS_DENIED;
         }
 

@@ -30,8 +30,5 @@ class DefaultController extends FOSRestController
             ->setSerializationContext($ctx);
 
         return $this->handleView($view);
-
-        return array("projects"=>$projects);
-        //return $this->render('default/index.html.twig', array('name' => 'pera'));
     }
 }

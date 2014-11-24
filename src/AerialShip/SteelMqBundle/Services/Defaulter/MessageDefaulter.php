@@ -15,7 +15,7 @@ class MessageDefaulter
         if (null === $message->getAvailableAt()) {
             $message->setDelay($message->getQueue()->getDelay());
         }
-        if (null == $message->getRetriesRemaining()) {
+        if (null === $message->getRetriesRemaining()) {
             $message->setRetries($message->getQueue()->getRetries());
         }
     }

@@ -121,6 +121,15 @@ class User implements UserInterface, \Serializable
     protected $projectRoles;
 
     /**
+     * @var Project[]|ArrayCollection
+     * @ORM\OneToMany(
+     *      targetEntity="Project",
+     *      mappedBy="owner"
+     * )
+     */
+    protected $ownOProjects;
+
+    /**
      *
      */
     public function __construct()
@@ -365,7 +374,7 @@ class User implements UserInterface, \Serializable
             return $this;
         }
 
-        if (false == in_array($role, $this->roles, true)) {
+        if (false === in_array($role, $this->roles, true)) {
             $this->roles[] = $role;
         }
 

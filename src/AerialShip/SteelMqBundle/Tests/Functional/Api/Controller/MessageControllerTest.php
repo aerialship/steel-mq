@@ -51,7 +51,7 @@ class MessageControllerTest extends AbstractFunctionTestCase
                         'retries' => $expectedRetries2 = 22,
                         'delay' => $expectedDelay2 = 2222,
                     ),
-                )
+                ),
             )
         );
         $response = $client->getResponse();

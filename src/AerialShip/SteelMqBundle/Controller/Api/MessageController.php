@@ -26,8 +26,11 @@ class MessageController extends AbstractApiController
     public function addAction(Project $project, Queue $queue, Request $request)
     {
         $this->checkQueueIsInProject($project, $queue);
-        RequestHelper::ensure($request->request, array('messages'=>array()));
-        RequestHelper::ensure($request->request, array('message_collection'=>array('messages'=>$request->request->get('messages'))));
+        RequestHelper::ensure($request->request, array('messages' => array()));
+        RequestHelper::ensure(
+            $request->request,
+            array('message_collection' => array('messages' => $request->request->get('messages')))
+        );
 
         $form = $this->createForm('message_collection');
         $form->handleRequest($request);
