@@ -150,11 +150,11 @@ class ProjectRole
     {
         $role = strtoupper($role);
 
-        if (false == isset(self::$validRoles[$role])) {
+        if (false === isset(self::$validRoles[$role])) {
             throw new \InvalidArgumentException(sprintf("Invalid project role '%s'", $role));
         }
 
-        if (false == in_array($role, $this->roles, true)) {
+        if (false === in_array($role, $this->roles, true)) {
             $this->roles[] = $role;
         }
 

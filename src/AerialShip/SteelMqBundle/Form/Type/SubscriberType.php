@@ -6,21 +6,25 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProjectType extends AbstractType
+class SubscriberType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text')
+            ->add('url', 'url')
+            ->add('headers', 'collection', array(
+                    'type' => 'header',
+                    'allow_add' => true,
+                ))
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'        => 'AerialShip\SteelMqBundle\Entity\Project',
-            'csrf_protection'   => false,
-        ));
+                'data_class'        => 'AerialShip\SteelMqBundle\Entity\Subscriber',
+                'csrf_protection'   => false,
+            ));
     }
 
     /**
@@ -30,6 +34,6 @@ class ProjectType extends AbstractType
      */
     public function getName()
     {
-        return 'project';
+        return 'subscriber';
     }
 }

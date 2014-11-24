@@ -41,7 +41,7 @@ class SteelMqUserProvider implements UserProviderInterface
     {
         $result = $this->userRepository->getByUsername($username);
 
-        if (false == $result) {
+        if (false === $result) {
             throw new UsernameNotFoundException();
         }
 
@@ -85,5 +85,4 @@ class SteelMqUserProvider implements UserProviderInterface
         return 'AerialShip\SteelMqBundle\Entity\User' == $class ||
             is_subclass_of($class, 'AerialShip\SteelMqBundle\Entity\User');
     }
-
 }

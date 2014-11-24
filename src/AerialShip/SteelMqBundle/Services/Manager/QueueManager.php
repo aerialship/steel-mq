@@ -43,7 +43,7 @@ class QueueManager
     public function getList(Project $project, $limit = 100, $offset = 0, $security = true)
     {
         if ($security &&
-            false == $this->securityContext->isGranted(ProjectRole::PROJECT_ROLE_DEFAULT, $project)
+            false === $this->securityContext->isGranted(ProjectRole::PROJECT_ROLE_DEFAULT, $project)
         ) {
             throw new AccessDeniedException();
         };

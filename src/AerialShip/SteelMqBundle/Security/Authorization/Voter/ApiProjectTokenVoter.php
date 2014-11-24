@@ -49,16 +49,16 @@ class ApiProjectTokenVoter implements VoterInterface
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
-        if (false == $token instanceof TokenPreAuthenticatedToken) {
+        if (false === $token instanceof TokenPreAuthenticatedToken) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
         /** @var TokenPreAuthenticatedToken $token */
 
-        if (false == $object || false == $this->supportsClass(get_class($object))) {
+        if (false === $object || false == $this->supportsClass(get_class($object))) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
 
-        if (false == $token->getProject()) {
+        if (false === $token->getProject()) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
 
@@ -73,5 +73,4 @@ class ApiProjectTokenVoter implements VoterInterface
         // in token is some another project
         return VoterInterface::ACCESS_DENIED;
     }
-
 }

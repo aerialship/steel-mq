@@ -36,8 +36,7 @@ class ProjectManager
         ProjectRoleRepositoryInterface $projectRoleRepository,
         SecurityContextInterface $securityContext,
         UserProvider $userProvider
-    )
-    {
+    ) {
         $this->projectRepository = $projectRepository;
         $this->projectRoleRepository = $projectRoleRepository;
         $this->securityContext = $securityContext;
@@ -51,13 +50,13 @@ class ProjectManager
      */
     public function getList(User $user = null, $security = true)
     {
-        if (false == $user) {
+        if (false === $user) {
             $user = $this->userProvider->get();
         }
 
         $result = array();
         foreach ($user->getProjectRoles() as $projectRole) {
-            if (false == $security ||
+            if (false === $security ||
                 $this->securityContext->isGranted(ProjectRole::PROJECT_ROLE_DEFAULT, $projectRole->getProject())
             ) {
                 $projectRole->getProject()->setCurrentProjectRole($projectRole);
@@ -79,7 +78,7 @@ class ProjectManager
             throw new \InvalidArgumentException('Project already created');
         }
 
-        if (false == $owner) {
+        if (false === $owner) {
             $owner = $this->userProvider->get();
         }
 

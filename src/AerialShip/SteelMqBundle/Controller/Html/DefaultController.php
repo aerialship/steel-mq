@@ -26,12 +26,9 @@ class DefaultController extends FOSRestController
         $ctx = SerializationContext::create()
             ->setGroups(array('Default', 'roles'));
 
-        $view = $this->view(array("projects"=>$projects))
+        $view = $this->view(array("projects" => $projects))
             ->setSerializationContext($ctx);
 
         return $this->handleView($view);
-
-        return array("projects"=>$projects);
-        //return $this->render('default/index.html.twig', array('name' => 'pera'));
     }
 }
