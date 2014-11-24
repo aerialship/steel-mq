@@ -107,10 +107,11 @@ class SubscriberControllerTest extends AbstractFunctionTestCase
                 "subscriber" => [
                     "url" => "http://some.subscriber.com/steel_mq_hook",
                     "headers" => [
-                        "Content-Type" => ["application/json"]
-                    ]
-                ]
-
+                        "Content-Type" => [
+                            "application/json",
+                        ],
+                    ],
+                ],
             ]
         );
 

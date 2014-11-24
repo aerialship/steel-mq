@@ -85,7 +85,7 @@ class QueueControllerTest extends AbstractFunctionTestCase
             array(
                 'queue' => array(
                     'title' => $expectedTitle = 'My New Queue',
-                )
+                ),
             )
         );
         $response = $client->getResponse();
@@ -139,7 +139,7 @@ class QueueControllerTest extends AbstractFunctionTestCase
                     'timeout' => $expectedTimeout = 78,
                     'delay' => $expectedDelay = 11,
                     'expires_in' => $expectedExpiresIn = 605123,
-                )
+                ),
             )
         );
         $response = $client->getResponse();

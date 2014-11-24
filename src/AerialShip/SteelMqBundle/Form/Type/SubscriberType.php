@@ -15,7 +15,7 @@ class SubscriberType extends AbstractType
             ->add('url', 'url')
             ->add('headers', 'collection', array(
                     'type' => 'header',
-                    'allow_add' => true
+                    'allow_add' => true,
                 ))
         ;
     }

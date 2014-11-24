@@ -24,7 +24,7 @@ class QueueType extends AbstractType
                 'choices' => array(
                     Queue::PUSH_TYPE_PULL=>Queue::PUSH_TYPE_PULL,
                     Queue::PUSH_TYPE_MULTICAST=>Queue::PUSH_TYPE_MULTICAST,
-                    Queue::PUSH_TYPE_UNICAST=>Queue::PUSH_TYPE_UNICAST
+                    Queue::PUSH_TYPE_UNICAST=>Queue::PUSH_TYPE_UNICAST,
                 ),
             ))
             ->add('retries', 'integer', array(
