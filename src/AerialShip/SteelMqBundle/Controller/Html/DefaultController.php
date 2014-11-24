@@ -32,6 +32,5 @@ class DefaultController extends FOSRestController
         return $this->handleView($view);
 
         return array("projects"=>$projects);
-        //return $this->render('default/index.html.twig', array('name' => 'pera'));
     }
 }
