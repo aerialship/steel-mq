@@ -25,5 +25,4 @@ class MapTransformer implements DataTransformerInterface
     {
         return [$value['key'] => $value['values']];
     }
-
 }

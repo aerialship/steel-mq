@@ -26,7 +26,6 @@ class ProjectRoleRepository extends EntityRepository implements ProjectRoleRepos
      */
     public function getByAccessToken($accessToken)
     {
-        return $this->findOneBy(array('accessToken'=>$accessToken));
+        return $this->findOneBy(array('accessToken' => $accessToken));
     }
-
 }

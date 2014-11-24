@@ -141,8 +141,8 @@ class AbstractFunctionTestCase extends WebTestCase
     protected function loadFixtures(Loader $loader)
     {
         $purger = new ORMPurger();
-        $executor = new ORMExecutor( $this->getEm(), $purger );
-        $executor->execute( $loader->getFixtures() );
+        $executor = new ORMExecutor($this->getEm(), $purger);
+        $executor->execute($loader->getFixtures());
     }
 
     protected function loadUserAndProjectData()

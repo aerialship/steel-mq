@@ -37,5 +37,4 @@ class SubscriberRepository extends EntityRepository implements SubscriberReposit
         $this->_em->remove($subscriber);
         $this->_em->flush();
     }
-
 }

@@ -73,5 +73,4 @@ class ApiProjectTokenVoter implements VoterInterface
         // in token is some another project
         return VoterInterface::ACCESS_DENIED;
     }
-
 }

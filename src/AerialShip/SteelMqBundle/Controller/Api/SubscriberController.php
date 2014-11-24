@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class SubscriberController extends AbstractApiController
 {
-
     /**
      * @Route("{slash}")
      * @Method({"GET"})
@@ -54,7 +53,7 @@ class SubscriberController extends AbstractApiController
             }
             $headers[] = [
                 'key' => $key,
-                'values' => $val
+                'values' => $val,
             ];
         }
         $subscriber['headers'] = $headers;
@@ -72,7 +71,7 @@ class SubscriberController extends AbstractApiController
         return $this->handleData(
             [
                 'id' => $subscriber->getId(),
-                'success' => true
+                'success' => true,
             ]
         );
     }

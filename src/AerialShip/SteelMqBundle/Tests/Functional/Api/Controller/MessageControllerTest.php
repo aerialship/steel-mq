@@ -51,7 +51,7 @@ class MessageControllerTest extends AbstractFunctionTestCase
                         'retries' => $expectedRetries2 = 22,
                         'delay' => $expectedDelay2 = 2222,
                     ),
-                )
+                ),
             )
         );
         $response = $client->getResponse();
@@ -62,7 +62,7 @@ class MessageControllerTest extends AbstractFunctionTestCase
         $this->assertTrue(is_array($json));
         $this->assertCount(2, $json);
 
-        for ($i=0; $i<2; $i++) {
+        for ($i = 0; $i<2; $i++) {
             $this->assertArrayHasKey('queue_id', $json[$i]);
             $this->assertArrayHasKey('status', $json[$i]);
             $this->assertArrayHasKey('id', $json[$i]);

@@ -55,5 +55,4 @@ class CastHelperTest extends \PHPUnit_Framework_TestCase
     {
         return $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
     }
-
 }

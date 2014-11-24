@@ -41,5 +41,4 @@ class MessageType extends AbstractType
     {
         return 'message';
     }
-
 }
