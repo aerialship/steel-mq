@@ -223,7 +223,10 @@ class QueueControllerTest extends AbstractFunctionTestCase
         $token = 'userToken';
 
         $client = static::createClient();
-        $client->request('DELETE', sprintf('projects/%s/queues/%s?token=%s', $this->projectId, $queue->getId(), $token));
+        $client->request(
+            'DELETE',
+            sprintf('projects/%s/queues/%s?token=%s', $this->projectId, $queue->getId(), $token)
+        );
 
         $response = $client->getResponse();
         $this->assertJsonResponse($response, 200);
@@ -243,7 +246,10 @@ class QueueControllerTest extends AbstractFunctionTestCase
         $this->assertInstanceOf('AerialShip\SteelMqBundle\Entity\Queue', $queue);
 
         $client = static::createClient();
-        $client->request('DELETE', sprintf('projects/%s/queues/%s?token=guestToken', $this->projectId, $queue->getId()));
+        $client->request(
+            'DELETE',
+            sprintf('projects/%s/queues/%s?token=guestToken', $this->projectId, $queue->getId())
+        );
         $response = $client->getResponse();
         $this->assertJsonResponse($response, 403);
 
@@ -255,7 +261,7 @@ class QueueControllerTest extends AbstractFunctionTestCase
     {
         $token = 'userToken';
         $queueId = null;
-        for ($i=0; $i<100; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $queueId = mt_rand(1000, 9999999);
             $queue = $this->getQueueRepository()->find($queueId);
             if (null === $queue) {
@@ -291,18 +297,22 @@ class QueueControllerTest extends AbstractFunctionTestCase
         $this->assertNotNull($queue);
         $this->assertInstanceOf('AerialShip\SteelMqBundle\Entity\Queue', $queue);
 
-        $this->getMessageRepository()->save((new Message())
-            ->setQueue($queue)
-            ->setAvailableAt(new \DateTime())
-            ->setBody('body')
-            ->setRetriesRemaining(5)
+        $this->getMessageRepository()->save(
+            (new Message())
+                ->setQueue($queue)
+                ->setAvailableAt(new \DateTime())
+                ->setBody('body')
+                ->setRetriesRemaining(5)
         );
 
         $queue = $this->getQueueRepository()->findOneBy(array('project' => $this->allProjects[0]));
         $this->assertEquals(1, $queue->getSize());
 
         $client = static::createClient();
-        $client->request('POST', sprintf('projects/%s/queues/%s/clear?token=%s', $this->projectId, $queue->getId(), $token));
+        $client->request(
+            'POST',
+            sprintf('projects/%s/queues/%s/clear?token=%s', $this->projectId, $queue->getId(), $token)
+        );
         $response = $client->getResponse();
         $this->assertJsonResponse($response);
 

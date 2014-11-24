@@ -24,8 +24,8 @@ class SubscriberControllerTest extends AbstractFunctionTestCase
 
         $this->subscriber = $subscriberRepo->findOneBy([]);
         $queues = $queueRepo->findBy([]);
-        foreach($queues as $queue){
-            if($queue->getSubscribers()->isEmpty()) {
+        foreach ($queues as $queue) {
+            if ($queue->getSubscribers()->isEmpty()) {
                 $this->emptyQueue = $queue;
                 break;
             }
@@ -151,4 +151,4 @@ class SubscriberControllerTest extends AbstractFunctionTestCase
 
         $this->assertTrue($json['success']);
     }
-} 
+}
