@@ -30,7 +30,5 @@ class DefaultController extends FOSRestController
             ->setSerializationContext($ctx);
 
         return $this->handleView($view);
-
-        return array("projects"=>$projects);
     }
 }
