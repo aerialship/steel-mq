@@ -7,6 +7,6 @@ PHP HTTP REST Message Queue based on Symfony and MySQL
 
 [![Build Status](https://scrutinizer-ci.com/g/aerialship/steel-mq/badges/build.png?b=master)](https://scrutinizer-ci.com/g/aerialship/steel-mq/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/aerialship/steel-mq/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/aerialship/steel-mq/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/aerialship/steel-mq/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/aerialship/steel-mq/?branch=master)
+[![Code Coverage](https://img.shields.io/coveralls/aerialship/steel-mq.svg)](https://coveralls.io/r/aerialship/steel-mq)
 
 [Technical Documentation](src/AerialShip/SteelMqBundle/Resources/doc/index.md)
