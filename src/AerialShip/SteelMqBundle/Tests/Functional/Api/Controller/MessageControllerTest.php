@@ -17,7 +17,7 @@ class MessageControllerTest extends AbstractFunctionTestCase
 
     protected function setUp()
     {
-        $this->loadUserAndProjectData();
+        $this->loadMessageData();
 
         $projectRepo = $this->getProjectRepository();
 
@@ -88,5 +88,39 @@ class MessageControllerTest extends AbstractFunctionTestCase
         $this->assertLessThan(4, abs(strtotime($json[1]['available_at']) - time()) - $expectedDelay2);
         $this->assertNull($json[1]['timeout_at']);
         $this->assertEquals($expectedBody2, $json[1]['body']);
+    }
+
+    public function testGetOneMessage()
+    {
+        $token = 'userToken';
+
+        /** @var Queue $queue */
+        $queue = $this->allProjects[0]->getQueues()->first();
+        $this->assertNotNull($queue);
+        $this->assertInstanceOf('AerialShip\SteelMqBundle\Entity\Queue', $queue);
+
+        $client = static::createClient();
+
+        $client->request(
+            'GET',
+            sprintf('projects/%s/queues/%s/messages?token=%s', $this->allProjects[0]->getId(), $queue->getId(), $token)
+        );
+        $response = $client->getResponse();
+        $this->assertJsonResponse($response);
+
+        $json = json_decode($response->getContent(), true);
+
+        $this->assertTrue(is_array($json));
+        $this->assertCount(1, $json);
+        $this->assertArrayHasKey('queue_id', $json[0]);
+        $this->assertArrayHasKey('status', $json[0]);
+        $this->assertArrayHasKey('id', $json[0]);
+        $this->assertArrayHasKey('retries_remaining', $json[0]);
+        $this->assertArrayHasKey('created_at', $json[0]);
+        $this->assertArrayHasKey('available_at', $json[0]);
+        $this->assertArrayHasKey('timeout_at', $json[0]);
+        $this->assertArrayHasKey('body', $json[0]);
+
+        $this->assertEquals($queue->getId(), $json[0]['queue_id']);
     }
 }

@@ -8,7 +8,7 @@ class ProjectControllerTest extends AbstractFunctionTestCase
 {
     protected function setUp()
     {
-        $this->loadUserAndProjectData();
+        $this->loadProjectData();
     }
 
     public function testListAction()
