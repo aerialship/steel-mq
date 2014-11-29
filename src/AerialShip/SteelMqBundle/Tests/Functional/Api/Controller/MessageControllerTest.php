@@ -177,4 +177,38 @@ class MessageControllerTest extends AbstractFunctionTestCase
 
         $this->assertEquals(404, $response->getStatusCode());
     }
+
+    public function testDelete()
+    {
+        $token = 'userToken';
+
+        /** @var Queue $queue */
+        $queue = $this->allProjects[0]->getQueues()->first();
+        $this->assertNotNull($queue);
+        $this->assertInstanceOf('AerialShip\SteelMqBundle\Entity\Queue', $queue);
+
+        /** @var Message $message */
+        $message = $queue->getMessages()->first();
+        $this->assertNotNull($message);
+        $this->assertInstanceOf('AerialShip\SteelMqBundle\Entity\Message', $message);
+
+        $client = static::createClient();
+
+        $client->request(
+            'DELETE',
+            sprintf('projects/%s/queues/%s/messages/%s?token=%s', $this->allProjects[0]->getId(), $queue->getId(), $message->getId(), $token)
+        );
+
+        $response = $client->getResponse();
+        $this->assertJsonResponse($response);
+
+        $json = json_decode($response->getContent(), true);
+        $this->assertTrue(is_array($json));
+
+        $this->assertArrayHasKey('success', $json);
+        $this->assertTrue($json['success']);
+
+        $queue = $this->getMessageRepository()->find($queue->getId());
+        $this->assertNull($queue);
+    }
 }

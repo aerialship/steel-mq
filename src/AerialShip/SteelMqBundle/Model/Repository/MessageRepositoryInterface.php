@@ -47,4 +47,10 @@ interface MessageRepositoryInterface
      * @return Message[]
      */
     public function getMessages(Queue $queue, array $options);
+
+    /**
+     * @param  Message $message
+     * @return void
+     */
+    public function delete(Message $message);
 }

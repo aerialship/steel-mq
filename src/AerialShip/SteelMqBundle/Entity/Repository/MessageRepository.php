@@ -90,4 +90,14 @@ class MessageRepository extends EntityRepository implements MessageRepositoryInt
         // transactional() replaces empty array with true
         return $result === true ? array() : $result;
     }
+
+    /**
+     * @param  Message $message
+     * @return void
+     */
+    public function delete(Message $message)
+    {
+        $this->_em->remove($message);
+        $this->_em->flush();
+    }
 }

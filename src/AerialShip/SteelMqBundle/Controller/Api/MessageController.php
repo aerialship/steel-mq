@@ -75,6 +75,24 @@ class MessageController extends AbstractApiController
         $this->checkQueueIsInProject($project, $queue);
         $this->checkMessageIsInQueue($queue, $message);
 
-        return $message;
+        return $this->handleData($message);
+    }
+
+    /**
+     * @Route("/{messageId}{slash}")
+     * @Method({"DELETE"})
+     * @ParamConverter("project", options={"id" = "projectId"})
+     * @ParamConverter("queue", options={"id" = "queueId"})
+     * @ParamConverter("message", options={"id" = "messageId"})
+     * @SecureParam(name="project", permissions="PROJECT_ROLE_DEFAULT")
+     */
+    public function deleteAction(Project $project, Queue $queue, Message $message)
+    {
+        $this->checkQueueIsInProject($project, $queue);
+        $this->checkMessageIsInQueue($queue, $message);
+
+        $this->get('aerial_ship_steel_mq.manager.message')->delete($message);
+
+        return $this->handleData($this->getSuccessData());
     }
 }
