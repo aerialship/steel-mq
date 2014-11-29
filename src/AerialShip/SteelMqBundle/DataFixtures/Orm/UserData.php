@@ -75,5 +75,4 @@ class UserData extends AbstractFixture implements OrderedFixtureInterface
     {
         return 10;
     }
-
 }

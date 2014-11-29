@@ -30,7 +30,7 @@ class AbstractApiController extends FOSRestController
      */
     protected function getSuccessData($extra = array())
     {
-        return array_merge(['success'=>true], $extra);
+        return array_merge(['success' => true], $extra);
     }
 
     /**

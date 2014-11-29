@@ -85,7 +85,7 @@ class QueueControllerTest extends AbstractFunctionTestCase
             array(
                 'queue' => array(
                     'title' => $expectedTitle = 'My New Queue',
-                )
+                ),
             )
         );
         $response = $client->getResponse();
@@ -139,7 +139,7 @@ class QueueControllerTest extends AbstractFunctionTestCase
                     'timeout' => $expectedTimeout = 78,
                     'delay' => $expectedDelay = 11,
                     'expires_in' => $expectedExpiresIn = 605123,
-                )
+                ),
             )
         );
         $response = $client->getResponse();
@@ -255,7 +255,7 @@ class QueueControllerTest extends AbstractFunctionTestCase
     {
         $token = 'userToken';
         $queueId = null;
-        for ($i=0; $i<100; $i++) {
+        for ($i = 0; $i<100; $i++) {
             $queueId = mt_rand(1000, 9999999);
             $queue = $this->getQueueRepository()->find($queueId);
             if (null === $queue) {
@@ -309,5 +309,4 @@ class QueueControllerTest extends AbstractFunctionTestCase
         $queue = $this->getQueueRepository()->findOneBy(array('project' => $this->allProjects[0]));
         $this->assertEquals(0, $queue->getSize());
     }
-
 }

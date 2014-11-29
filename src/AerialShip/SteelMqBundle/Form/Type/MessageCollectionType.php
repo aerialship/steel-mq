@@ -37,5 +37,4 @@ class MessageCollectionType extends AbstractType
     {
         return 'message_collection';
     }
-
 }

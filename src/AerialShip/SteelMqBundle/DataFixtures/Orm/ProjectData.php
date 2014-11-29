@@ -125,5 +125,4 @@ class ProjectData extends AbstractFixture implements OrderedFixtureInterface
     {
         return 20;
     }
-
 }

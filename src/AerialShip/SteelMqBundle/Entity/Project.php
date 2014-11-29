@@ -198,5 +198,4 @@ class Project
 
         return ProjectRole::toString($this->currentProjectRole->getRoles());
     }
-
 }

@@ -23,5 +23,4 @@ interface UserRepositoryInterface
      * @return null|User
      */
     public function getByUsername($username);
-
 }

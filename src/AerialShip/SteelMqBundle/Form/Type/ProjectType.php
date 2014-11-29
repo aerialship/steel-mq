@@ -32,5 +32,4 @@ class ProjectType extends AbstractType
     {
         return 'project';
     }
-
 }
