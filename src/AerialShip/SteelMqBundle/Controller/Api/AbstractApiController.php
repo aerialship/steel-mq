@@ -2,6 +2,7 @@
 
 namespace AerialShip\SteelMqBundle\Controller\Api;
 
+use AerialShip\SteelMqBundle\Entity\Message;
 use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Entity\Queue;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -20,6 +21,18 @@ class AbstractApiController extends FOSRestController
     protected function checkQueueIsInProject(Project $project, Queue $queue)
     {
         if ($queue->getProject()->getId() != $project->getId()) {
+            throw new BadRequestHttpException();
+        }
+    }
+
+    /**
+     * @param  Queue                   $queue
+     * @param  Message                 $message
+     * @throws BadRequestHttpException
+     */
+    protected function checkMessageIsInQueue(Queue $queue, Message $message)
+    {
+        if ($message->getQueue()->getId() != $queue->getId()) {
             throw new BadRequestHttpException();
         }
     }
