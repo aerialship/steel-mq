@@ -76,16 +76,16 @@ class MessageControllerTest extends AbstractFunctionTestCase
         $this->assertEquals($queue->getId(), $json[0]['queue_id']);
         $this->assertEquals(Message::STATUS_AVAILABLE, $json[0]['status']);
         $this->assertEquals($queue->getRetries(), $json[0]['retries_remaining']);
-        $this->assertLessThan(2, abs(strtotime($json[0]['created_at']) - time()));
-        $this->assertLessThan(2, abs(strtotime($json[0]['available_at']) - time()));
+        $this->assertLessThan(4, abs(strtotime($json[0]['created_at']) - time()));
+        $this->assertLessThan(4, abs(strtotime($json[0]['available_at']) - time()));
         $this->assertNull($json[0]['timeout_at']);
         $this->assertEquals($expectedBody1, $json[0]['body']);
 
         $this->assertEquals($queue->getId(), $json[1]['queue_id']);
         $this->assertEquals(Message::STATUS_NOT_AVAILABLE, $json[1]['status']);
         $this->assertEquals($expectedRetries2, $json[1]['retries_remaining']);
-        $this->assertLessThan(2, abs(strtotime($json[1]['created_at']) - time()));
-        $this->assertLessThan(2, abs(strtotime($json[1]['available_at']) - time()) - $expectedDelay2);
+        $this->assertLessThan(4, abs(strtotime($json[1]['created_at']) - time()));
+        $this->assertLessThan(4, abs(strtotime($json[1]['available_at']) - time()) - $expectedDelay2);
         $this->assertNull($json[1]['timeout_at']);
         $this->assertEquals($expectedBody2, $json[1]['body']);
     }
