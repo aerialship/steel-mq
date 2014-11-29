@@ -24,7 +24,7 @@
     </target>
 
     <target name="test-phpunit" depends="init">
-        <exec command="${phpunit} -c app --coverage-clover=build/logs/coverage.clover.xml" checkreturn="true" logoutput="true">
+        <exec command="${phpunit} -c app --coverage-clover=build/logs/clover.xml" checkreturn="true" logoutput="true">
         </exec>
     </target>
 

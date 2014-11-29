@@ -11,13 +11,13 @@ before_script:
     - npm install uglify-js
     - npm install uglifycss
     - npm install jscs
-    - pear channel-discover pear.phing.info
-    - pear install phing/phing
-    - phpenv rehash
     - curl http://get.sensiolabs.org/php-cs-fixer.phar -o php-cs-fixer.phar
     - mysql -e 'create database steelmq;'
     - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev --no-interaction install
 
 script:
-    - phing deploy
-    - phing test
+    - bin/phing deploy
+    - bin/phing test
+
+after_script:
+    - php vendor/bin/coveralls -v
