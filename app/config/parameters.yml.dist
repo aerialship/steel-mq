@@ -14,7 +14,7 @@ parameters:
     mailer_password:   ~
 
     locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            2NX5N5If5Kh03vy3zIOYS5P3BYgVNpiG
 
     debug_toolbar:          true
     debug_redirects:        false
