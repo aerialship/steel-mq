@@ -81,4 +81,9 @@ class MessageManager
 
         return $this->messageRepository->getMessages($queue, $options);
     }
+
+    public function delete(Message $message)
+    {
+        $this->messageRepository->delete($message);
+    }
 }
