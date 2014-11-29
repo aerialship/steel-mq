@@ -2,6 +2,7 @@
 
 namespace AerialShip\SteelMqBundle\Controller\Api;
 
+use AerialShip\SteelMqBundle\Entity\Message;
 use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Entity\Queue;
 use AerialShip\SteelMqBundle\Helper\RequestHelper;
@@ -59,5 +60,21 @@ class MessageController extends AbstractApiController
         $result = $this->get('aerial_ship_steel_mq.manager.message')->getMessages($queue, $options);
 
         return $this->handleData($result);
+    }
+
+    /**
+     * @Route("/{messageId}{slash}")
+     * @Method({"GET"})
+     * @ParamConverter("project", options={"id" = "projectId"})
+     * @ParamConverter("queue", options={"id" = "queueId"})
+     * @ParamConverter("message", options={"id" = "messageId"})
+     * @SecureParam(name="project", permissions="PROJECT_ROLE_DEFAULT")
+     */
+    public function getByIdAction(Project $project, Queue $queue, Message $message)
+    {
+        $this->checkQueueIsInProject($project, $queue);
+        $this->checkMessageIsInQueue($queue, $message);
+
+        return $message;
     }
 }

@@ -123,4 +123,58 @@ class MessageControllerTest extends AbstractFunctionTestCase
 
         $this->assertEquals($queue->getId(), $json[0]['queue_id']);
     }
+
+    public function testGetMessageById()
+    {
+        $token = 'userToken';
+
+        /** @var Queue $queue */
+        $queue = $this->allProjects[0]->getQueues()->first();
+        $this->assertNotNull($queue);
+        $this->assertInstanceOf('AerialShip\SteelMqBundle\Entity\Queue', $queue);
+
+        /** @var Message $message */
+        $message = $queue->getMessages()->first();
+        $this->assertNotNull($message);
+        $this->assertInstanceOf('AerialShip\SteelMqBundle\Entity\Message', $message);
+
+        $client = static::createClient();
+
+        $client->request(
+            'GET',
+            sprintf('projects/%s/queues/%s/messages/%s?token=%s', $this->allProjects[0]->getId(), $queue->getId(), $message->getId(), $token)
+        );
+        $response = $client->getResponse();
+        $this->assertJsonResponse($response);
+
+        $json = json_decode($response->getContent(), true);
+
+        $this->assertArrayHasKey('queue_id', $json);
+        $this->assertArrayHasKey('status', $json);
+        $this->assertArrayHasKey('id', $json);
+        $this->assertArrayHasKey('retries_remaining', $json);
+        $this->assertArrayHasKey('created_at', $json);
+        $this->assertArrayHasKey('available_at', $json);
+        $this->assertArrayHasKey('body', $json);
+
+        $this->assertEquals($queue->getId(), $json['queue_id']);
+        $this->assertEquals($message->getStatus(), $json['status']);
+        $this->assertEquals($message->getId(), $json['id']);
+        $this->assertEquals($message->getRetriesRemaining(), $json['retries_remaining']);
+        $this->assertEquals($message->getCreatedAt()->getTimestamp(), strtotime($json['created_at']));
+        $this->assertEquals($message->getAvailableAt()->getTimestamp(), strtotime($json['available_at']));
+        $this->assertEquals($message->getBody(), $json['body']);
+    }
+
+    public function testGetMessageByIdNonExisting()
+    {
+        $token = 'userToken';
+
+        $client = static::createClient();
+
+        $client->request('GET', sprintf('projects/999999/queues/999999/messages/9999?token=%s', $token));
+        $response = $client->getResponse();
+
+        $this->assertEquals(404, $response->getStatusCode());
+    }
 }
