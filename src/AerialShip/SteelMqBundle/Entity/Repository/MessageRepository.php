@@ -4,6 +4,7 @@ namespace AerialShip\SteelMqBundle\Entity\Repository;
 
 use AerialShip\SteelMqBundle\Entity\Message;
 use AerialShip\SteelMqBundle\Entity\Queue;
+use AerialShip\SteelMqBundle\Error\SafeException;
 use AerialShip\SteelMqBundle\Helper\TokenHelper;
 use AerialShip\SteelMqBundle\Model\Repository\MessageRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
@@ -98,6 +99,27 @@ class MessageRepository extends EntityRepository implements MessageRepositoryInt
     public function delete(Message $message)
     {
         $this->_em->remove($message);
+        $this->_em->flush();
+    }
+
+    /**
+     * @param  Message $message
+     * @param  int     $delay
+     * @return void
+     */
+    public function release(Message $message, $delay)
+    {
+        if ($message->getStatus() != Message::STATUS_TAKEN) {
+            throw new SafeException('Only taken messages can be released');
+        }
+
+        $availableAt = new \DateTime(sprintf('+%s SECOND', intval($delay)));
+        $message
+            ->setToken(null)
+            ->setAvailableAt($availableAt)
+            ->setTimeoutAt(null)
+        ;
+        $this->_em->persist($message);
         $this->_em->flush();
     }
 }

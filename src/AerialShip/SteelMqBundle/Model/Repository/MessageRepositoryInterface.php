@@ -53,4 +53,11 @@ interface MessageRepositoryInterface
      * @return void
      */
     public function delete(Message $message);
+
+    /**
+     * @param  Message $message
+     * @param  int     $delay
+     * @return void
+     */
+    public function release(Message $message, $delay);
 }

@@ -122,6 +122,11 @@ class MessageControllerTest extends AbstractFunctionTestCase
         $this->assertArrayHasKey('body', $json[0]);
 
         $this->assertEquals($queue->getId(), $json[0]['queue_id']);
+
+        $message = $this->loadMessage($json[0]['id']);
+        $this->assertEquals(Message::STATUS_TAKEN, $message->getStatus());
+        $this->assertNotNull($message->getToken());
+        $this->assertGreaterThanOrEqual(new \DateTime(), $message->getTimeoutAt());
     }
 
     public function testGetMessageById()
@@ -208,7 +213,56 @@ class MessageControllerTest extends AbstractFunctionTestCase
         $this->assertArrayHasKey('success', $json);
         $this->assertTrue($json['success']);
 
-        $queue = $this->getMessageRepository()->find($queue->getId());
-        $this->assertNull($queue);
+        $message = $this->getMessageRepository()->find($message->getId());
+        $this->assertNull($message);
+    }
+
+    public function testRelease()
+    {
+        $token = 'userToken';
+
+        /** @var Queue $queue */
+        $queue = $this->allProjects[0]->getQueues()->first();
+        $this->assertNotNull($queue);
+        $this->assertInstanceOf('AerialShip\SteelMqBundle\Entity\Queue', $queue);
+
+        // get a message
+        $client = static::createClient();
+        $client->request(
+            'GET',
+            sprintf('projects/%s/queues/%s/messages?token=%s', $this->allProjects[0]->getId(), $queue->getId(), $token)
+        );
+        $response = $client->getResponse();
+        $this->assertJsonResponse($response);
+
+        $json = json_decode($response->getContent(), true);
+
+        $this->assertTrue(is_array($json));
+        $this->assertCount(1, $json);
+
+        $messageId = $json[0]['id'];
+
+        // load message
+        $message = $this->loadMessage($messageId);
+        $this->assertEquals(Message::STATUS_TAKEN, $message->getStatus());
+
+        // release taken message
+        $client = static::createClient();
+        $client->request(
+            'POST',
+            sprintf('projects/%s/queues/%s/messages/%s/release?token=%s', $this->allProjects[0]->getId(), $queue->getId(), $message->getId(), $token)
+        );
+        $response = $client->getResponse();
+        $this->assertJsonResponse($response);
+        $json = json_decode($response->getContent(), true);
+        $this->assertTrue(is_array($json));
+        $this->assertArrayHasKey('success', $json);
+
+        // load message
+        $message = $this->loadMessage($messageId);
+        $this->assertEquals(Message::STATUS_AVAILABLE, $message->getStatus());
+        $this->assertLessThanOrEqual(new \DateTime(), $message->getAvailableAt());
+        $this->assertNull($message->getToken());
+        $this->assertNull($message->getTimeoutAt());
     }
 }
