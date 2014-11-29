@@ -92,5 +92,4 @@ class ProjectControllerTest extends AbstractFunctionTestCase
         $this->assertEquals('Validation Failed', $json['message']);
         $this->assertEquals('This value should not be blank.', $json['errors']['children']['title']['errors'][0]);
     }
-
 }

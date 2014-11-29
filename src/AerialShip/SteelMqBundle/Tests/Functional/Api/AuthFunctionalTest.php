@@ -33,7 +33,7 @@ class AuthFunctionalTest extends AbstractFunctionTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/projects', array(), array(), array(
-            'HTTP_Authorization' => 'token userToken'
+            'HTTP_Authorization' => 'token userToken',
         ));
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $json = json_decode($client->getResponse()->getContent());
@@ -121,5 +121,4 @@ class AuthFunctionalTest extends AbstractFunctionTestCase
         $this->assertEquals('403', $json['code']);
         $this->assertEquals('Access Denied', $json['message']);
     }
-
 }

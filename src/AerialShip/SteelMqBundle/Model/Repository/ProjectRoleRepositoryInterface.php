@@ -18,5 +18,4 @@ interface ProjectRoleRepositoryInterface
      * @return null|ProjectRole
      */
     public function getByAccessToken($accessToken);
-
 }

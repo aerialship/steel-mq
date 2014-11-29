@@ -339,5 +339,4 @@ class Queue
     {
         return $this->getMessages()->count();
     }
-
 }
