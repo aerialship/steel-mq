@@ -8,3 +8,6 @@ aerial_ship_steel_mq_api:
 aerial_ship_steel_mq_html:
     resource: "@AerialShipSteelMqBundle/Controller/Html"
     type: annotation
+    defaults: { "_format": "html", "slash": "/" }
+    requirements:
+        slash: /|

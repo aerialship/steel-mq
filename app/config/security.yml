@@ -32,11 +32,18 @@ security:
 
         main:
             pattern: ^/
+            form_login:
+                login_path: /login
+                check_path: /login_check
+                default_target_path: /
+                provider: steelmq
+            logout:
+                path: /logout
             anonymous: ~
 
 
     access_control:
-        - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/, roles: ROLE_USER }
 
     access_decision_manager:
