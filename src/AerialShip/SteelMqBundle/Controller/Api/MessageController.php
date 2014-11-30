@@ -95,4 +95,26 @@ class MessageController extends AbstractApiController
 
         return $this->handleData($this->getSuccessData());
     }
+
+    /**
+     * @Route("/{messageId}/release{slash}")
+     * @Method({"POST"})
+     * @ParamConverter("project", options={"id" = "projectId"})
+     * @ParamConverter("queue", options={"id" = "queueId"})
+     * @ParamConverter("message", options={"id" = "messageId"})
+     * @SecureParam(name="project", permissions="PROJECT_ROLE_DEFAULT")
+     */
+    public function releaseAction(Project $project, Queue $queue, Message $message, Request $request)
+    {
+        $this->checkQueueIsInProject($project, $queue);
+        $this->checkMessageIsInQueue($queue, $message);
+
+        $options = array(
+            'delay' => $request->query->get('delay'),
+        );
+
+        $this->get('aerial_ship_steel_mq.manager.message')->release($message, $options);
+
+        return $this->handleData($this->getSuccessData());
+    }
 }

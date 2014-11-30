@@ -7,3 +7,6 @@ services:
 
     aerial_ship_steel_mq.defaulter.get_message:
         class: AerialShip\SteelMqBundle\Services\Defaulter\GetMessageDefaulter
+
+    aerial_ship_steel_mq.defaulter.release_message:
+        class: AerialShip\SteelMqBundle\Services\Defaulter\ReleaseMessageDefaulter

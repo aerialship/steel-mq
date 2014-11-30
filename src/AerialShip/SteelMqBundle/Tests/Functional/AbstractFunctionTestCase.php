@@ -197,4 +197,36 @@ class AbstractFunctionTestCase extends WebTestCase
             $response->headers
         );
     }
+
+    /**
+     * @param  int                                           $id
+     * @param  bool                                          $assert
+     * @return \AerialShip\SteelMqBundle\Entity\Message|null
+     */
+    protected function loadMessage($id, $assert = true)
+    {
+        $message = $this->getMessageRepository()->find(intval($id));
+        if ($assert) {
+            $this->assertNotNull($message);
+            $this->assertInstanceOf('AerialShip\SteelMqBundle\Entity\Message', $message);
+        }
+
+        return $message;
+    }
+
+    /**
+     * @param  int                                           $id
+     * @param  bool                                          $assert
+     * @return \AerialShip\SteelMqBundle\Entity\Message|null
+     */
+    protected function loadQueue($id, $assert = true)
+    {
+        $queue = $this->getQueueRepository()->find(intval($id));
+        if ($assert) {
+            $this->assertNotNull($queue);
+            $this->assertInstanceOf('AerialShip\SteelMqBundle\Entity\Queue', $queue);
+        }
+
+        return $queue;
+    }
 }
