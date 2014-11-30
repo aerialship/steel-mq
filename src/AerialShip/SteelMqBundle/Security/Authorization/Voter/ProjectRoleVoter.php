@@ -103,7 +103,7 @@ class ProjectRoleVoter implements VoterInterface
             }
         }
 
-        return null;
+        return;
     }
 
     /**

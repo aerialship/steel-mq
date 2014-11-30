@@ -193,7 +193,7 @@ class Project
     public function getCurrentRoles()
     {
         if (false == $this->currentProjectRole) {
-            return null;
+            return;
         }
 
         return ProjectRole::toString($this->currentProjectRole->getRoles());

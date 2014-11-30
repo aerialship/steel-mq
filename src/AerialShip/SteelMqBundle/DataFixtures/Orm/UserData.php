@@ -21,7 +21,7 @@ class UserData extends AbstractFixture implements OrderedFixtureInterface
         $user->setEmail('superadmin@aerialship.com')
             ->setName('Super Admin')
             ->setSalt(TokenHelper::generate())
-            ->setPassword('abcdefgh123')
+            ->setPlainPassword('abcdefgh123')
             ->setRoles(array(User::ROLE_SUPER_ADMIN))
             ->setAccessToken('superAdminToken')
         ;
@@ -33,7 +33,7 @@ class UserData extends AbstractFixture implements OrderedFixtureInterface
         $user->setEmail('admin@aerialship.com')
             ->setName('Admin')
             ->setSalt(TokenHelper::generate())
-            ->setPassword('abcdefgh123')
+            ->setPlainPassword('abcdefgh123')
             ->setRoles(array(User::ROLE_ADMIN))
             ->setAccessToken('adminToken')
         ;
@@ -45,7 +45,7 @@ class UserData extends AbstractFixture implements OrderedFixtureInterface
         $user->setEmail('user@aerialship.com')
             ->setName('User')
             ->setSalt(TokenHelper::generate())
-            ->setPassword('abcdefgh123')
+            ->setPlainPassword('abcdefgh123')
             ->setRoles(array(User::ROLE_USER))
             ->setAccessToken('userToken')
         ;
@@ -57,7 +57,7 @@ class UserData extends AbstractFixture implements OrderedFixtureInterface
         $user->setEmail('guest@aerialship.com')
             ->setName('Guest')
             ->setSalt(TokenHelper::generate())
-            ->setPassword('abcdefgh123')
+            ->setPlainPassword('abcdefgh123')
             ->setRoles(array(User::ROLE_USER))
             ->setAccessToken('guestToken')
         ;
