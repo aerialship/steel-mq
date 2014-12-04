@@ -1,0 +1,28 @@
+services:
+    aerial_ship_steel_mq.command.user.create:
+        class: AerialShip\SteelMqBundle\Command\UserCreateCommand
+        arguments:
+            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:User')"
+        tags:
+            - { name: console.command }
+
+    aerial_ship_steel_mq.command.user.passwd:
+        class: AerialShip\SteelMqBundle\Command\UserPasswdCommand
+        arguments:
+            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:User')"
+        tags:
+            - { name: console.command }
+
+    aerial_ship_steel_mq.command.user.promote:
+        class: AerialShip\SteelMqBundle\Command\UserPromoteCommand
+        arguments:
+            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:User')"
+        tags:
+            - { name: console.command }
+
+    aerial_ship_steel_mq.command.user.demote:
+        class: AerialShip\SteelMqBundle\Command\UserDemoteCommand
+        arguments:
+            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:User')"
+        tags:
+            - { name: console.command }

@@ -18,6 +18,22 @@ class User implements UserInterface, \Serializable
     const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
     const ROLE_DEFAULT = self::ROLE_USER;
 
+    private static $allRoles = array(
+        self::ROLE_USER => 1,
+        self::ROLE_ADMIN => 1,
+        self::ROLE_SUPER_ADMIN => 1,
+    );
+
+    /**
+     * @param string $role
+     *
+     * @return bool
+     */
+    public static function isValidRole($role)
+    {
+        return isset(self::$allRoles[$role]);
+    }
+
     /**
      * @var int
      * @ORM\Id
@@ -127,6 +143,7 @@ class User implements UserInterface, \Serializable
     {
         $this->createdAt = new \DateTime();
         $this->projectRoles = new ArrayCollection();
+        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
     }
 
     /**
