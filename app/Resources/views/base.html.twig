@@ -6,7 +6,6 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
             {% stylesheets
-            'vendor/necolas_normalize.css/normalize.css'
             'components/bootstrap/css/bootstrap.min.css'
             'vendor/fortawesome_font-awesome/css/font-awesome.min.css'
             'bundles/aerialshipsteelmq/css/style.css'
@@ -21,6 +20,15 @@
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            {% javascripts
+                'components/jquery/jquery.min.js'
+                'components/bootstrap/js/bootstrap.min.js'
+                '@BraincraftedBootstrapBundle/Resources/js/bc-bootstrap-collection.js'
+                output="js/compiled/base.js"
+            %}
+            <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
     </body>
 </html>

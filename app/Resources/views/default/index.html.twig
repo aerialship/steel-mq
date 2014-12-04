@@ -1,14 +1,12 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout.html.twig' %}
 
-{% block body %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6">
-                levi
-            </div>
-            <div class="col-md-6">
-                <a href="{{ path('logout') }}">Logout</a>
-            </div>
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            levi
+        </div>
+        <div class="col-md-6">
+            <a href="{{ path('logout') }}">Logout</a>
         </div>
     </div>
 {% endblock %}
