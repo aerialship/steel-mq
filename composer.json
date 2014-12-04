@@ -6,19 +6,6 @@
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
     },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "necolas/normalize.css",
-                "version": "3.0.1",
-                "dist": {
-                    "type": "file",
-                    "url": "https://raw.githubusercontent.com/necolas/normalize.css/3.0.1/normalize.css"
-                }
-            }
-        }
-    ],
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.5.*",
@@ -34,7 +21,6 @@
 
         "components/jquery": "1.11.1",
         "components/jqueryui": "1.11.1",
-        "necolas/normalize.css": "3.0.1",
         "components/bootstrap": "3.2.0",
         "fortawesome/font-awesome": "v4.1.0",
         "braincrafted/bootstrap-bundle": "~2.1",
@@ -92,7 +78,6 @@
             "dev-master": "2.5-dev"
         },
         "vendor2web": {
-            "necolas/normalize.css": "necolas_normalize.css",
             "fortawesome/font-awesome": "fortawesome_font-awesome"
         }
     }

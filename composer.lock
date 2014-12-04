@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5dbba231973614027e39d6d3d0d77508",
+    "hash": "184382e5347eee0097a1fa99f08cbbb2",
     "packages": [
         {
             "name": "appsco/component-share",
@@ -1988,17 +1988,6 @@
                 "psr-3"
             ],
             "time": "2014-09-30 13:30:58"
-        },
-        {
-            "name": "necolas/normalize.css",
-            "version": "3.0.1",
-            "dist": {
-                "type": "file",
-                "url": "https://raw.githubusercontent.com/necolas/normalize.css/3.0.1/normalize.css",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "library"
         },
         {
             "name": "phpcollection/phpcollection",
