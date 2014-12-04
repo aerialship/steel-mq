@@ -7,6 +7,13 @@ use AerialShip\SteelMqBundle\Entity\User;
 interface UserRepositoryInterface
 {
     /**
+     * @param  User $user
+     * @param  bool $flush
+     * @return void
+     */
+    public function save(User $user, $flush = true);
+
+    /**
      * @param  string    $accessToken
      * @return User|null
      */

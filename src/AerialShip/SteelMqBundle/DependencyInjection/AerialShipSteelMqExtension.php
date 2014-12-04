@@ -28,5 +28,6 @@ class AerialShipSteelMqExtension extends Extension
         $loader->load('defaulter.yml');
         $loader->load('manager.yml');
         $loader->load('services.yml');
+        $loader->load('command.yml');
     }
 }
