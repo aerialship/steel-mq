@@ -10,3 +10,9 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
         public: false
+
+    aerial_ship_steel_mq.model.project_share_service:
+        class: AerialShip\SteelMqBundle\Services\Sharing\ProjectShareService
+        arguments:
+            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:ProjectRole')"
+            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:User')"

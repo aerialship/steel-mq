@@ -29,7 +29,8 @@ class ProjectRole
      * @ORM\Id
      * @ORM\ManyToOne(
      *      targetEntity="User",
-     *      inversedBy="projectRoles"
+     *      inversedBy="projectRoles",
+     *      fetch="EXTRA_LAZY"
      * )
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
@@ -120,7 +121,10 @@ class ProjectRole
      */
     public function getRoles()
     {
-        return $this->roles;
+        $roles = $this->roles;
+        $roles[] = self::PROJECT_ROLE_DEFAULT;
+
+        return array_unique($roles);
     }
 
     /**
@@ -131,9 +135,11 @@ class ProjectRole
     {
         $this->roles = array();
 
-        foreach ($roles as $role) {
+        foreach (array_unique($roles) as $role) {
             if (isset(self::$validRoles[$role])) {
-                $this->roles[] = $role;
+                if ($role != self::PROJECT_ROLE_DEFAULT) {
+                    $this->roles[] = $role;
+                }
             } else {
                 throw new \InvalidArgumentException(sprintf("Invalid project role '%s'", $role));
             }
@@ -149,6 +155,10 @@ class ProjectRole
     public function addRole($role)
     {
         $role = strtoupper($role);
+
+        if (self::PROJECT_ROLE_DEFAULT == $role) {
+            return $this;
+        }
 
         if (false == isset(self::$validRoles[$role])) {
             throw new \InvalidArgumentException(sprintf("Invalid project role '%s'", $role));
@@ -176,12 +186,28 @@ class ProjectRole
     }
 
     /**
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        $role = strtoupper($role);
+
+        if (self::PROJECT_ROLE_DEFAULT == $role) {
+            return true;
+        }
+
+        return in_array($role, $this->getRoles());
+    }
+
+    /**
      * @param  string $role
      * @return bool
      */
     public static function isRoleValid($role)
     {
-        return isset(self::$validRoles[$role]);
+        return isset(self::$validRoles[strtoupper($role)]);
     }
 
     public static function toString(array $roles)

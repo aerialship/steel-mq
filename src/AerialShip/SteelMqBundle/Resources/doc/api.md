@@ -48,6 +48,24 @@ POST /projects
 ```
 
 
+Get project info
+----------------
+
+```
+GET /projects/{Project ID}
+```
+
+### Response
+
+``` json
+{
+    "id": 1359,
+    "title": "Project Name",
+    "roles": ["owner"]
+}
+```
+
+
 List Message Queues
 -------------------
 

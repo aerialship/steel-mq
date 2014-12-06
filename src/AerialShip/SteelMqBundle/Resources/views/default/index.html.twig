@@ -1,0 +1,60 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Projects {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Projects</h1>
+            <ul class="list-unstyled alt-rows">
+            {% for role in app.user.projectRoles.slice(0,10) %}
+                <li>
+                    <ul class="nav nav-pills">
+                        <li role="presentation">
+                            <a href=""><span class="badge mr-10">{{ role.project.id }}</span> {{ role.project.title }}</a>
+                        </li>
+                        <li role="presentation" class="pull-right">
+                            <a href="#"
+                                data-as='{{ {
+                                    click: {
+                                        "bs.modal.load": {
+                                            "url": path('project_share_modal', {userId: role.user.id, projectId: role.project.id }),
+                                            "block": true
+                                        }
+                                    }
+                                }|json_encode }}'
+                            ><i class="fa fa-share-alt"></i> Share</a>
+                        </li>
+                        <li role="presentation" class="pull-right">
+                            <a href="#"
+                                data-as='{{ {
+                                    click: {
+                                        "bs.modal.load": {
+                                            "url": path('project_settings_modal', {userId: role.user.id, projectId: role.project.id }),
+                                            "block": true
+                                        }
+                                    }
+                                }|json_encode }}'
+                            ><i class="fa fa-gear"></i> Settings</a>
+                        </li>
+                        <li role="presentation" class="pull-right">
+                            <a href="#"
+                                data-as='{{ {
+                                    click: {
+                                        "bs.modal.load": {
+                                            "url": path('project_credentials', {userId: role.user.id, projectId: role.project.id }),
+                                            "block": true
+                                        }
+                                    }
+                                }|json_encode }}'
+                            ><i class="fa fa-key"></i> Credentials</a>
+                        </li>
+                    </ul>
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+
+{% endblock %}

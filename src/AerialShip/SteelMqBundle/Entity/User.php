@@ -131,7 +131,8 @@ class User implements UserInterface, \Serializable
      *      targetEntity="ProjectRole",
      *      mappedBy="user",
      *      orphanRemoval=true,
-     *      cascade={"remove"}
+     *      cascade={"remove"},
+     *      fetch="EXTRA_LAZY"
      * )
      */
     protected $projectRoles;

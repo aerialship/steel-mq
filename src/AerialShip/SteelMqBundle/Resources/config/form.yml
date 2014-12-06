@@ -18,3 +18,13 @@ services:
         class: AerialShip\SteelMqBundle\Form\Type\MessageCollectionType
         tags:
             - { name: form.type, alias: message_collection }
+
+    aerial_ship_steel_mq.form.type.project_collaborator:
+        class: AerialShip\SteelMqBundle\Form\Type\ProjectCollaboratorType
+        tags:
+            - { name: form.type, alias: project_collaborator }
+
+    aerial_ship_steel_mq.form.type.share_project:
+        class: AerialShip\SteelMqBundle\Form\Type\ShareProjectType
+        tags:
+            - { name: form.type, alias: share_project }

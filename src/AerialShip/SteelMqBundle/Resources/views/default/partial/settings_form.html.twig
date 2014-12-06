@@ -1,0 +1,50 @@
+
+<form role="form"
+    {{ form_enctype(form) }}
+    action="{{ path('project_settings_form', {userId: role.user.id, projectId: role.project.id}) }}"
+    method="post" data-ajax-form
+>
+
+{% if msg is defined and msg %}
+    <div class="alert alert-{{ msg_type }}" role="alert">
+        {{ msg }}
+    </div>
+{% endif %}
+
+{{ form_widget(form) }}
+
+<div class="form-group">
+    <button type="submit" name="save" class="btn btn-primary pull-right" value="1">Save</button>
+    <div class="clearfix"></div>
+</div>
+
+<div class="mt-30"></div>
+
+<div class="panel panel-danger">
+    <div class="panel-heading" role="tab" id="headingTwo">
+        <h4 class="panel-title">
+            <a class="collapsed btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <i class="fa fa-times-circle"></i> Delete Project
+                <div class="clearfix"></div>
+            </a>
+        </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+        <div class="panel-body">
+            <button type="submit" name="delete" class="btn btn-danger pull-right" value="1"><i class="fa fa-times"></i> Confirm Delete</button>
+        </div>
+    </div>
+</div>
+
+</form>
+
+{% if close %}
+<script type="text/javascript">
+    setTimeout(function() {
+        $('#projectSettingsModal').modal('hide');
+    }, 900);
+    setTimeout(function() {
+        window.location.reload();
+    }, 1000);
+</script>
+{% endif %}

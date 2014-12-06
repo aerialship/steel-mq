@@ -1,0 +1,26 @@
+
+<form role="form"
+        {{ form_enctype(form) }}
+      action="{{ path('project_share_form', {userId: role.user.id, projectId: role.project.id}) }}"
+      method="post" data-ajax-form
+>
+
+    <h4>Owner</h4>
+    <ul class="list-inline">
+    {% for owner in owners %}
+        <li>{{ owner.user.email }}</li>
+    {% endfor %}
+    </ul>
+
+<div class="clearfix mt-30"></div>
+
+<h4>Collaborators</h4>
+
+{{ form_widget(form) }}
+
+<div class="form-group">
+    <button type="submit" class="btn btn-warning btn-lg pull-right">Save</button>
+    <div class="clearfix"></div>
+</div>
+
+</form>

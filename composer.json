@@ -6,6 +6,19 @@
     "autoload": {
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
     },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "malsup/blockui",
+                "version": "2.65",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/malsup/blockui/archive/v2.65.zip"
+                }
+            }
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.5.*",
@@ -31,7 +44,10 @@
         "friendsofsymfony/rest-bundle": "~1.4",
         "jms/serializer-bundle": "~0.13",
         "jms/security-extra-bundle": "~1.5",
-        "ircmaxell/password-compat": "1.0.4"
+        "ircmaxell/password-compat": "1.0.4",
+        "aerialship/as-js": "dev-master",
+        "malsup/form": "3.50",
+        "malsup/blockui": "2.65"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
@@ -78,7 +94,10 @@
             "dev-master": "2.5-dev"
         },
         "vendor2web": {
-            "fortawesome/font-awesome": "fortawesome_font-awesome"
+            "fortawesome/font-awesome": "fortawesome_font-awesome",
+            "malsup/blockui": "malsup_blockui",
+            "malsup/form": "malsup_form",
+            "aerialship/as-js": "aerialship_as-js"
         }
     }
 }
