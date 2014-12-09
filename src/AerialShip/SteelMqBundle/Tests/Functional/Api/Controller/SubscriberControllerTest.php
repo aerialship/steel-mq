@@ -63,8 +63,8 @@ class SubscriberControllerTest extends AbstractFunctionTestCase
 
         $this->assertEquals($this->subscriber->getId(), $subscriberData['id']);
         $this->assertEquals('http://some.subscriber.com/steal_mq_hook', $subscriberData['url']);
-        $this->assertEquals('Content-Type', array_keys($subscriberData['headers'])[0]);
-        $this->assertEquals('X-Custom', array_keys($subscriberData['headers'])[1]);
+        $this->assertEquals('Content-Type', $subscriberData['headers'][0]['name']);
+        $this->assertEquals('X-Custom', $subscriberData['headers'][1]['name']);
     }
 
     public function testEmptyList()
@@ -104,7 +104,12 @@ class SubscriberControllerTest extends AbstractFunctionTestCase
                 "subscriber" => [
                     "url" => "http://some.subscriber.com/steel_mq_hook",
                     "headers" => [
-                        "Content-Type" => ["application/json"],
+                        [
+                            "name" => "Content-Type",
+                            "values" => [
+                                "application/json",
+                            ],
+                        ],
                     ],
                 ]
 

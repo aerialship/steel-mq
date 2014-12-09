@@ -11,8 +11,7 @@ class HeaderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->addViewTransformer(new MapTransformer())
-            ->add('key', 'text')
+            ->add('name', 'text')
             ->add('values', 'collection', [
                     "type" => 'text',
                     'allow_add' => true

@@ -31,7 +31,6 @@ class Subscriber
      * @var array
      * @ORM\Column(type="array")
      * @JMS\Expose
-     * @JMS\Accessor(getter="getJMSHeaders")
      */
     protected $headers = array();
 
@@ -55,39 +54,12 @@ class Subscriber
     }
 
     /**
-     * @return array
-     */
-    public function getJMSHeaders()
-    {
-        $headers = [];
-        foreach ($this->headers as $header) {
-            $headers[$header[0]] = $header[1];
-        }
-
-        return $headers;
-    }
-
-    /**
-     * @param  array $array
+     * @param  array $headers
      * @return $this
      */
-    public function setHeaders($array)
+    public function setHeaders($headers)
     {
-        foreach ($array as $header) {
-            $this->addHeader(array_keys($header)[0], array_values($header)[0]);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param  string           $name
-     * @param  string           $value
-     * @return $this|Subscriber
-     */
-    public function addHeader($name, $value)
-    {
-        $this->headers[] = array($name, $value);
+        $this->headers = $headers;
 
         return $this;
     }

@@ -16,11 +16,26 @@ class SubscriberData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
+
         $subscriber = new Subscriber();
+        $headers = [
+            [
+                "name" => "Content-Type",
+                "values" => [
+                    "application/json",
+                ],
+            ],
+            [
+                "name" => "X-Custom",
+                "values" => [
+                    "foo",
+                    "bar",
+                ],
+            ],
+        ];
         $subscriber
             ->setUrl('http://some.subscriber.com/steal_mq_hook')
-            ->addHeader("Content-Type", ["application/json"])
-            ->addHeader("X-Custom", ["foo", "bar"])
+            ->setHeaders($headers)
             ->setQueue($this->getReference('queue-p1-1'))
         ;
 

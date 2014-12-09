@@ -45,19 +45,6 @@ class SubscriberController extends AbstractApiController
         $this->checkQueueIsInProject($project, $queue);
 
         $form = $this->createForm('subscriber');
-        $subscriber = $request->get('subscriber');
-        $headers = [];
-        foreach ($subscriber['headers'] as $key => $val) {
-            if (is_string($val)) {
-                $val = [$val];
-            }
-            $headers[] = [
-                'key' => $key,
-                'values' => $val,
-            ];
-        }
-        $subscriber['headers'] = $headers;
-        $request->request->set('subscriber', $subscriber);
 
         $form->handleRequest($request);
 
