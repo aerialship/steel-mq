@@ -67,6 +67,13 @@ class ProjectManager
         return $result;
     }
 
+    public function getProjectRoleByUserProject(User $user, Project $project)
+    {
+        return $this->projectRoleRepository->getByUserIdProjectId(array(
+            'userId' => $user->getId(),
+            'projectId' => $project->getId(),
+        ));
+    }
     /**
      * @param  Project     $project
      * @param  User|null   $owner
@@ -95,5 +102,13 @@ class ProjectManager
         });
 
         return $projectRole;
+    }
+
+    /**
+     * @param Project $project
+     */
+    public function save(Project $project)
+    {
+        $this->projectRepository->save($project);
     }
 }

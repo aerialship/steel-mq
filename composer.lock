@@ -4,8 +4,30 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "184382e5347eee0097a1fa99f08cbbb2",
+    "hash": "6611ca01bfff96b50721675f7ffb7b67",
     "packages": [
+        {
+            "name": "aerialship/as-js",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aerialship/as-js.git",
+                "reference": "d33ac3413519840b7c7a9afae03bcd9539956aa0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aerialship/as-js/zipball/d33ac3413519840b7c7a9afae03bcd9539956aa0",
+                "reference": "d33ac3413519840b7c7a9afae03bcd9539956aa0",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Lightweight javascript framework that minimize writing of javascript with implementation of common operations and their easy binding to dom trough special data attribute",
+            "time": "2014-12-07 07:42:58"
+        },
         {
             "name": "appsco/component-share",
             "version": "1.0.3",
@@ -1916,6 +1938,67 @@
                 "minification"
             ],
             "time": "2014-10-14 14:45:32"
+        },
+        {
+            "name": "malsup/blockui",
+            "version": "2.65",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/malsup/blockui/archive/v2.65.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "library"
+        },
+        {
+            "name": "malsup/form",
+            "version": "3.50",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/malsup/form.git",
+                "reference": "380288544da0e8f6970a974f535eb993724fc337"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/malsup/form/zipball/380288544da0e8f6970a974f535eb993724fc337",
+                "reference": "380288544da0e8f6970a974f535eb993724fc337",
+                "shasum": ""
+            },
+            "require": {
+                "components/jquery": ">=1.5"
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "jquery.form.js"
+                    ],
+                    "shim": {
+                        "deps": [
+                            "jquery"
+                        ]
+                    }
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "M. Alsup",
+                    "homepage": "http://jquery.malsup.com"
+                }
+            ],
+            "description": "A simple way to AJAX-ify any form on your page; with file upload and progress support.",
+            "homepage": "http://jquery.malsup.com/form/",
+            "keywords": [
+                "ajax",
+                "form",
+                "upload"
+            ],
+            "time": "2014-02-19 14:15:06"
         },
         {
             "name": "monolog/monolog",
@@ -3848,7 +3931,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "doctrine/doctrine-migrations-bundle": 20,
-        "doctrine/migrations": 20
+        "doctrine/migrations": 20,
+        "aerialship/as-js": 20
     },
     "prefer-stable": true,
     "platform": {

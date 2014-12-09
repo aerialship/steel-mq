@@ -22,7 +22,7 @@ class LoginController extends Controller
             $request->getSession()->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-        return $this->render('login/index.html.twig', array(
+        return $this->render('@AerialShipSteelMq/login/index.html.twig', array(
             'last_username' => $request->getSession()->get(SecurityContext::LAST_USERNAME),
             'error' => $error,
         ));

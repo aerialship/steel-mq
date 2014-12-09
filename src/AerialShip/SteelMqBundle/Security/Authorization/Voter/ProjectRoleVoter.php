@@ -45,7 +45,9 @@ class ProjectRoleVoter implements VoterInterface
     public function supportsClass($class)
     {
         return $class == 'AerialShip\SteelMqBundle\Entity\Project' ||
-            is_subclass_of($class, 'AerialShip\SteelMqBundle\Entity\Project');
+            $class == 'AerialShip\SteelMqBundle\Entity\ProjectRole' ||
+            is_subclass_of($class, 'AerialShip\SteelMqBundle\Entity\Project') ||
+            is_subclass_of($class, 'AerialShip\SteelMqBundle\Entity\ProjectRole');
     }
 
     /**
@@ -66,11 +68,9 @@ class ProjectRoleVoter implements VoterInterface
             return VoterInterface::ACCESS_ABSTAIN;
         }
 
-        /** @var Project $project */
-        $project = $object;
         $user = $this->getUser($token);
 
-        $projectRole = $this->getProjectRole($user, $project);
+        $projectRole = $this->getProjectRole($user, $object);
 
         if (false == $projectRole) {
             return VoterInterface::ACCESS_DENIED;
@@ -91,19 +91,28 @@ class ProjectRoleVoter implements VoterInterface
     }
 
     /**
-     * @param  User             $user
-     * @param  Project          $project
+     * @param User                $user
+     * @param Project|ProjectRole $object
+     *
      * @return ProjectRole|null
      */
-    protected function getProjectRole(User $user, Project $project)
+    protected function getProjectRole(User $user, $object)
     {
-        foreach ($user->getProjectRoles() as $projectRole) {
-            if ($projectRole->getProject()->getId() == $project->getId()) {
-                return $projectRole;
-            }
+        if ($object instanceof ProjectRole) {
+            return $object;
         }
 
-        return;
+        if ($object instanceof Project) {
+            foreach ($user->getProjectRoles() as $projectRole) {
+                if ($projectRole->getProject()->getId() == $object->getId()) {
+                    return $projectRole;
+                }
+            }
+
+            return;
+        }
+
+        throw new \LogicException('Unsupported object type');
     }
 
     /**

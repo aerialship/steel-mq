@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %} - AerialShip SteelMQ{% endblock %}</title>
         {% block stylesheets %}
             {% stylesheets
             'components/bootstrap/css/bootstrap.min.css'
@@ -25,6 +25,12 @@
                 'components/jquery/jquery.min.js'
                 'components/bootstrap/js/bootstrap.min.js'
                 '@BraincraftedBootstrapBundle/Resources/js/bc-bootstrap-collection.js'
+                'vendor/malsup_blockui/jquery.blockUI.js'
+                'vendor/malsup_form/jquery.form.js'
+                'vendor/aerialship_as-js/src/core.js'
+                'vendor/aerialship_as-js/src/method/*'
+                'vendor/aerialship_as-js/src/execute_bind.js'
+                '@AerialShipSteelMqBundle/Resources/public/js/common.js'
                 output="js/compiled/base.js"
             %}
             <script src="{{ asset_url }}"></script>
