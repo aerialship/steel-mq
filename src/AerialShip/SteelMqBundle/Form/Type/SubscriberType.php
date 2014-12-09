@@ -8,14 +8,13 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class SubscriberType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('url', 'url')
             ->add('headers', 'collection', array(
                     'type' => 'header',
-                    'allow_add' => true
+                    'allow_add' => true,
                 ))
         ;
     }

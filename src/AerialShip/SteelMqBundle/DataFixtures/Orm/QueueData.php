@@ -40,7 +40,6 @@ class QueueData extends AbstractFixture implements OrderedFixtureInterface, Cont
         $manager->flush();
         $this->addReference('queue-p1-1', $queue);
 
-
         $queue = new Queue();
         $queue->setTitle('Queue Two P1')
             ->setProject($this->getReference('project-one'));

@@ -27,8 +27,8 @@ class AbstractApiController extends FOSRestController
     }
 
     /**
-     * @param Queue    $queue
-     * @param  Message $message
+     * @param Queue   $queue
+     * @param Message $message
      *
      * @throws BadRequestHttpException
      */

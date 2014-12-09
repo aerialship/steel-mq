@@ -155,14 +155,6 @@ class AbstractFunctionTestCase extends WebTestCase
     {
         $loader = new Loader();
         $loader->addFixture(new UserData());
-        $loader->addFixture(new ProjectData());
-        $loader->addFixture(new QueueData());
-        $loader->addFixture(new SubscriberData());
-        foreach ($loader->getFixtures() as $fixture) {
-            if ($fixture instanceof ContainerAwareInterface) {
-                $fixture->setContainer($this->getBootedKernel()->getContainer());
-            }
-        }
         $this->loadFixtures($loader);
     }
 
@@ -171,7 +163,6 @@ class AbstractFunctionTestCase extends WebTestCase
         $loader = new Loader();
         $loader->addFixture(new UserData());
         $loader->addFixture(new ProjectData());
-        $loader->addFixture(new QueueData());
         $this->loadFixtures($loader);
     }
 
@@ -181,6 +172,7 @@ class AbstractFunctionTestCase extends WebTestCase
         $loader->addFixture(new UserData());
         $loader->addFixture(new ProjectData());
         $loader->addFixture(new QueueData());
+        $loader->addFixture(new SubscriberData());
         $this->loadFixtures($loader);
     }
 
@@ -190,6 +182,7 @@ class AbstractFunctionTestCase extends WebTestCase
         $loader->addFixture(new UserData());
         $loader->addFixture(new ProjectData());
         $loader->addFixture(new QueueData());
+        $loader->addFixture(new SubscriberData());
         $loader->addFixture(new MessageData());
         $this->loadFixtures($loader);
     }

@@ -8,7 +8,6 @@ use AerialShip\SteelMqBundle\Tests\Functional\AbstractFunctionTestCase;
 
 class SubscriberControllerTest extends AbstractFunctionTestCase
 {
-
     /** @var Subscriber $subscriber */
     private $subscriber;
 
@@ -17,15 +16,15 @@ class SubscriberControllerTest extends AbstractFunctionTestCase
 
     protected function setUp()
     {
-        $this->loadUserAndProjectData();
+        $this->loadMessageData();
 
         $subscriberRepo = $this->getSubscriberRepository();
         $queueRepo = $this->getQueueRepository();
 
         $this->subscriber = $subscriberRepo->findOneBy([]);
         $queues = $queueRepo->findBy([]);
-        foreach($queues as $queue){
-            if($queue->getSubscribers()->isEmpty()) {
+        foreach ($queues as $queue) {
+            if ($queue->getSubscribers()->isEmpty()) {
                 $this->emptyQueue = $queue;
                 break;
             }
@@ -66,7 +65,6 @@ class SubscriberControllerTest extends AbstractFunctionTestCase
         $this->assertEquals('http://some.subscriber.com/steal_mq_hook', $subscriberData['url']);
         $this->assertEquals('Content-Type', array_keys($subscriberData['headers'])[0]);
         $this->assertEquals('X-Custom', array_keys($subscriberData['headers'])[1]);
-
     }
 
     public function testEmptyList()
@@ -88,7 +86,6 @@ class SubscriberControllerTest extends AbstractFunctionTestCase
         $json = json_decode($response->getContent(), true);
         $this->assertTrue(is_array($json));
         $this->assertCount(0, $json);
-
     }
 
     public function testCreate()
@@ -107,8 +104,8 @@ class SubscriberControllerTest extends AbstractFunctionTestCase
                 "subscriber" => [
                     "url" => "http://some.subscriber.com/steel_mq_hook",
                     "headers" => [
-                        "Content-Type" => ["application/json"]
-                    ]
+                        "Content-Type" => ["application/json"],
+                    ],
                 ]
 
             ]
@@ -151,4 +148,4 @@ class SubscriberControllerTest extends AbstractFunctionTestCase
 
         $this->assertTrue($json['success']);
     }
-} 
+}
