@@ -16,7 +16,6 @@ class SubscriberData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-
         $subscriber = new Subscriber();
         $headers = [
             [

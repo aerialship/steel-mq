@@ -2,7 +2,6 @@
 
 namespace AerialShip\SteelMqBundle\Form\Type;
 
-use AerialShip\SteelMqBundle\Form\Extension\DataTransformer\MapTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -14,7 +13,7 @@ class HeaderType extends AbstractType
             ->add('name', 'text')
             ->add('values', 'collection', [
                     "type" => 'text',
-                    'allow_add' => true
+                    'allow_add' => true,
                 ])
         ;
     }
