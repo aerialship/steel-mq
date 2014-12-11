@@ -5,6 +5,7 @@ namespace AerialShip\SteelMqBundle\Controller\Api;
 use AerialShip\SteelMqBundle\Entity\Message;
 use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Entity\Queue;
+use AerialShip\SteelMqBundle\Entity\Subscriber;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
 use JMS\Serializer\SerializationContext;
@@ -26,13 +27,27 @@ class AbstractApiController extends FOSRestController
     }
 
     /**
-     * @param  Queue                   $queue
-     * @param  Message                 $message
+     * @param Queue   $queue
+     * @param Message $message
+     *
      * @throws BadRequestHttpException
      */
     protected function checkMessageIsInQueue(Queue $queue, Message $message)
     {
         if ($message->getQueue()->getId() != $queue->getId()) {
+            throw new BadRequestHttpException();
+        }
+    }
+
+    /**
+     * @param Queue      $queue
+     * @param Subscriber $subscriber
+     *
+     * @throws BadRequestHttpException
+     */
+    protected function checkSubscriberIsInQueue(Queue $queue, Subscriber $subscriber)
+    {
+        if ($subscriber->getQueue()->getId() !== $queue->getId()) {
             throw new BadRequestHttpException();
         }
     }

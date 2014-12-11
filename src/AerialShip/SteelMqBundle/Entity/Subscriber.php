@@ -3,9 +3,10 @@
 namespace AerialShip\SteelMqBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AerialShip\SteelMqBundle\Entity\Repository\SubscriberRepository")
  * @ORM\Table(name="smq_subscriber")
  */
 class Subscriber
@@ -15,18 +16,21 @@ class Subscriber
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @JMS\Expose
      */
     protected $id;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=200)
+     * @JMS\Expose
      */
     protected $url;
 
     /**
      * @var array
      * @ORM\Column(type="array")
+     * @JMS\Expose
      */
     protected $headers = array();
 
@@ -37,6 +41,7 @@ class Subscriber
      *      inversedBy="subscribers"
      * )
      * @ORM\JoinColumn(onDelete="CASCADE")
+     * @JMS\Groups({"queue"})
      */
     protected $queue;
 
@@ -49,13 +54,12 @@ class Subscriber
     }
 
     /**
-     * @param  string           $name
-     * @param  string           $value
-     * @return $this|Subscriber
+     * @param  array $headers
+     * @return $this
      */
-    public function addHeader($name, $value)
+    public function setHeaders($headers)
     {
-        $this->headers[] = array($name, $value);
+        $this->headers = $headers;
 
         return $this;
     }

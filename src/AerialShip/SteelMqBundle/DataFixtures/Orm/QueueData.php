@@ -39,6 +39,17 @@ class QueueData extends AbstractFixture implements OrderedFixtureInterface, Cont
         $manager->persist($queue);
         $manager->flush();
         $this->addReference('queue-p1-1', $queue);
+
+        $queue = new Queue();
+        $queue->setTitle('Queue Two P1')
+            ->setProject($this->getReference('project-one'));
+        if (null === $this->container) {
+            throw new \LogicException('No container');
+        }
+        $this->container->get('aerial_ship_steel_mq.defaulter.queue')->setDefaults($queue);
+        $manager->persist($queue);
+        $manager->flush();
+        $this->addReference('queue2-p1-1', $queue);
     }
 
     /**

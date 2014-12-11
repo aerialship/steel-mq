@@ -5,10 +5,12 @@ namespace AerialShip\SteelMqBundle\Tests\Functional;
 use AerialShip\SteelMqBundle\DataFixtures\Orm\MessageData;
 use AerialShip\SteelMqBundle\DataFixtures\Orm\ProjectData;
 use AerialShip\SteelMqBundle\DataFixtures\Orm\QueueData;
+use AerialShip\SteelMqBundle\DataFixtures\Orm\SubscriberData;
 use AerialShip\SteelMqBundle\DataFixtures\Orm\UserData;
 use AerialShip\SteelMqBundle\Model\Repository\MessageRepositoryInterface;
 use AerialShip\SteelMqBundle\Model\Repository\ProjectRepositoryInterface;
 use AerialShip\SteelMqBundle\Model\Repository\QueueRepositoryInterface;
+use AerialShip\SteelMqBundle\Model\Repository\SubscriberRepositoryInterface;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
@@ -111,6 +113,22 @@ class AbstractFunctionTestCase extends WebTestCase
     }
 
     /**
+     * @return SubscriberRepositoryInterface
+     */
+    protected function getSubscriberRepository()
+    {
+        $result = $this->getService('doctrine')
+            ->getManager()
+            ->getRepository('AerialShipSteelMqBundle:Subscriber');
+
+        if ($result instanceof SubscriberRepositoryInterface) {
+            return $result;
+        }
+
+        throw new \LogicException('Expected SubscriberRepositoryInterface');
+    }
+
+    /**
      * @return EntityManager
      */
     protected function getEm()
@@ -137,8 +155,6 @@ class AbstractFunctionTestCase extends WebTestCase
     {
         $loader = new Loader();
         $loader->addFixture(new UserData());
-        $loader->addFixture(new ProjectData());
-        $loader->addFixture(new QueueData());
         $this->loadFixtures($loader);
     }
 
@@ -147,7 +163,6 @@ class AbstractFunctionTestCase extends WebTestCase
         $loader = new Loader();
         $loader->addFixture(new UserData());
         $loader->addFixture(new ProjectData());
-        $loader->addFixture(new QueueData());
         $this->loadFixtures($loader);
     }
 
@@ -157,6 +172,7 @@ class AbstractFunctionTestCase extends WebTestCase
         $loader->addFixture(new UserData());
         $loader->addFixture(new ProjectData());
         $loader->addFixture(new QueueData());
+        $loader->addFixture(new SubscriberData());
         $this->loadFixtures($loader);
     }
 
@@ -166,6 +182,7 @@ class AbstractFunctionTestCase extends WebTestCase
         $loader->addFixture(new UserData());
         $loader->addFixture(new ProjectData());
         $loader->addFixture(new QueueData());
+        $loader->addFixture(new SubscriberData());
         $loader->addFixture(new MessageData());
         $this->loadFixtures($loader);
     }
