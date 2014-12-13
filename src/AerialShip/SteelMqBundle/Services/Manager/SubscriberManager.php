@@ -45,6 +45,13 @@ class SubscriberManager
         $this->subscriberRepository->delete($subscriber);
     }
 
+    /**
+     * @param Queue $queue
+     * @param int   $limit
+     * @param int   $offset
+     *
+     * @return Subscriber[]
+     */
     public function getList(Queue $queue, $limit = 100, $offset = 0)
     {
         $result = array();
