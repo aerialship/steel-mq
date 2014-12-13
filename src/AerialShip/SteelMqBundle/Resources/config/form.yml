@@ -1,4 +1,9 @@
 services:
+    aerial_ship_steel_mq.form.type.confirm:
+        class: AerialShip\SteelMqBundle\Form\Type\ConfirmType
+        tags:
+            - { name: form.type, alias: confirm }
+
     aerial_ship_steel_mq.form.type.project:
         class: AerialShip\SteelMqBundle\Form\Type\ProjectType
         tags:

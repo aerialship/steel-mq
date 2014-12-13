@@ -11,7 +11,7 @@
                 <li>
                     <ul class="nav nav-pills">
                         <li role="presentation">
-                            <a href=""><span class="badge mr-10">{{ role.project.id }}</span> {{ role.project.title }}</a>
+                            <a href="{{ path("project", {projectId: role.project.id}) }}"><span class="badge mr-10">{{ role.project.id }}</span> {{ role.project.title }}</a>
                         </li>
                         <li role="presentation" class="pull-right">
                             <a href="#"

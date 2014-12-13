@@ -54,7 +54,8 @@ braincrafted_bootstrap:
         twig: false
         knp_menu: false
         knp_paginator: false
-    icon_prefix: ~
+    icon_prefix: fa
+    icon_tag: i
 
 # Doctrine Configuration
 doctrine:

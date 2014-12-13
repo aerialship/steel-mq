@@ -3,6 +3,7 @@
 namespace AerialShip\SteelMqBundle\Services;
 
 use AerialShip\SteelMqBundle\Entity\User;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class UserProvider
@@ -25,12 +26,12 @@ class UserProvider
     {
         $token = $this->securityContext->getToken();
         if (false == $token) {
-            throw new \RuntimeException('No token');
+            throw new AccessDeniedException();
         }
 
         $user = $token->getUser();
         if (false == $user instanceof User) {
-            throw new \RuntimeException('No user');
+            throw new \LogicException();
         }
 
         return $user;
