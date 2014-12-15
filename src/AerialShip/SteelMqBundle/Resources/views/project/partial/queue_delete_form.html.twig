@@ -1,0 +1,12 @@
+<form role="form" action="{{ path('delete_queue_form', {projectId: queue.project.id, queueId: queue.id}) }}"
+    method="post"
+    name="confirm"
+    {{ form_enctype(form) }}
+>
+    <div class="form-group">
+        {{ form_widget(form.confirm) }}
+
+        <button type="button" class="btn btn-default pull-right" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+    </div>
+    {{ form_rest(form) }}
+{{ form_end(form) }}

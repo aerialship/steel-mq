@@ -6,6 +6,7 @@ use AerialShip\SteelMqBundle\Entity\Message;
 use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Entity\Queue;
 use AerialShip\SteelMqBundle\Helper\RequestHelper;
+use AerialShip\SteelMqBundle\Helper\SecurityHelper;
 use JMS\SecurityExtraBundle\Annotation\SecureParam;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -26,7 +27,7 @@ class MessageController extends AbstractApiController
      */
     public function addAction(Project $project, Queue $queue, Request $request)
     {
-        $this->checkQueueIsInProject($project, $queue);
+        SecurityHelper::checkQueueIsInProject($project, $queue);
         RequestHelper::ensure($request->request, array('messages' => array()));
         RequestHelper::ensure($request->request, array('message_collection' => array('messages' => $request->request->get('messages'))));
 
@@ -49,7 +50,7 @@ class MessageController extends AbstractApiController
      */
     public function getAction(Project $project, Queue $queue, Request $request)
     {
-        $this->checkQueueIsInProject($project, $queue);
+        SecurityHelper::checkQueueIsInProject($project, $queue);
 
         $options = array(
             'limit' => $request->query->get('limit'),
@@ -72,8 +73,8 @@ class MessageController extends AbstractApiController
      */
     public function getByIdAction(Project $project, Queue $queue, Message $message)
     {
-        $this->checkQueueIsInProject($project, $queue);
-        $this->checkMessageIsInQueue($queue, $message);
+        SecurityHelper::checkQueueIsInProject($project, $queue);
+        SecurityHelper::checkMessageIsInQueue($queue, $message);
 
         return $this->handleData($message);
     }
@@ -88,8 +89,8 @@ class MessageController extends AbstractApiController
      */
     public function deleteAction(Project $project, Queue $queue, Message $message)
     {
-        $this->checkQueueIsInProject($project, $queue);
-        $this->checkMessageIsInQueue($queue, $message);
+        SecurityHelper::checkQueueIsInProject($project, $queue);
+        SecurityHelper::checkMessageIsInQueue($queue, $message);
 
         $this->get('aerial_ship_steel_mq.manager.message')->delete($message);
 
@@ -106,8 +107,8 @@ class MessageController extends AbstractApiController
      */
     public function releaseAction(Project $project, Queue $queue, Message $message, Request $request)
     {
-        $this->checkQueueIsInProject($project, $queue);
-        $this->checkMessageIsInQueue($queue, $message);
+        SecurityHelper::checkQueueIsInProject($project, $queue);
+        SecurityHelper::checkMessageIsInQueue($queue, $message);
 
         $options = array(
             'delay' => $request->query->get('delay'),

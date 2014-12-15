@@ -1,8 +1,9 @@
 
 <form role="form"
-        {{ form_enctype(form) }}
-      action="{{ path('project_share_form', {userId: role.user.id, projectId: role.project.id}) }}"
-      method="post" data-ajax-form
+    {{ form_enctype(form) }}
+    action="{{ path('project_share_form', {userId: role.user.id, projectId: role.project.id}) }}"
+    method="post"
+    data-ajax-form
 >
 
     <h4>Owner</h4>

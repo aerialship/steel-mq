@@ -2,7 +2,9 @@
 
 namespace AerialShip\SteelMqBundle\Entity\Repository;
 
+use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Entity\ProjectRole;
+use AerialShip\SteelMqBundle\Entity\User;
 use AerialShip\SteelMqBundle\Model\Repository\ProjectRoleRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -46,15 +48,29 @@ class ProjectRoleRepository extends EntityRepository implements ProjectRoleRepos
     }
 
     /**
-     * @param array $id
+     * @param array $id [ userId => int, projectId => int ]
      *
      * @return ProjectRole|null
      */
     public function getByUserIdProjectId(array $id)
     {
-        return $this->findOneBy(array(
-            'user' => $this->_em->getProxyFactory()->getProxy('AerialShipSteelMqBundle:User', array('id' => $id['userId'])),
-            'project' => $this->_em->getProxyFactory()->getProxy('AerialShipSteelMqBundle:Project', array('id' => $id['projectId'])),
+        return $this->find(array(
+            'user' => $id['userId'],
+            'project' => $id['projectId'],
+        ));
+    }
+
+    /**
+     * @param User    $user
+     * @param Project $project
+     *
+     * @return null|ProjectRole
+     */
+    public function getByUserProject(User $user, Project $project)
+    {
+        return $this->getByUserIdProjectId(array(
+            'userId' => $user->getId(),
+            'projectId' => $project->getId(),
         ));
     }
 }

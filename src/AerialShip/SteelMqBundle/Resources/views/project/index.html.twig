@@ -1,0 +1,97 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ project.title }} #{{ project.id }} {{ parent() }}{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <h1>{{ project.title }} #{{ project.id }}</h1>
+
+    <div>
+        <button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Create queue</button>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Size</th>
+                <th>Total messages ever</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set has_queue_role = is_granted('PROJECT_ROLE_QUEUE', project) %}
+            {% for queue in project.queues %}
+                <tr>
+                    <td><a href="">{{ queue.title }}</a></td>
+                    <td>{{ queue.pushType }}</td>
+                    <td>{{ queue.size }}</td>
+                    <td>{{ queue.size }}</td>
+                    <td>
+                        <a href="" title="Settings" class="mr-20"><i class="fa fa-gear fa-2x"></i></a>
+                        <a href="" title="Messages" class="mr-20"><i class="fa fa-envelope-o fa-2x"></i></a>
+                        {% if has_queue_role %}
+                        <span class="mr-10"></span>
+                        <a href="" title="Clear" class="mr-20"
+                            data-as='{{ {
+                                click: {
+                                    "bs.modal.load": {
+                                        "url": path('clear_queue_modal', {projectId: project.id, queueId: queue.id}),
+                                        "block": true
+                                    }
+                                }
+                            }|json_encode }}'
+                        ><i class="fa fa-trash-o fa-2x"></i></a>
+                        <a href="" title="Delete"
+                            data-as='{{ {
+                                click: {
+                                    "bs.modal.load": {
+                                        "url": path('delete_queue_modal', {projectId: project.id, queueId: queue.id}),
+                                        "block": true
+                                    }
+                                }
+                            }|json_encode }}'
+                        ><i class="fa fa-times fa-2x"></i></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="clearfix mt-30"></div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+            <h4 class="panel-title">
+                <a class="collapsed btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <i class="fa fa-info-circle"></i> API
+                    <div class="clearfix"></div>
+                </a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body">
+                <dl>
+                    <dt>API Base URL</dt>
+                    <dd><kbd>{{ url('project_info', {projectId: role.project.id}) }}</kbd></dd>
+
+                    <dt class="mt-30">curl get project info</dt>
+                    <dd><kbd class="btn-block">curl -X GET \<br/> &nbsp; -H "Authorization: token {{ role.accessToken }}" \<br/> &nbsp; {{ url('project_info', {projectId: role.project.id}) }}</kbd></dd>
+
+                    <dt class="mt-30">curl list project queues</dt>
+                    <dd><kbd class="btn-block">curl -X GET \<br/> &nbsp; -H "Authorization: token {{ role.accessToken }}" \<br/> &nbsp; {{ url('queue_list', {projectId: role.project.id}) }}</kbd></dd>
+
+                </dl>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

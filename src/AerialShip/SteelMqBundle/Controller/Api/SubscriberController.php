@@ -5,6 +5,7 @@ namespace AerialShip\SteelMqBundle\Controller\Api;
 use AerialShip\SteelMqBundle\Entity\Project;
 use AerialShip\SteelMqBundle\Entity\Queue;
 use AerialShip\SteelMqBundle\Entity\Subscriber;
+use AerialShip\SteelMqBundle\Helper\SecurityHelper;
 use JMS\SecurityExtraBundle\Annotation\SecureParam;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -26,7 +27,7 @@ class SubscriberController extends AbstractApiController
      */
     public function listAction(Project $project, Queue $queue)
     {
-        $this->checkQueueIsInProject($project, $queue);
+        SecurityHelper::checkQueueIsInProject($project, $queue);
 
         $subscribers = $this->get('aerial_ship_steel_mq.manager.subscriber')->getList($queue);
 
@@ -42,7 +43,7 @@ class SubscriberController extends AbstractApiController
      */
     public function createAction(Project $project, Queue $queue, Request $request)
     {
-        $this->checkQueueIsInProject($project, $queue);
+        SecurityHelper::checkQueueIsInProject($project, $queue);
 
         $form = $this->createForm('subscriber');
 
@@ -73,8 +74,8 @@ class SubscriberController extends AbstractApiController
      */
     public function deleteAction(Project $project, Queue $queue, Subscriber $subscriber)
     {
-        $this->checkQueueIsInProject($project, $queue);
-        $this->checkSubscriberIsInQueue($queue, $subscriber);
+        SecurityHelper::checkQueueIsInProject($project, $queue);
+        SecurityHelper::checkSubscriberIsInQueue($queue, $subscriber);
 
         $this->get('aerial_ship_steel_mq.manager.subscriber')->delete($subscriber);
 

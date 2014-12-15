@@ -1,0 +1,22 @@
+{% extends '@AerialShipSteelMq/modal.html.twig' %}
+
+{% block title %}Confirm Clear Queue{% endblock title %}
+
+{% block body %}
+
+    <p>
+        Are you sure you want to clear queue <strong>{{ queue.title }} #{{ queue.id }}</strong>
+        from project <strong>{{ queue.project.title }} #{{ queue.project.id }}</strong>?
+    </p>
+
+    <div class="alert alert-danger" role="alert">
+        <strong>Warning:</strong> Clearing a queue will delete all messages in the queue!
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="mt-30">
+        {{ include('@AerialShipSteelMq/project/partial/queue_clear_form.html.twig') }}
+    </div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

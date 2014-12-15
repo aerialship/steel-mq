@@ -1,0 +1,27 @@
+{% set titleID = random() %}
+
+<div class="modal fade {% block modal_class %}{% endblock %}" id="{% block modal_id %}modal_id{% endblock %}" role="dialog" aria-labeledby="x{{ titleID }}" aria-hidden="false" {% block modal_attributes %}{% endblock %}>
+    <div class="modal-dialog {% block modal_dialog_class %}{% endblock %}" {% block modal_dialog_attributes %}{% endblock %}>
+        <div class="modal-content" {% block modal_content_attributes %}{% endblock %}>
+            <div class="modal-header" {% block modal_header_attributes %}{% endblock %}>
+                {% block header %}
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" {% block header_dismiss_button_attributes %}{% endblock %}>&times;</button>
+                    <h4 class="modal-title" id="x{{ titleID }}">{% block title %}Default title{% endblock title %}</h4>
+                {% endblock header %}
+            </div>
+            <div class="modal-body" {% block modal_body_attributes %}{% endblock %}>
+                {% block body %}
+                    ...
+                {% endblock %}
+            </div>
+            {% block footer %}
+            <div class="modal-footer" {% block modal_footer_attributes %}{% endblock %}>
+                {% block footer_content %}
+                    <button type="button" class="btn btn-default" data-dismiss="modal" {% block footer_close_attributes %}{% endblock %}>{{ "close"|trans }}</button>
+                    <button type="button" class="btn btn-primary" data-id="save" {% block footer_save_attributes %}{% endblock %}>{{ "save"|trans }}</button>
+                {% endblock %}
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+</div>
