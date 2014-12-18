@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}{{ queue.title }} #{{ queue.id }} {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}">Home</a></li>
+        <li><a href="{{ path('project', {projectId: queue.project.id}) }}">{{ queue.project.title }}</a></li>
+        <li class="active">{{ queue.title }} Messages</li>
+    </ol>
+
+    <h1>Messages in {{ queue.title }} #{{ queue.id }}</h1>
+
+{% endblock %}

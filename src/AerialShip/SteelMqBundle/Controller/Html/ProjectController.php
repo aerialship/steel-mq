@@ -107,7 +107,7 @@ class ProjectController extends Controller
 
         $form->handleRequest($request);
         if ($form->isValid()) {
-            //$this->get('aerial_ship_steel_mq.manager.queue')->clear($queue);
+            $this->get('aerial_ship_steel_mq.manager.queue')->clear($queue);
             $request->getSession()->getFlashBag()->add(
                 'notice',
                 sprintf('Queue "%s" has been cleared.', $queue->getTitle())

@@ -3,6 +3,12 @@
 {% block title %}{{ project.title }} #{{ project.id }} {{ parent() }}{% endblock %}
 
 {% block content %}
+
+    <ol class="breadcrumb">
+        <li><a href="{{ path('homepage') }}">Home</a></li>
+        <li class="active">{{ project.title }}</li>
+    </ol>
+
     {% for flashMessage in app.session.flashbag.get('notice') %}
         <div class="alert alert-success">
             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>            {{ flashMessage }}
@@ -29,13 +35,13 @@
             {% set has_queue_role = is_granted('PROJECT_ROLE_QUEUE', project) %}
             {% for queue in project.queues %}
                 <tr>
-                    <td><a href="">{{ queue.title }}</a></td>
+                    <td><a href="{{ path('messages', {projectId: project.id, queueId: queue.id}) }}">{{ queue.title }}</a></td>
                     <td>{{ queue.pushType }}</td>
                     <td>{{ queue.size }}</td>
                     <td>{{ queue.size }}</td>
                     <td>
                         <a href="" title="Settings" class="mr-20"><i class="fa fa-gear fa-2x"></i></a>
-                        <a href="" title="Messages" class="mr-20"><i class="fa fa-envelope-o fa-2x"></i></a>
+                        <a href="{{ path('messages', {projectId: project.id, queueId: queue.id}) }}" title="Messages" class="mr-20"><i class="fa fa-envelope-o fa-2x"></i></a>
                         {% if has_queue_role %}
                         <span class="mr-10"></span>
                         <a href="" title="Clear" class="mr-20"
