@@ -83,6 +83,13 @@ class Queue
     protected $expiresIn;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer", options={"default": 0})
+     * @JMS\Expose()
+     */
+    protected $deletedCount = 0;
+
+    /**
      * @var Project
      * @ORM\ManyToOne(
      *      targetEntity="Project",
@@ -133,8 +140,8 @@ class Queue
     }
 
     /**
-     * @param  null|int    $errorQueue
-     * @return $this|Queue
+     * @param  null|int $errorQueue
+     * @return Queue
      */
     public function setErrorQueue($errorQueue)
     {
@@ -160,8 +167,8 @@ class Queue
     }
 
     /**
-     * @param  string      $pushType
-     * @return $this|Queue
+     * @param  string $pushType
+     * @return Queue
      */
     public function setPushType($pushType)
     {
@@ -179,8 +186,8 @@ class Queue
     }
 
     /**
-     * @param  int         $retries
-     * @return $this|Queue
+     * @param  int   $retries
+     * @return Queue
      */
     public function setRetries($retries)
     {
@@ -198,8 +205,8 @@ class Queue
     }
 
     /**
-     * @param  int         $retriesDelay
-     * @return $this|Queue
+     * @param  int   $retriesDelay
+     * @return Queue
      */
     public function setRetriesDelay($retriesDelay)
     {
@@ -217,8 +224,8 @@ class Queue
     }
 
     /**
-     * @param  string      $title
-     * @return $this|Queue
+     * @param  string $title
+     * @return Queue
      */
     public function setTitle($title)
     {
@@ -236,8 +243,8 @@ class Queue
     }
 
     /**
-     * @param  int         $delay
-     * @return $this|Queue
+     * @param  int   $delay
+     * @return Queue
      */
     public function setDelay($delay)
     {
@@ -255,12 +262,31 @@ class Queue
     }
 
     /**
-     * @param  int         $expiresIn
-     * @return $this|Queue
+     * @param  int   $expiresIn
+     * @return Queue
      */
     public function setExpiresIn($expiresIn)
     {
         $this->expiresIn = $expiresIn;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDeletedCount()
+    {
+        return $this->deletedCount;
+    }
+
+    /**
+     * @param  int   $deletedCount
+     * @return Queue
+     */
+    public function setDeletedCount($deletedCount)
+    {
+        $this->deletedCount = $deletedCount;
 
         return $this;
     }
@@ -274,8 +300,8 @@ class Queue
     }
 
     /**
-     * @param  int         $timeout
-     * @return $this|Queue
+     * @param  int   $timeout
+     * @return Queue
      */
     public function setTimeout($timeout)
     {
@@ -293,8 +319,8 @@ class Queue
     }
 
     /**
-     * @param  Project     $project
-     * @return $this|Queue
+     * @param  Project $project
+     * @return Queue
      */
     public function setProject(Project $project)
     {

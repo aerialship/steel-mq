@@ -87,6 +87,10 @@ class QueueManager
 
     public function clear(Queue $queue)
     {
-        $this->queueRepository->clearQueue($queue);
+        $this->queueRepository->transactional(function () use ($queue) {
+            $deletedCount = $this->queueRepository->clearQueue($queue);
+            $queue->setDeletedCount($queue->getDeletedCount() + $deletedCount);
+            $this->queueRepository->save($queue);
+        });
     }
 }

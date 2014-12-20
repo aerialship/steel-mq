@@ -301,6 +301,8 @@ class QueueControllerTest extends AbstractFunctionTestCase
         $queue = $this->getQueueRepository()->findOneBy(array('project' => $this->allProjects[0]));
         $this->assertEquals(1, $queue->getSize());
 
+        $oldDeletedCount = $queue->getDeletedCount();
+
         $client = static::createClient();
         $client->request('POST', sprintf('projects/%s/queues/%s/clear?token=%s', $this->projectId, $queue->getId(), $token));
         $response = $client->getResponse();
@@ -308,5 +310,8 @@ class QueueControllerTest extends AbstractFunctionTestCase
 
         $queue = $this->getQueueRepository()->findOneBy(array('project' => $this->allProjects[0]));
         $this->assertEquals(0, $queue->getSize());
+
+        $queue = $this->getQueueRepository()->find($queue->getId());
+        $this->assertEquals($oldDeletedCount + 1, $queue->getDeletedCount());
     }
 }
