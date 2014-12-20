@@ -38,7 +38,7 @@
                     <td><a href="{{ path('messages', {projectId: project.id, queueId: queue.id}) }}">{{ queue.title }}</a></td>
                     <td>{{ queue.pushType }}</td>
                     <td>{{ queue.size }}</td>
-                    <td>{{ queue.size }}</td>
+                    <td>{{ queue.size + queue.deletedCount }}</td>
                     <td>
                         <a href="" title="Settings" class="mr-20"><i class="fa fa-gear fa-2x"></i></a>
                         <a href="{{ path('messages', {projectId: project.id, queueId: queue.id}) }}" title="Messages" class="mr-20"><i class="fa fa-envelope-o fa-2x"></i></a>

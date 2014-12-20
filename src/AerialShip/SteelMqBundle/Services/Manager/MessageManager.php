@@ -5,6 +5,7 @@ namespace AerialShip\SteelMqBundle\Services\Manager;
 use AerialShip\SteelMqBundle\Entity\Message;
 use AerialShip\SteelMqBundle\Entity\Queue;
 use AerialShip\SteelMqBundle\Model\Repository\MessageRepositoryInterface;
+use AerialShip\SteelMqBundle\Model\Repository\QueueRepositoryInterface;
 use AerialShip\SteelMqBundle\Services\Defaulter\GetMessageDefaulter;
 use AerialShip\SteelMqBundle\Services\Defaulter\MessageDefaulter;
 use AerialShip\SteelMqBundle\Services\Defaulter\ReleaseMessageDefaulter;
@@ -21,6 +22,9 @@ class MessageManager
     /** @var MessageRepositoryInterface */
     protected $messageRepository;
 
+    /** @var QueueRepositoryInterface */
+    protected $queueRepository;
+
     /** @var MessageDefaulter */
     protected $messageDefaulter;
 
@@ -33,6 +37,7 @@ class MessageManager
     /**
      * @param ValidatorInterface         $validator
      * @param MessageRepositoryInterface $messageRepository
+     * @param QueueRepositoryInterface   $queueRepository
      * @param MessageDefaulter           $messageDefaulter
      * @param GetMessageDefaulter        $getMessageDefaulter
      * @param ReleaseMessageDefaulter    $releaseMessageDefaulter
@@ -40,20 +45,23 @@ class MessageManager
     public function __construct(
         ValidatorInterface $validator,
         MessageRepositoryInterface $messageRepository,
+        QueueRepositoryInterface $queueRepository,
         MessageDefaulter $messageDefaulter,
         GetMessageDefaulter $getMessageDefaulter,
         ReleaseMessageDefaulter $releaseMessageDefaulter
     ) {
         $this->validator = $validator;
         $this->messageRepository = $messageRepository;
+        $this->queueRepository = $queueRepository;
         $this->messageDefaulter = $messageDefaulter;
         $this->getMessageDefaulter = $getMessageDefaulter;
         $this->releaseMessageDefaulter = $releaseMessageDefaulter;
     }
 
     /**
-     * @param  Queue     $queue
-     * @param  array     $data
+     * @param Queue $queue
+     * @param array $data
+     *
      * @return Message[]
      */
     public function add(Queue $queue, array $data)
@@ -79,8 +87,9 @@ class MessageManager
     }
 
     /**
-     * @param  Queue                                      $queue
-     * @param  array                                      $options
+     * @param Queue $queue
+     * @param array $options
+     *
      * @return ConstraintViolationListInterface|Message[]
      */
     public function getMessages(Queue $queue, array $options)
@@ -99,12 +108,17 @@ class MessageManager
      */
     public function delete(Message $message)
     {
-        $this->messageRepository->delete($message);
+        $this->messageRepository->transactional(function () use ($message) {
+            $message->getQueue()->setDeletedCount($message->getQueue()->getDeletedCount() + 1);
+            $this->queueRepository->save($message->getQueue());
+            $this->messageRepository->delete($message);
+        });
     }
 
     /**
-     * @param  Message                                 $message
-     * @param  array                                   $options
+     * @param Message $message
+     * @param array   $options
+     *
      * @return ConstraintViolationListInterface[]|true
      */
     public function release(Message $message, array $options)

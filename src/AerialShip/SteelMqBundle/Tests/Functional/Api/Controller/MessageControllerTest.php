@@ -197,6 +197,8 @@ class MessageControllerTest extends AbstractFunctionTestCase
         $this->assertNotNull($message);
         $this->assertInstanceOf('AerialShip\SteelMqBundle\Entity\Message', $message);
 
+        $oldDeleteCount = $queue->getDeletedCount();
+
         $client = static::createClient();
 
         $client->request(
@@ -215,6 +217,9 @@ class MessageControllerTest extends AbstractFunctionTestCase
 
         $message = $this->getMessageRepository()->find($message->getId());
         $this->assertNull($message);
+
+        $queue = $this->getQueueRepository()->find($queue->getId());
+        $this->assertEquals($oldDeleteCount + 1, $queue->getDeletedCount());
     }
 
     public function testRelease()

@@ -26,6 +26,7 @@ services:
         arguments:
             - @validator
             - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:Message')"
+            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:Queue')"
             - @aerial_ship_steel_mq.defaulter.message
             - @aerial_ship_steel_mq.defaulter.get_message
             - @aerial_ship_steel_mq.defaulter.release_message
