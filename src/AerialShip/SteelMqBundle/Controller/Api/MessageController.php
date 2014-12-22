@@ -41,6 +41,7 @@ class MessageController extends AbstractApiController
 
         return $this->handleData($message);
     }
+
     /**
      * @Route("{slash}")
      * @Method({"GET"})
