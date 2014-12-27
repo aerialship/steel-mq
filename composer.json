@@ -47,7 +47,8 @@
         "ircmaxell/password-compat": "1.0.4",
         "aerialship/as-js": "dev-master",
         "malsup/form": "3.50",
-        "malsup/blockui": "2.65"
+        "malsup/blockui": "2.65",
+        "salavert/time-ago-in-words": "1.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

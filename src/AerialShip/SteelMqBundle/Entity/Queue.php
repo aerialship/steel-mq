@@ -119,6 +119,7 @@ class Queue
      *      cascade={"remove"},
      *      fetch="EXTRA_LAZY"
      * )
+     * @ORM\OrderBy({"availableAt": "DESC"})
      */
     protected $messages;
 

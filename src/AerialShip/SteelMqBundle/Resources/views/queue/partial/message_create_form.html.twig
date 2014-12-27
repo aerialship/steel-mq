@@ -1,0 +1,29 @@
+<form role="form" action="{{ path('create_message_form', {projectId: queue.project.id, queueId: queue.id}) }}"
+    method="post"
+    name="new_message"
+    {{ form_enctype(form) }}
+    data-ajax-form
+>
+    {{ form_row(form.body) }}
+
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+            <h4 class="panel-title">
+                <a class="collapsed btn-block" data-toggle="collapse" data-parent="#accordion" href="#collapseCreateMessageDetails" aria-expanded="false" aria-controls="collapseTwo">
+                    <i class="fa fa-cogs"></i> Details
+                    <div class="clearfix"></div>
+                </a>
+            </h4>
+        </div>
+        <div id="collapseCreateMessageDetails" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body">
+                {{ form_row(form.retries) }}
+                {{ form_row(form.delay) }}
+            </div>
+        </div>
+    </div>
+
+    {{ form_row(form.actions) }}
+
+    <div class="clearfix mb-10"></div>
+</form>

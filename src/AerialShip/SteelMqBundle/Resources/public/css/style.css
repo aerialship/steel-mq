@@ -36,3 +36,7 @@ ul.alt-rows > li:nth-child(odd) {
     line-height: 1.5;
     padding: 1px 5px;
 }
+
+form[name="new_message"] textarea {
+    height: 300px;
+}

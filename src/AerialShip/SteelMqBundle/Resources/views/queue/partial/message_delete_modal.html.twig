@@ -1,0 +1,18 @@
+{% extends '@AerialShipSteelMq/modal.html.twig' %}
+
+{% block title %}Confirm Delete Message{% endblock title %}
+
+{% block body %}
+
+    <div class="alert alert-danger" role="alert">
+        Are you sure you want to delete message <strong>#{{ message.id }}</strong>
+        from queue <strong>{{ message.queue.title }} #{{ message.queue.id }}</strong>?
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="mt-30">
+        {{ include('@AerialShipSteelMq/queue/partial/message_delete_form.html.twig') }}
+    </div>
+{% endblock %}
+
+{% block footer %}{% endblock %}

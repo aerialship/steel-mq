@@ -1,0 +1,13 @@
+{% extends '@AerialShipSteelMq/modal.html.twig' %}
+
+{% block title %}Message #{{ message.id }}{% endblock title %}
+
+{% block modal_dialog_class %}modal-lg{% endblock %}
+
+{% block body %}
+<pre>
+{{ body }}
+</pre>
+{% endblock %}
+
+{% block footer %}{% endblock %}

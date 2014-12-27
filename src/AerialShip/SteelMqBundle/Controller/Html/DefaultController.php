@@ -21,7 +21,10 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/ajax/credentials/{userId}/{projectId}", name="project_credentials")
+     * @Route("/ajax/credentials/{userId}/{projectId}",
+     *      name="project_credentials",
+     *      requirements={"userId" = "\d+", "projectId" = "\d+"}
+     * )
      * @ParamConverter("role", options={"id" = {"userId", "projectId"}, "repository_method" = "getByUserIdProjectId"})
      * @SecureParam(name="role", permissions="PROJECT_ROLE_DEFAULT")
      */
@@ -33,7 +36,10 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/ajax/settings/{userId}/{projectId}/modal", name="project_settings_modal")
+     * @Route("/ajax/settings/{userId}/{projectId}/modal",
+     *      name="project_settings_modal",
+     *      requirements={"userId" = "\d+", "projectId" = "\d+"}
+     * )
      * @ParamConverter("role", options={"id" = {"userId", "projectId"}, "repository_method" = "getByUserIdProjectId"})
      * @SecureParam(name="role", permissions="PROJECT_ROLE_OWNER")
      */
@@ -45,7 +51,10 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/ajax/settings/{userId}/{projectId}/form", name="project_settings_form")
+     * @Route("/ajax/settings/{userId}/{projectId}/form",
+     *      name="project_settings_form",
+     *      requirements={"userId" = "\d+", "projectId" = "\d+"}
+     * )
      * @ParamConverter("role", options={"id" = {"userId", "projectId"}, "repository_method" = "getByUserIdProjectId"})
      * @SecureParam(name="role", permissions="PROJECT_ROLE_OWNER")
      */
@@ -83,7 +92,10 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/ajax/share/{userId}/{projectId}/modal", name="project_share_modal")
+     * @Route("/ajax/share/{userId}/{projectId}/modal",
+     *      name="project_share_modal",
+     *      requirements={"userId" = "\d+", "projectId" = "\d+"}
+     * )
      * @ParamConverter("role", options={"id" = {"userId", "projectId"}, "repository_method" = "getByUserIdProjectId"})
      * @SecureParam(name="role", permissions="PROJECT_ROLE_OWNER")
      */
@@ -95,7 +107,10 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/ajax/share/{userId}/{projectId}/form", name="project_share_form")
+     * @Route("/ajax/share/{userId}/{projectId}/form",
+     *      name="project_share_form",
+     *      requirements={"userId" = "\d+", "projectId" = "\d+"}
+     * )
      * @ParamConverter("role", options={"id" = {"userId", "projectId"}, "repository_method" = "getByUserIdProjectId"})
      * @SecureParam(name="role", permissions="PROJECT_ROLE_SHARE")
      */

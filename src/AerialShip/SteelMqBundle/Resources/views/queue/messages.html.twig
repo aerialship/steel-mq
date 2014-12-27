@@ -10,6 +10,104 @@
         <li class="active">{{ queue.title }} Messages</li>
     </ol>
 
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <button class="btn btn-primary pull-right"
+        data-as='{{ {
+            click: {
+                "bs.modal.load": {
+                    url: path('create_message_modal', {projectId: queue.project.id, queueId: queue.id}),
+                    block: true
+                }
+            }
+        }|json_encode }}'
+    ><i class="fa fa-plus"></i> Create Message</button>
+
     <h1>Messages in {{ queue.title }} #{{ queue.id }}</h1>
 
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Created At</th>
+                <th>Available At</th>
+                <th>Status</th>
+                <th>Timeout At</th>
+                <th>Size [kb]</th>
+                <th class="text-right">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set available = false %}
+        {% set now = "now"|date("U") %}
+        {% for message in queue.messages.slice(0, 50) %}
+
+            {% set highlight = false %}
+            {% if not available and message.availableAt|date("U") < now %}
+                {% set highlight = true %}
+                {% set available = true %}
+            {% endif %}
+
+            <tr {% if highlight %} class="info"{% endif %}>
+                <td>{{ message.id }}</td>
+                <td>
+                    <small title="{{ message.createdAt|date('Y-m-d H:i:s') }}">{{ message.createdAt|time_ago_in_words }}</small>
+                </td>
+                <td>
+                    <small title="{{ message.availableAt|date('Y-m-d H:i:s') }}">{{ message.availableAt|time_ago_in_words }}</small>
+                </td>
+                <td>{{ ("status." ~ message.status)|trans }}</td>
+                <td>
+                    <small title="{{ message.timeoutAt is empty ? '': message.timeoutAt|date('Y-m-d H:i:s') }}">
+                        {{ message.timeoutAt is empty ? '-': message.timeoutAt|date('Y-m-d H:i:s') }}
+                    </small>
+                </td>
+                <td>{{ (message.body|length / 1024)|number_format(2, '.', ',') }}</td>
+                <td class="text-right">
+                    {% if message.body|length < 102400 %}
+                    <a href="#" title="View" class="mr-10"
+                        data-as='{{ {
+                            click: {
+                                "bs.modal.load": {
+                                    url: path('view_message_modal', {
+                                        projectId: queue.project.id,
+                                        queueId: queue.id,
+                                        messageId: message.id
+                                    }),
+                                    block: true
+                                }
+                            }
+                        }|json_encode }}'
+                    ><i class="fa fa-eye fa-2x"></i></a>
+                    {% endif %}
+
+                    <a href="{{ path('download_message', {
+                            projectId: queue.project.id,
+                            queueId: queue.id,
+                            messageId: message.id})
+                    }}" title="Download" class="mr-20"><i class="fa fa-cloud-download fa-2x"></i></a>
+
+                    <a href="#" title="Delete"
+                        data-as='{{ {
+                            click: {
+                                "bs.modal.load": {
+                                    url: path('delete_message_modal', {
+                                        projectId: queue.project.id,
+                                        queueId: queue.id,
+                                        messageId: message.id
+                                    }),
+                                    block: true
+                                }
+                            }
+                        }|json_encode }}'
+                    ><i class="fa fa-times fa-2x"></i></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

@@ -14,7 +14,10 @@ use Symfony\Component\HttpFoundation\Request;
 class ProjectController extends Controller
 {
     /**
-     * @Route("/view/{projectId}{slash}", name="project")
+     * @Route("/view/{projectId}{slash}",
+     *      name="project",
+     *      requirements={"projectId" = "\d+"}
+     * )
      * @ParamConverter("project", options={"id" = "projectId"})
      * @SecureParam(name="project", permissions="PROJECT_ROLE_DEFAULT")
      */
@@ -29,7 +32,10 @@ class ProjectController extends Controller
     }
 
     /**
-     * @Route("/ajax/{projectId}/delete/queue/{queueId}/modal{slash}", name="delete_queue_modal")
+     * @Route("/ajax/{projectId}/delete/queue/{queueId}/modal{slash}",
+     *      name="delete_queue_modal",
+     *      requirements={"projectId" = "\d+", "queueId" = "\d+"}
+     * )
      * @ParamConverter("project", options={"id" = "projectId"})
      * @ParamConverter("queue", options={"id" = "queueId"})
      * @SecureParam(name="project", permissions="PROJECT_ROLE_QUEUE")
@@ -47,7 +53,10 @@ class ProjectController extends Controller
     }
 
     /**
-     * @Route("/ajax/{projectId}/delete/queue/{queueId}/form{slash}", name="delete_queue_form")
+     * @Route("/ajax/{projectId}/delete/queue/{queueId}/form{slash}",
+     *      name="delete_queue_form",
+     *      requirements={"projectId" = "\d+", "queueId" = "\d+"}
+     * )
      * @ParamConverter("project", options={"id" = "projectId"})
      * @ParamConverter("queue", options={"id" = "queueId"})
      * @SecureParam(name="project", permissions="PROJECT_ROLE_QUEUE")
@@ -76,7 +85,10 @@ class ProjectController extends Controller
     }
 
     /**
-     * @Route("/ajax/{projectId}/clear/queue/{queueId}/modal{slash}", name="clear_queue_modal")
+     * @Route("/ajax/{projectId}/clear/queue/{queueId}/modal{slash}",
+     *      name="clear_queue_modal",
+     *      requirements={"projectId" = "\d+", "queueId" = "\d+"}
+     * )
      * @ParamConverter("project", options={"id" = "projectId"})
      * @ParamConverter("queue", options={"id" = "queueId"})
      * @SecureParam(name="project", permissions="PROJECT_ROLE_QUEUE")
@@ -94,7 +106,10 @@ class ProjectController extends Controller
     }
 
     /**
-     * @Route("/ajax/{projectId}/clear/queue/{queueId}/form{slash}", name="clear_queue_form")
+     * @Route("/ajax/{projectId}/clear/queue/{queueId}/form{slash}",
+     *      name="clear_queue_form",
+     *      requirements={"projectId" = "\d+", "queueId" = "\d+"}
+     * )
      * @ParamConverter("project", options={"id" = "projectId"})
      * @ParamConverter("queue", options={"id" = "queueId"})
      * @SecureParam(name="project", permissions="PROJECT_ROLE_QUEUE")
@@ -123,7 +138,10 @@ class ProjectController extends Controller
     }
 
     /**
-     * @Route("/ajax/{projectId}/queue/create/modal{slash}", name="create_queue_modal")
+     * @Route("/ajax/{projectId}/queue/create/modal{slash}",
+     *      name="create_queue_modal",
+     *      requirements={"projectId" = "\d+"}
+     * )
      * @ParamConverter("project", options={"id" = "projectId"})
      * @SecureParam(name="project", permissions="PROJECT_ROLE_QUEUE")
      */
@@ -138,7 +156,10 @@ class ProjectController extends Controller
     }
 
     /**
-     * @Route("/ajax/{projectId}/queue/create/form{slash}", name="create_queue_form")
+     * @Route("/ajax/{projectId}/queue/create/form{slash}",
+     *      name="create_queue_form",
+     *      requirements={"projectId" = "\d+"}
+     * )
      * @ParamConverter("project", options={"id" = "projectId"})
      * @SecureParam(name="project", permissions="PROJECT_ROLE_QUEUE")
      */
