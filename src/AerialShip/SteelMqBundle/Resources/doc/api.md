@@ -379,6 +379,16 @@ POST /projects/{Project ID}/queues/{Queue ID}/messages
 ```
 
 
+Webhook
+-------
+
+Creates a message with body equal to posted content. 
+
+```
+POST /projects/{Project ID}/queues/{Queue ID}/messages/webhook
+```
+
+
 Get Message from Queue
 ----------------------
 

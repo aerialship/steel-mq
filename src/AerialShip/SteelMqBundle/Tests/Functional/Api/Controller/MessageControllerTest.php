@@ -90,6 +90,51 @@ class MessageControllerTest extends AbstractFunctionTestCase
         $this->assertEquals($expectedBody2, $json[1]['body']);
     }
 
+    public function testWebhook()
+    {
+        $token = 'userToken';
+
+        /** @var Queue $queue */
+        $queue = $this->getQueueRepository()->findOneBy(array('project' => $this->allProjects[0]));
+        $this->assertNotNull($queue);
+        $this->assertInstanceOf('AerialShip\SteelMqBundle\Entity\Queue', $queue);
+
+        $client = static::createClient();
+
+        $client->request(
+            'POST',
+            sprintf('projects/%s/queues/%s/messages/webhook?token=%s', $this->allProjects[0]->getId(), $queue->getId(), $token),
+            array(),
+            array(),
+            array(),
+            $expectedBody = 'message body'
+        );
+        $response = $client->getResponse();
+        $this->assertJsonResponse($response);
+
+        $json = json_decode($response->getContent(), true);
+
+        $this->assertTrue(is_array($json));
+        $this->assertCount(1, $json);
+
+        $this->assertArrayHasKey('queue_id', $json[0]);
+        $this->assertArrayHasKey('status', $json[0]);
+        $this->assertArrayHasKey('id', $json[0]);
+        $this->assertArrayHasKey('retries_remaining', $json[0]);
+        $this->assertArrayHasKey('created_at', $json[0]);
+        $this->assertArrayHasKey('available_at', $json[0]);
+        $this->assertArrayHasKey('timeout_at', $json[0]);
+        $this->assertArrayHasKey('body', $json[0]);
+
+        $this->assertEquals($queue->getId(), $json[0]['queue_id']);
+        $this->assertEquals(Message::STATUS_AVAILABLE, $json[0]['status']);
+        $this->assertEquals($queue->getRetries(), $json[0]['retries_remaining']);
+        $this->assertLessThan(4, abs(strtotime($json[0]['created_at']) - time()));
+        $this->assertLessThan(4, abs(strtotime($json[0]['available_at']) - time()));
+        $this->assertNull($json[0]['timeout_at']);
+        $this->assertEquals($expectedBody, $json[0]['body']);
+    }
+
     public function testGetOneMessage()
     {
         $token = 'userToken';

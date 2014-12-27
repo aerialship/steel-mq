@@ -16,3 +16,22 @@ services:
         arguments:
             - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:ProjectRole')"
             - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:User')"
+
+    aerial_ship_steel_mq.decoder_provider:
+        class: FOS\RestBundle\Decoder\ContainerDecoderProvider
+        arguments:
+            -
+                json: aerial_ship_steel_mq.decoder.json
+        calls:
+            - [ setContainer, [@service_container] ]
+        public: false
+
+    aerial_ship_steel_mq.decoder.json:
+        class: FOS\RestBundle\Decoder\JsonDecoder
+
+    aerial_ship_steel_mq.body_listener:
+        class: AerialShip\SteelMqBundle\EventListener\BodyListener
+        arguments:
+            - @aerial_ship_steel_mq.decoder_provider
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 10 }
