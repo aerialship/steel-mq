@@ -123,6 +123,55 @@ class ProjectController extends Controller
     }
 
     /**
+     * @Route("/ajax/{projectId}/queue/create/modal{slash}", name="create_queue_modal")
+     * @ParamConverter("project", options={"id" = "projectId"})
+     * @SecureParam(name="project", permissions="PROJECT_ROLE_QUEUE")
+     */
+    public function createQueueModalAction(Project $project)
+    {
+        $form = $this->getQueueForm();
+
+        return $this->render('@AerialShipSteelMq/project/partial/queue_create_modal.html.twig', array(
+            'form' => $form->createView(),
+            'project' => $project,
+        ));
+    }
+
+    /**
+     * @Route("/ajax/{projectId}/queue/create/form{slash}", name="create_queue_form")
+     * @ParamConverter("project", options={"id" = "projectId"})
+     * @SecureParam(name="project", permissions="PROJECT_ROLE_QUEUE")
+     */
+    public function createQueueFormAction(Project $project, Request $request)
+    {
+        $form = $this->getQueueForm();
+
+        $reload = 0;
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            /** @var Queue $queue */
+            $queue = $form->getData();
+            $this->get('aerial_ship_steel_mq.manager.queue')->create($project, $queue);
+            $reload = 100;
+            $request->getSession()->getFlashBag()->add(
+                'notice',
+                sprintf('Queue "%s" has been created.', $queue->getTitle())
+            );
+        }
+
+        $response = $this->render('@AerialShipSteelMq/project/partial/queue_create_form.html.twig', array(
+            'form' => $form->createView(),
+            'project' => $project,
+        ));
+
+        if ($reload) {
+            $response->headers->add(array('X-AS-Reload' => array($reload)));
+        }
+
+        return $response;
+    }
+
+    /**
      * @return \Symfony\Component\Form\Form
      */
     private function getConfirmForm()
@@ -130,6 +179,29 @@ class ProjectController extends Controller
         $form = $this->createForm('confirm', null, array(
             'cancel' => false,
         ));
+
+        return $form;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\Form
+     */
+    private function getQueueForm()
+    {
+        $queue = new Queue();
+        $this->get('aerial_ship_steel_mq.defaulter.queue')->setDefaults($queue);
+        $form = $this->createForm('queue', $queue);
+
+        $form->add('actions', 'form_actions', [
+            'buttons' => [
+                'save' => ['type' => 'submit', 'options' => [
+                    'label' => 'Save',
+                    'attr' => [
+                        'class' => 'pull-right',
+                    ],
+                ]],
+            ]
+        ]);
 
         return $form;
     }

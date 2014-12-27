@@ -18,7 +18,16 @@
     <h1>{{ project.title }} #{{ project.id }}</h1>
 
     <div>
-        <button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Create queue</button>
+        <button type="button" class="btn btn-primary pull-right"
+            data-as='{{ {
+                click: {
+                    'bs.modal.load': {
+                        url: path('create_queue_modal', {projectId: project.id}),
+                        block: true
+                    }
+                }
+            }|json_encode }}'
+        ><i class="fa fa-plus"></i> Create queue</button>
     </div>
 
     <table class="table table-striped">

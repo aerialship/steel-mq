@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/aerialship/as-js.git",
-                "reference": "d33ac3413519840b7c7a9afae03bcd9539956aa0"
+                "reference": "e999d997ae6b68dbaad622b29a83d19506c9de7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aerialship/as-js/zipball/d33ac3413519840b7c7a9afae03bcd9539956aa0",
-                "reference": "d33ac3413519840b7c7a9afae03bcd9539956aa0",
+                "url": "https://api.github.com/repos/aerialship/as-js/zipball/e999d997ae6b68dbaad622b29a83d19506c9de7c",
+                "reference": "e999d997ae6b68dbaad622b29a83d19506c9de7c",
                 "shasum": ""
             },
             "type": "library",
@@ -26,7 +26,7 @@
                 "MIT"
             ],
             "description": "Lightweight javascript framework that minimize writing of javascript with implementation of common operations and their easy binding to dom trough special data attribute",
-            "time": "2014-12-07 07:42:58"
+            "time": "2014-12-27 16:38:31"
         },
         {
             "name": "appsco/component-share",
@@ -3935,6 +3935,7 @@
         "aerialship/as-js": 20
     },
     "prefer-stable": true,
+    "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.3"
     },
