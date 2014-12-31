@@ -17,15 +17,82 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class QueueController extends Controller
 {
     /**
-     * @Route("/view/{projectId}/queue/{queueId}/messages{slash}",
-     *      name="messages",
-     *      requirements={"projectId" = "\d+", "queueId" = "\d+"}
+     * @Route("/view/{projectId}/queue/{queueId}/overview{slash}",
+     *      name="queue_overview",
+     *      requirements={"projectId" = "\d+", "queueId" = "\d+"},
+     *      defaults={"tab": "overview"}
      * )
      * @ParamConverter("project", options={"id" = "projectId"})
      * @ParamConverter("queue", options={"id" = "queueId"})
      * @SecureParam(name="project", permissions="PROJECT_ROLE_DEFAULT")
      */
-    public function listAction(Project $project, Queue $queue)
+    public function overviewAction(Project $project, Queue $queue, Request $request)
+    {
+        SecurityHelper::checkQueueIsInProject($project, $queue);
+
+        $queueForm = $this->createForm('queue', $queue);
+        $queueForm->add('actions', 'form_actions', [
+            'buttons' => [
+                'save' => ['type' => 'submit', 'options' => [
+                    'label' => 'Save',
+                    'attr' => [
+                        'class' => 'pull-right',
+                    ],
+                ]],
+            ]
+        ]);
+
+        $queueForm->handleRequest($request);
+        if ($queueForm->isValid()) {
+            $this->get('aerial_ship_steel_mq.manager.queue')->update($project, $queue);
+
+            $request->getSession()->getFlashBag()->add(
+                'notice',
+                sprintf('Queue #%s has been updated.', $queue->getId())
+            );
+
+            return $this->redirect($this->generateUrl('queue_overview', array(
+                'projectId' => $project->getId(),
+                'queueId' => $queue->getId(),
+            )));
+        }
+
+        return $this->render('@AerialShipSteelMq/queue/overview.html.twig', array(
+            'queue' => $queue,
+            'queue_form' => $queueForm->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/view/{projectId}/queue/{queueId}/subscribers{slash}",
+     *      name="queue_subscribers",
+     *      requirements={"projectId" = "\d+", "queueId" = "\d+"},
+     *      defaults={"tab": "subscribers"}
+     * )
+     * @ParamConverter("project", options={"id" = "projectId"})
+     * @ParamConverter("queue", options={"id" = "queueId"})
+     * @SecureParam(name="project", permissions="PROJECT_ROLE_DEFAULT")
+     */
+    public function subscribersAction(Project $project, Queue $queue)
+    {
+        SecurityHelper::checkQueueIsInProject($project, $queue);
+
+        return $this->render('@AerialShipSteelMq/queue/subscribers.html.twig', array(
+            'queue' => $queue,
+        ));
+    }
+
+    /**
+     * @Route("/view/{projectId}/queue/{queueId}/messages{slash}",
+     *      name="queue_messages",
+     *      requirements={"projectId" = "\d+", "queueId" = "\d+"},
+     *      defaults={"tab": "messages"}
+     * )
+     * @ParamConverter("project", options={"id" = "projectId"})
+     * @ParamConverter("queue", options={"id" = "queueId"})
+     * @SecureParam(name="project", permissions="PROJECT_ROLE_DEFAULT")
+     */
+    public function messagesAction(Project $project, Queue $queue)
     {
         SecurityHelper::checkQueueIsInProject($project, $queue);
 

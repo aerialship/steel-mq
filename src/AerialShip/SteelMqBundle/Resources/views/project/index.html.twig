@@ -6,7 +6,7 @@
 
     <ol class="breadcrumb">
         <li><a href="{{ path('homepage') }}">Home</a></li>
-        <li class="active">{{ project.title }}</li>
+        <li class="active">{{ project.title }} #{{ project.id }}</li>
     </ol>
 
     {% for flashMessage in app.session.flashbag.get('notice') %}
@@ -44,13 +44,13 @@
             {% set has_queue_role = is_granted('PROJECT_ROLE_QUEUE', project) %}
             {% for queue in project.queues %}
                 <tr>
-                    <td><a href="{{ path('messages', {projectId: project.id, queueId: queue.id}) }}">{{ queue.title }}</a></td>
+                    <td><a href="{{ path('queue_messages', {projectId: project.id, queueId: queue.id}) }}">{{ queue.title }}</a></td>
                     <td>{{ queue.pushType }}</td>
                     <td>{{ queue.size }}</td>
                     <td>{{ queue.size + queue.deletedCount }}</td>
                     <td>
-                        <a href="" title="Settings" class="mr-20"><i class="fa fa-gear fa-2x"></i></a>
-                        <a href="{{ path('messages', {projectId: project.id, queueId: queue.id}) }}" title="Messages" class="mr-20"><i class="fa fa-envelope-o fa-2x"></i></a>
+                        <a href="{{ path('queue_overview', {projectId: project.id, queueId: queue.id}) }}" title="Settings" class="mr-20"><i class="fa fa-gear fa-2x"></i></a>
+                        <a href="{{ path('queue_messages', {projectId: project.id, queueId: queue.id}) }}" title="Messages" class="mr-20"><i class="fa fa-envelope-o fa-2x"></i></a>
                         {% if has_queue_role %}
                         <span class="mr-10"></span>
                         <a href="" title="Clear" class="mr-20"

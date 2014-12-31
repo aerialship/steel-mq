@@ -79,7 +79,7 @@ class QueueController extends AbstractApiController
     }
 
     /**
-     * @Route("/{queueId}{slash}")
+     * @Route("/{queueId}{slash}", name="api_queue_info")
      * @Method({"GET"})
      * @ParamConverter("project", options={"id" = "projectId"})
      * @ParamConverter("queue", options={"id" = "queueId"})

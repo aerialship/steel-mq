@@ -1,0 +1,42 @@
+{% extends '@AerialShipSteelMq/queue/_layout.html.twig' %}
+
+{% block tab_content %}
+
+    <div class="row">
+
+        <h2>Overview</h2>
+        <div class="col-md-3">
+            <dl>
+                <dt>Size</dt>
+                <dd>{{ queue.size }}</dd>
+                <dt class="mt-10">Messages ever</dt>
+                <dd>{{ queue.size + queue.deletedCount }}</dd>
+            </dl>
+        </div>
+        <div class="col-md-9">
+            <dl>
+                <dt>Base API url</dt>
+                <dd><kbd>{{ url('api_queue_info', {projectId: queue.project.id, queueId: queue.id}) }}</kbd></dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="row">
+        <h2>Queue settings</h2>
+        <div class="col-md-6">
+            <form role="form" action="{{ path('queue_overview', {projectId: queue.project.id, queueId: queue.id}) }}"
+                method="post"
+                name="confirm"
+                {{ form_enctype(queue_form) }}
+            >
+                {{ form_widget(queue_form) }}
+
+            </form>
+
+            <div class="clearfix mb-30"></div>
+        </div>
+
+    </div>
+
+
+{% endblock %}
