@@ -26,3 +26,10 @@ services:
             - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:User')"
         tags:
             - { name: console.command }
+
+    aerial_ship_steel_mq.command.message.delete_expired:
+        class: AerialShip\SteelMqBundle\Command\MessageExpiredDeleteCommand
+        arguments:
+            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:Message')"
+        tags:
+            - { name: console.command }

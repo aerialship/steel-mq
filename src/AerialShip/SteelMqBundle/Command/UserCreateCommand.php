@@ -4,13 +4,13 @@ namespace AerialShip\SteelMqBundle\Command;
 
 use AerialShip\SteelMqBundle\Entity\User;
 use AerialShip\SteelMqBundle\Model\Repository\UserRepositoryInterface;
-use Symfony\Bundle\FrameworkBundle\Command\AbstractConfigCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class UserCreateCommand extends AbstractConfigCommand
+class UserCreateCommand extends Command
 {
     /** @var  UserRepositoryInterface */
     protected $userRepository;

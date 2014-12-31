@@ -122,4 +122,28 @@ class MessageRepository extends EntityRepository implements MessageRepositoryInt
         $this->_em->persist($message);
         $this->_em->flush();
     }
+
+    /**
+     * @param \DateTime $now
+     *
+     * @return int Number of deleted messages
+     */
+    public function deleteExpired(\DateTime $now = null)
+    {
+        if (null === $now) {
+            $now = new \DateTime();
+        }
+
+        $sql = "DELETE m
+            FROM smq_message m
+            JOIN smq_queue q ON q.id=m.queue_id
+            WHERE m.token IS NULL
+            AND (m.available_at + INTERVAL q.expires_in SECOND) < :now ";
+
+        $result = $this->_em->getConnection()->executeUpdate($sql, array(
+            'now' => $now->format('Y-m-d H:i:s'),
+        ));
+
+        return $result;
+    }
 }

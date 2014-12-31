@@ -60,4 +60,11 @@ interface MessageRepositoryInterface
      * @return void
      */
     public function release(Message $message, $delay);
+
+    /**
+     * @param \DateTime $now
+     *
+     * @return int Number of deleted messages
+     */
+    public function deleteExpired(\DateTime $now = null);
 }
