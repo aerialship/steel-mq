@@ -29,6 +29,12 @@ class Message
     protected $id;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $locked = false;
+
+    /**
      * @var int
      * @ORM\Column(type="integer")
      * @JMS\Expose
@@ -150,6 +156,25 @@ class Message
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isLocked()
+    {
+        return $this->locked;
+    }
+
+    /**
+     * @param  boolean       $locked
+     * @return $this|Message
+     */
+    public function setLocked($locked)
+    {
+        $this->locked = $locked;
+
+        return $this;
     }
 
     /**

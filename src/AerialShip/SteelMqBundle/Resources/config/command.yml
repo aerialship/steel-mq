@@ -33,3 +33,10 @@ services:
             - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:Message')"
         tags:
             - { name: console.command }
+
+    aerial_ship_steel_mq.command.message.timeout_manage:
+        class: AerialShip\SteelMqBundle\Command\MessageTimeoutManageCommand
+        arguments:
+            - "@=service('doctrine').getManager().getRepository('AerialShipSteelMqBundle:Message')"
+        tags:
+            - { name: console.command }

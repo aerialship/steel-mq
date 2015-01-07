@@ -146,4 +146,90 @@ class MessageRepository extends EntityRepository implements MessageRepositoryInt
 
         return $result;
     }
+
+    /**
+     * @param \DateTime $now
+     *
+     * @return array [totalCount, nonDeletedCount, movedCount]
+     */
+    public function manageTimeout(\DateTime $now = null)
+    {
+        if (null === $now) {
+            $now = new \DateTime();
+        }
+
+        return $this->_em->transactional(function () use ($now) {
+            return $this->timeoutTransactional($now);
+        });
+    }
+
+    /**
+     * @param \DateTime $now
+     *
+     * @return array [totalCount, nonDeletedCount, movedCount]
+     *
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    private function timeoutTransactional(\DateTime $now)
+    {
+        $totalCount = $this->_em->getConnection()->executeUpdate(
+            'UPDATE smq_message
+            SET locked=1
+            WHERE token IS NOT NULL
+            AND timeout_at < :now ',
+            array(
+                'now' => $now->format('Y-m-d H:i:s'),
+            )
+        );
+
+        // copy all retries_remaining=0 to existing error queue
+        $movedCount = $this->_em->getConnection()->executeUpdate(
+            'INSERT INTO smq_message (queue_id, locked, retries_remaining, created_at, available_at, timeout_at, token, body)
+            SELECT e.id, 0, e.retries, :now, :now + INTERVAL e.delay SECOND, NULL, NULL, m.body
+            FROM smq_message m
+            JOIN smq_queue q ON m.queue_id=q.id
+            JOIN smq_queue e ON e.id=q.error_queue
+            WHERE m.token IS NOT NULL
+            AND m.timeout_at < :now
+            AND m.retries_remaining = 0
+            AND m.locked = 1',
+            array(
+                'now' => $now->format('Y-m-d H:i:s'),
+            )
+        );
+
+        // delete all retries_remaining=0
+        $this->_em->getConnection()->executeUpdate(
+            'DELETE m
+            FROM smq_message m
+            JOIN smq_queue q ON m.queue_id=q.id
+            WHERE m.token IS NOT NULL
+            AND m.timeout_at < :now
+            AND m.retries_remaining = 0
+            AND m.locked = 1',
+            array(
+                'now' => $now->format('Y-m-d H:i:s'),
+            )
+        );
+
+        // decrement retries_remaining, clear lock, and put back to available
+        $nonDeletedCount = $this->_em->getConnection()->executeUpdate(
+            'UPDATE smq_message m
+            JOIN smq_queue q ON m.queue_id=q.id
+            SET m.retries_remaining = m.retries_remaining - 1,
+            m.available_at = :now + INTERVAL q.delay SECOND,
+            m.locked = 0,
+            m.token = NULL,
+            m.timeout_at = NULL
+            WHERE m.token IS NOT NULL
+            AND m.timeout_at < :now
+            AND m.retries_remaining > 0
+            AND m.locked = 1',
+            array(
+                'now' => $now->format('Y-m-d H:i:s'),
+            )
+        );
+
+        return array($totalCount, $nonDeletedCount, $movedCount);
+    }
 }

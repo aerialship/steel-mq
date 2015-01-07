@@ -67,4 +67,11 @@ interface MessageRepositoryInterface
      * @return int Number of deleted messages
      */
     public function deleteExpired(\DateTime $now = null);
+
+    /**
+     * @param \DateTime $now
+     *
+     * @return array [totalCount, nonDeletedCount]
+     */
+    public function manageTimeout(\DateTime $now = null);
 }
