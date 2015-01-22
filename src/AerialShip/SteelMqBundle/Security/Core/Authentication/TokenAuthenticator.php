@@ -43,7 +43,7 @@ class TokenAuthenticator implements SimplePreAuthenticatorInterface
                 $accessToken = $matches['token'];
             }
         }
-        if (false == $accessToken) {
+        if (false === $accessToken) {
             $accessToken = $request->request->get('token');
         }
         if (false == $accessToken) {
