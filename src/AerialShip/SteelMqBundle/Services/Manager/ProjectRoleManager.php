@@ -44,7 +44,7 @@ class ProjectRoleManager
     {
         $user = $this->userProvider->get();
         $role = $this->projectRoleRepository->getByUserProject($user, $project);
-        if (null == $role) {
+        if (null === $role) {
             throw new AccessDeniedHttpException();
         }
 
