@@ -49,7 +49,7 @@ class ApiProjectTokenVoter implements VoterInterface
      */
     public function vote(TokenInterface $token, $object, array $attributes)
     {
-        if (false == $token instanceof TokenPreAuthenticatedToken) {
+        if (false === $token instanceof TokenPreAuthenticatedToken) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
         /** @var TokenPreAuthenticatedToken $token */
