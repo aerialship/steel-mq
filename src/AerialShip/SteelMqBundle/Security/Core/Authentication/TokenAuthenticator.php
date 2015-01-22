@@ -81,7 +81,7 @@ class TokenAuthenticator implements SimplePreAuthenticatorInterface
             $user = $this->userRepository->getByAccessToken($accessToken);
         }
 
-        if (false == $user) {
+        if (false === $user) {
             return new TokenPreAuthenticatedToken(
                 'anon.',
                 null,
