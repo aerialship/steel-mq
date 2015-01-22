@@ -72,7 +72,7 @@ class ProjectRoleVoter implements VoterInterface
 
         $projectRole = $this->getProjectRole($user, $object);
 
-        if (false == $projectRole) {
+        if (false === $projectRole) {
             return VoterInterface::ACCESS_DENIED;
         }
 

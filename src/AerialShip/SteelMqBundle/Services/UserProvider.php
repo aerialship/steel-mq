@@ -25,12 +25,12 @@ class UserProvider
     public function get()
     {
         $token = $this->securityContext->getToken();
-        if (false == $token) {
+        if (false === $token) {
             throw new AccessDeniedException();
         }
 
         $user = $token->getUser();
-        if (false == $user instanceof User) {
+        if (false === $user instanceof User) {
             throw new \LogicException();
         }
 

@@ -32,7 +32,7 @@ class MessageTimeoutManageCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (false == $input->getOption('force')) {
+        if (false === $input->getOption('force')) {
             throw new \RuntimeException('Use --force to really manage timed-out messages');
         }
 

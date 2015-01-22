@@ -11,7 +11,6 @@ before_script:
     - npm install uglify-js
     - npm install uglifycss
     - npm install jscs
-    - curl http://get.sensiolabs.org/php-cs-fixer.phar -o php-cs-fixer.phar
     - mysql -e 'create database steelmq;'
     - COMPOSER_ROOT_VERSION=dev-master composer --prefer-source --dev --no-interaction install
 
