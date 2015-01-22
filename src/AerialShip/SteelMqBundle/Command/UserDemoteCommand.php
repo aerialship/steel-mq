@@ -48,7 +48,7 @@ class UserDemoteCommand extends Command
     protected function getUser($email)
     {
         $user = $this->userRepository->getByUsername($email);
-        if (false == $user) {
+        if (false === $user) {
             throw new \RuntimeException(sprintf("User %s does not exist", $email));
         }
 
