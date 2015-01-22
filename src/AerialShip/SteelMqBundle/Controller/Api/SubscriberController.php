@@ -49,7 +49,7 @@ class SubscriberController extends AbstractApiController
 
         $form->handleRequest($request);
 
-        if (false == $form->isValid()) {
+        if (false === $form->isValid()) {
             return $this->handleView($this->view($form, 400));
         }
         /** @var Subscriber $subscriber */
