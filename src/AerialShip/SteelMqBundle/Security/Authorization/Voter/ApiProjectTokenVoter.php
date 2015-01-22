@@ -58,7 +58,7 @@ class ApiProjectTokenVoter implements VoterInterface
             return VoterInterface::ACCESS_ABSTAIN;
         }
 
-        if (false == $token->getProject()) {
+        if (false === $token->getProject()) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
 
