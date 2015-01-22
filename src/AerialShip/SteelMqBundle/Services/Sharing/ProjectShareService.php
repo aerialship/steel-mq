@@ -83,7 +83,7 @@ class ProjectShareService
         }
 
         foreach ($data as $collaborator) {
-            if (false == isset($roleIndex[$collaborator['email']])) {
+            if (false === isset($roleIndex[$collaborator['email']])) {
                 $email = $collaborator['email'];
                 $role = new ProjectRole();
                 $role->setUser($this->getUserByEmail($email))
@@ -107,7 +107,7 @@ class ProjectShareService
     protected function getUserByEmail($email)
     {
         $user = $this->userRepository->getByUsername($email);
-        if (false == $user) {
+        if (false === $user) {
             $user = $this->createUser($email);
         }
 
