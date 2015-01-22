@@ -132,8 +132,6 @@ class ProjectShareService
         ;
         $this->userRepository->save($user);
 
-        // TODO send invitation email
-
         return $user;
     }
 }
