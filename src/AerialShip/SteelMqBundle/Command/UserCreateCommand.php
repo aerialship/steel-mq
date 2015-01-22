@@ -48,7 +48,7 @@ class UserCreateCommand extends Command
         ;
         $this->userRepository->save($user);
 
-        if (false == $input->getOption('password')) {
+        if (false === $input->getOption('password')) {
             $output->writeln($password);
         }
     }
