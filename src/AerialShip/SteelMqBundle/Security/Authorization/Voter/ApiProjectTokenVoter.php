@@ -54,7 +54,7 @@ class ApiProjectTokenVoter implements VoterInterface
         }
         /** @var TokenPreAuthenticatedToken $token */
 
-        if (false == $object || false == $this->supportsClass(get_class($object))) {
+        if (false === $object || false == $this->supportsClass(get_class($object))) {
             return VoterInterface::ACCESS_ABSTAIN;
         }
 
